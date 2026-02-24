@@ -2,74 +2,142 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Harnaksh Royal Control</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harnaksh Royal Empire</title>
     <style>
-        body { background: #000; color: #f0b90b; font-family: 'Courier New', monospace; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .container { background: #111; padding: 30px; border: 3px solid #f0b90b; border-radius: 20px; box-shadow: 0 0 20px #f0b90b; width: 400px; text-align: center; }
-        input { width: 90%; padding: 10px; margin: 10px 0; background: #222; border: 1px solid #f0b90b; color: white; border-radius: 5px; }
-        button { width: 95%; padding: 12px; background: #f0b90b; color: black; border: none; font-weight: bold; cursor: pointer; border-radius: 5px; margin-top: 10px; }
-        #admin-panel { display: none; }
-        .game-list { text-align: left; margin-top: 20px; border-top: 1px solid #444; padding-top: 10px; }
-        .game-item { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px id #222; color: white; }
+        /* Royal Gold & Black Theme */
+        body { 
+            background: radial-gradient(circle, #1a1a1a 0%, #000 100%); 
+            color: #f0b90b; 
+            font-family: 'Segoe UI', sans-serif; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            margin: 0; 
+        }
+        .royal-card { 
+            background: #111; 
+            border: 2px solid #f0b90b; 
+            padding: 30px; 
+            border-radius: 20px; 
+            box-shadow: 0 0 40px rgba(240, 185, 11, 0.3); 
+            width: 400px; 
+            text-align: center; 
+        }
+        h1 { margin-bottom: 20px; text-transform: uppercase; letter-spacing: 3px; }
+        input { 
+            width: 90%; 
+            padding: 12px; 
+            margin: 10px 0; 
+            background: #222; 
+            border: 1px solid #444; 
+            color: white; 
+            border-radius: 8px; 
+            outline: none; 
+        }
+        input:focus { border-color: #f0b90b; }
+        button { 
+            width: 95%; 
+            padding: 14px; 
+            background: #f0b90b; 
+            color: black; 
+            border: none; 
+            border-radius: 8px; 
+            font-weight: bold; 
+            font-size: 16px; 
+            cursor: pointer; 
+            margin-top: 15px; 
+            transition: 0.3s;
+        }
+        button:hover { background: #d9a608; transform: scale(1.02); }
+        #dashboard { display: none; width: 500px; }
+        .game-item { 
+            background: #222; 
+            padding: 15px; 
+            margin: 10px 0; 
+            border-radius: 10px; 
+            display: flex; 
+            justify-content: space-between; 
+            border-left: 5px solid #f0b90b; 
+        }
+        .logout { background: #ff4d4d; color: white; margin-top: 25px; }
     </style>
 </head>
 <body>
 
-    <div id="login-box" class="container">
+    <div id="login-screen" class="royal-card">
         <h1>👑 LOGIN</h1>
-        <p>User: admin | Pass: admin123</p>
-        <input type="text" id="user" placeholder="Username">
-        <input type="password" id="pass" placeholder="Password">
-        <button onclick="check()">UNLOCk SYSTEM</button>
+        <p style="color: #888;">Enter Secret Credentials</p>
+        <input type="text" id="user" placeholder="Admin Name">
+        <input type="password" id="pass" placeholder="Secret Password">
+        <button onclick="checkAccess()">UNLOCK EMPIRE</button>
     </div>
 
-    <div id="admin-panel" class="container">
-        <h2 style="margin:0;">ROYAL DASHBOARD</h2>
-        <p style="color:white;">Owner: Harnaksh Bhai</p>
-        <hr border="1" color="#f0b90b">
+    <div id="dashboard" class="royal-card">
+        <h1>MASTER CONTROL</h1>
+        <p>Welcome, <b>Harnaksh Bhai</b></p>
+        <hr style="border: 0.5px solid #333;">
         
-        <input type="text" id="gName" placeholder="Game Name">
-        <input type="number" id="gPrice" placeholder="Game Price (₹)">
-        <button onclick="saveGame()">ADD TO WEBSITE</button>
+        <div style="margin: 20px 0;">
+            <input type="text" id="gName" placeholder="Game Name">
+            <input type="number" id="gPrice" placeholder="Game Price (₹)">
+            <button onclick="saveGame()">+ DEPLOY GAME</button>
+        </div>
 
-        <div class="game-list" id="display">
+        <div id="game-list" style="text-align: left; max-height: 300px; overflow-y: auto;">
             </div>
-        
-        <button onclick="location.reload()" style="background:red; color:white; margin-top:20px;">LOGOUT</button>
+
+        <button class="logout" onclick="location.reload()">🔒 LOCK SYSTEM</button>
     </div>
 
     <script>
-        function check() {
+        // 🔐 SECRET KEYS
+        const SECRET_U = "admin";
+        const SECRET_P = "admin123";
+
+        function checkAccess() {
             let u = document.getElementById('user').value;
             let p = document.getElementById('pass').value;
-            if(u === "admin" && p === "admin123") {
-                document.getElementById('login-box').style.display = 'none';
-                document.getElementById('admin-panel').style.display = 'block';
-                load();
+
+            if(u === SECRET_U && p === SECRET_P) {
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
+                showGames();
             } else {
-                alert("Oye! Galat password hai.");
+                alert("⛔ ACCESS DENIED! Sahi password dalo bhai.");
             }
         }
 
         function saveGame() {
             let name = document.getElementById('gName').value;
             let price = document.getElementById('gPrice').value;
+
             if(name && price) {
-                let games = JSON.parse(localStorage.getItem('myGames') || '[]');
-                games.push({name, price});
-                localStorage.setItem('myGames', JSON.stringify(games));
+                let db = JSON.parse(localStorage.getItem('royal_db') || '[]');
+                db.push({ name, price });
+                localStorage.setItem('royal_db', JSON.stringify(db));
+                
                 document.getElementById('gName').value = '';
                 document.getElementById('gPrice').value = '';
-                load();
+                showGames();
+            } else {
+                alert("Bhai, Name aur Price dono bharo!");
             }
         }
 
-        function load() {
-            let games = JSON.parse(localStorage.getItem('myGames') || '[]');
-            let box = document.getElementById('display');
-            box.innerHTML = '<h3>Live Games: ' + games.length + '</h3>';
-            games.forEach((g, index) => {
-                box.innerHTML += <div class="game-item"><span>${g.name}</span> <span>₹${g.price}</span></div>;
+        function showGames() {
+            let db = JSON.parse(localStorage.getItem('royal_db') || '[]');
+            let list = document.getElementById('game-list');
+            list.innerHTML = <h3 style="color:#fff">Active Assets: ${db.length}</h3>;
+            
+            db.forEach((game) => {
+                list.innerHTML += `
+                    <div class="game-item">
+                        <span style="color:white; font-weight:bold;">${game.name}</span>
+                        <span style="color:#f0b90b">₹${game.price}</span>
+                    </div>
+                `;
             });
         }
     </script>
