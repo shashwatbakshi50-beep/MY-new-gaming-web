@@ -1,311 +1,80 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Royal Empire Admin</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+const mongoose = require("mongoose");
 
-<style>
-body{
-margin:0;
-font-family:'Segoe UI',sans-serif;
-background:#0b0e11;
-color:#fff;
-}
+const gameSchema = new mongoose.Schema({
+    name: String,
+    price: Number
+});
 
-/* LOGIN PAGE */
-#loginPage{
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-background:linear-gradient(135deg,#141e30,#243b55);
-}
+module.exports = mongoose.model("Game", gameSchema);
+const express = require("express");
+const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const cors = require("cors");
+const Game = require("./models/Game");
 
-.login-box{
-background:#181a20;
-padding:50px;
-width:350px;
-border-radius:15px;
-text-align:center;
-box-shadow:0 0 40px rgba(0,0,0,0.7);
-}
+const app = express();
+app.use(cors());
+app.use(express.json());
+app.use(express.static("public"));
 
-.login-box h1{
-color:#f0b90b;
-margin-bottom:20px;
-}
+mongoose.connect("mongodb://127.0.0.1:27017/adminPanel");
 
-input{
-width:100%;
-padding:12px;
-margin:10px 0;
-border:none;
-border-radius:6px;
-}
+const SECRET = "MY_SUPER_SECRET_KEY";
 
-button{
-padding:10px;
-border:none;
-border-radius:6px;
-cursor:pointer;
-font-weight:bold;
-}
-
-.login-btn{
-width:100%;
-background:#f0b90b;
-color:black;
-}
-
-/* DASHBOARD */
-#dashboard{
-display:none;
-padding:30px;
-}
-
-.topbar{
-display:flex;
-justify-content:space-between;
-align-items:center;
-background:#181a20;
-padding:20px;
-border-radius:12px;
-margin-bottom:20px;
-}
-
-.logout-btn{
-background:red;
-color:white;
-}
-
-.section{
-background:#181a20;
-padding:20px;
-border-radius:12px;
-margin-bottom:20px;
-}
-
-.section h3{
-color:#f0b90b;
-margin-top:0;
-}
-
-.action-btn{
-background:#0ecb81;
-color:black;
-margin-top:10px;
-}
-
-.delete-btn{
-background:red;
-color:white;
-}
-
-.item{
-display:flex;
-justify-content:space-between;
-align-items:center;
-background:#2b3139;
-padding:10px;
-margin:8px 0;
-border-radius:8px;
-}
-</style>
-</head>
-
-<body>
-
-<!-- LOGIN PAGE -->
-<div id="loginPage">
-<div class="login-box">
-<h1>👑 Empire Admin</h1>
-<input type="email" id="email" placeholder="Email">
-<input type="password" id="password" placeholder="Password">
-<button class="login-btn" onclick="login()">Login</button>
-</div>
-</div>
-
-<!-- DASHBOARD -->
-<div id="dashboard">
-
-<div class="topbar">
-<h2>Bakshi Empire Control 👑</h2>
-<button class="logout-btn" onclick="logout()">Logout</button>
-</div>
-
-<!-- GAME MANAGEMENT -->
-<div class="section">
-<h3>🎮 Game Management</h3>
-<input type="text" id="gameName" placeholder="Game Name">
-<input type="number" id="gamePrice" placeholder="Price">
-<button class="action-btn" onclick="addGame()">Add Game</button>
-<div id="gameList"></div>
-</div>
-
-<!-- PRODUCT MANAGEMENT -->
-<div class="section">
-<h3>🛍 Product Management</h3>
-<input type="text" id="productName" placeholder="Product Name">
-<input type="number" id="productPrice" placeholder="Price">
-<button class="action-btn" onclick="addProduct()">Add Product</button>
-<div id="productList"></div>
-</div>
-
-<!-- PAYMENT RECORD -->
-<div class="section">
-<h3>💰 Donation / Payment Record</h3>
-<input type="text" id="donorName" placeholder="Donor Name">
-<input type="number" id="donationAmount" placeholder="Amount">
-<button class="action-btn" onclick="addDonation()">Add Payment</button>
-<div id="donationList"></div>
-</div>
-
-</div>
-
-<script>
-
-/* YOUR ADMIN ACCESS */
-const ADMIN_EMAIL="shashwatbakshi80@outlook.com";
-const ADMIN_PASS="admin@123";
-
-/* PROTECTION */
-if(localStorage.getItem("adminAuth")!=="true"){
-document.getElementById("dashboard").style.display="none";
-}
+/* Admin Credentials */
+const adminEmail = "shashwatbakshi80@outlook.com";
+const hashedPassword = bcrypt.hashSync("admin@123", 10);
 
 /* LOGIN */
-function login(){
-let email=document.getElementById("email").value;
-let pass=document.getElementById("password").value;
+app.post("/login", (req, res) => {
+    const { email, password } = req.body;
 
-if(email===ADMIN_EMAIL && pass===ADMIN_PASS){
-localStorage.setItem("adminAuth","true");
-showDashboard();
-}else{
-alert("Invalid Login ❌");
-}
-}
+    if (email !== adminEmail)
+        return res.status(401).json({ message: "Invalid Email" });
 
-function showDashboard(){
-document.getElementById("loginPage").style.display="none";
-document.getElementById("dashboard").style.display="block";
-loadAll();
-}
+    if (!bcrypt.compareSync(password, hashedPassword))
+        return res.status(401).json({ message: "Wrong Password" });
 
-/* LOGOUT */
-function logout(){
-localStorage.removeItem("adminAuth");
-location.reload();
-}
-
-/* AUTO CHECK */
-window.onload=function(){
-if(localStorage.getItem("adminAuth")==="true"){
-showDashboard();
-}
-}
-
-/* GAME FUNCTIONS */
-function addGame(){
-let name=gameName.value;
-let price=gamePrice.value;
-if(!name||!price)return alert("Fill all fields");
-let data=JSON.parse(localStorage.getItem("games"))||[];
-data.push({name,price});
-localStorage.setItem("games",JSON.stringify(data));
-gameName.value="";gamePrice.value="";
-loadGames();
-}
-
-function loadGames(){
-let data=JSON.parse(localStorage.getItem("games"))||[];
-gameList.innerHTML="";
-data.forEach((g,i)=>{
-gameList.innerHTML+=`
-<div class="item">
-<div>${g.name} - ₹${g.price}</div>
-<button class="delete-btn" onclick="deleteGame(${i})">Delete</button>
-</div>`;
+    const token = jwt.sign({ email }, SECRET, { expiresIn: "2h" });
+    res.json({ token });
 });
+
+/* Middleware */
+function verifyToken(req, res, next) {
+    const token = req.headers.authorization;
+    if (!token) return res.status(403).json({ message: "No Token" });
+
+    try {
+        jwt.verify(token, SECRET);
+        next();
+    } catch {
+        res.status(401).json({ message: "Invalid Token" });
+    }
 }
 
-function deleteGame(i){
-let data=JSON.parse(localStorage.getItem("games"));
-data.splice(i,1);
-localStorage.setItem("games",JSON.stringify(data));
-loadGames();
-}
+/* Add Game */
+app.post("/add-game", verifyToken, async (req, res) => {
+    const { name, price } = req.body;
 
-/* PRODUCT FUNCTIONS */
-function addProduct(){
-let name=productName.value;
-let price=productPrice.value;
-if(!name||!price)return alert("Fill all fields");
-let data=JSON.parse(localStorage.getItem("products"))||[];
-data.push({name,price});
-localStorage.setItem("products",JSON.stringify(data));
-productName.value="";productPrice.value="";
-loadProducts();
-}
+    const game = new Game({ name, price });
+    await game.save();
 
-function loadProducts(){
-let data=JSON.parse(localStorage.getItem("products"))||[];
-productList.innerHTML="";
-data.forEach((p,i)=>{
-productList.innerHTML+=`
-<div class="item">
-<div>${p.name} - ₹${p.price}</div>
-<button class="delete-btn" onclick="deleteProduct(${i})">Delete</button>
-</div>`;
+    res.json({ message: "Game Added" });
 });
-}
 
-function deleteProduct(i){
-let data=JSON.parse(localStorage.getItem("products"));
-data.splice(i,1);
-localStorage.setItem("products",JSON.stringify(data));
-loadProducts();
-}
-
-/* DONATION FUNCTIONS */
-function addDonation(){
-let name=donorName.value;
-let amount=donationAmount.value;
-if(!name||!amount)return alert("Fill all fields");
-let data=JSON.parse(localStorage.getItem("donations"))||[];
-data.push({name,amount});
-localStorage.setItem("donations",JSON.stringify(data));
-donorName.value="";donationAmount.value="";
-loadDonations();
-}
-
-function loadDonations(){
-let data=JSON.parse(localStorage.getItem("donations"))||[];
-donationList.innerHTML="";
-data.forEach((d,i)=>{
-donationList.innerHTML+=`
-<div class="item">
-<div>${d.name} - ₹${d.amount}</div>
-<button class="delete-btn" onclick="deleteDonation(${i})">Delete</button>
-</div>`;
+/* Get Games */
+app.get("/games", verifyToken, async (req, res) => {
+    const games = await Game.find();
+    res.json(games);
 });
-}
 
-function deleteDonation(i){
-let data=JSON.parse(localStorage.getItem("donations"));
-data.splice(i,1);
-localStorage.setItem("donations",JSON.stringify(data));
-loadDonations();
-}
+/* Delete Game */
+app.delete("/delete/:id", verifyToken, async (req, res) => {
+    await Game.findByIdAndDelete(req.params.id);
+    res.json({ message: "Deleted" });
+});
 
-function loadAll(){
-loadGames();
-loadProducts();
-loadDonations();
-}
-
-</script>
-
-</body>
-</html>
+app.listen(5000, () => {
+    console.log("Secure Admin running on http://localhost:5000");
+});
