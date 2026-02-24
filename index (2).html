@@ -1,103 +1,256 @@
+const express = require("express");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const cors = require("cors");
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+/* ================= CONFIG ================= */
+
+const SECRET = "EMPIRE_SUPER_SECRET_2026";
+const ADMIN_EMAIL = "shashwatbakshi80@outlook.com";
+const HASHED_PASSWORD = bcrypt.hashSync("admin@123", 10);
+
+let games = [];
+
+/* ================= AUTH ================= */
+
+app.post("/api/login", async (req, res) => {
+    const { email, password } = req.body;
+
+    if (email !== ADMIN_EMAIL)
+        return res.status(401).json({ message: "Invalid Email" });
+
+    const valid = await bcrypt.compare(password, HASHED_PASSWORD);
+    if (!valid)
+        return res.status(401).json({ message: "Wrong Password" });
+
+    const token = jwt.sign({ email }, SECRET, { expiresIn: "2h" });
+
+    res.json({ token });
+});
+
+function verifyToken(req, res, next) {
+    const token = req.headers.authorization;
+
+    if (!token)
+        return res.status(403).json({ message: "Access Denied" });
+
+    try {
+        jwt.verify(token, SECRET);
+        next();
+    } catch {
+        res.status(401).json({ message: "Invalid Token" });
+    }
+}
+
+/* ================= GAME ROUTES ================= */
+
+app.post("/api/games", verifyToken, (req, res) => {
+    const { name, price } = req.body;
+
+    const game = {
+        id: Date.now(),
+        name,
+        price
+    };
+
+    games.push(game);
+
+    res.json({ message: "Game Added Successfully" });
+});
+
+app.get("/api/games", verifyToken, (req, res) => {
+    res.json(games);
+});
+
+app.delete("/api/games/:id", verifyToken, (req, res) => {
+    const id = parseInt(req.params.id);
+    games = games.filter(g => g.id !== id);
+    res.json({ message: "Game Deleted" });
+});
+
+/* ================= ADMIN PAGE ================= */
+
+app.get("/", (req, res) => {
+res.send(`
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>HARNAKSH EMPIRE | LOGIN & SYSTEM</title>
-    <style>
-        :root { --gold: #f0b90b; --black: #0d0d0d; }
-        body { 
-            background: var(--black); color: white; 
-            font-family: 'Segoe UI', sans-serif; 
-            display: flex; justify-content: center; align-items: center; 
-            height: 100vh; margin: 0; 
-        }
-        .box { 
-            background: #1a1a1a; border: 3px solid var(--gold); 
-            padding: 30px; border-radius: 20px; 
-            box-shadow: 0 0 40px rgba(240, 185, 11, 0.3); 
-            width: 380px; text-align: center; 
-        }
-        input { 
-            width: 85%; padding: 12px; margin: 10px 0; 
-            background: #252525; border: 1px solid #444; 
-            color: white; border-radius: 8px; 
-        }
-        button { 
-            width: 93%; padding: 15px; background: var(--gold); 
-            color: black; border: none; border-radius: 8px; 
-            font-weight: bold; cursor: pointer; font-size: 16px; 
-        }
-        button:hover { background: white; }
-        .hidden { display: none; }
-        #list { text-align: left; margin-top: 20px; border-top: 1px solid #333; padding-top: 10px; }
-        .game-card { 
-            background: #222; padding: 10px; margin-bottom: 5px; 
-            border-radius: 5px; display: flex; justify-content: space-between;
-            border-left: 4px solid var(--gold);
-        }
-    </style>
+<title>Empire Admin</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body{
+margin:0;
+font-family:Segoe UI;
+background:linear-gradient(135deg,#141e30,#243b55);
+color:white;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+padding:40px;
+}
+
+.card{
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(15px);
+padding:30px;
+border-radius:15px;
+box-shadow:0 0 40px rgba(0,0,0,0.5);
+margin-bottom:20px;
+}
+
+input{
+width:100%;
+padding:12px;
+margin:10px 0;
+border:none;
+border-radius:6px;
+}
+
+button{
+padding:10px 15px;
+border:none;
+border-radius:6px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.btn-primary{background:#f0b90b;color:black;}
+.btn-danger{background:red;color:white;}
+.btn-success{background:#0ecb81;color:black;}
+
+h1{color:#f0b90b;text-align:center;}
+.game-card{
+background:#1e2329;
+padding:15px;
+border-radius:8px;
+margin:10px 0;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+</style>
 </head>
 <body>
 
-    <div id="login-screen" class="box">
-        <h1>👑 LOGIN</h1>
-        <p>Harnaksh Bhai, Password Daalo</p>
-        <input type="password" id="passInput" placeholder="Enter Password">
-        <button onclick="login()">UNLOCK SYSTEM</button>
-        <p style="color: #444; font-size: 12px; margin-top: 10px;">Hint: king123</p>
-    </div>
+<div class="container">
 
-    <div id="dashboard-screen" class="box hidden">
-        <h1>🛠️ DASHBOARD</h1>
-        <p>Harnaksh Empire - System Active</p>
-        <input type="text" id="gName" placeholder="Game Name">
-        <input type="number" id="gPrice" placeholder="Price (₹)">
-        <button onclick="add()">DEPLOY GAME 🚀</button>
-        
-        <div id="list"></div>
-        <button onclick="location.reload()" style="background: #555; color: white; margin-top: 15px; padding: 10px;">LOGOUT</button>
-    </div>
+<h1>👑 Empire Admin Panel</h1>
 
-    <script>
-        // Login Function
-        function login() {
-            let pass = document.getElementById('passInput').value;
-            if(pass === "king123") {
-                document.getElementById('login-screen').classList.add('hidden');
-                document.getElementById('dashboard-screen').classList.remove('hidden');
-                loadData();
-            } else {
-                alert("Oye! Sahi password daal!");
-            }
-        }
+<div class="card" id="loginBox">
+<h2>Admin Login</h2>
+<input type="email" id="email" placeholder="Enter Email">
+<input type="password" id="password" placeholder="Enter Password">
+<button class="btn-primary" onclick="login()">Login</button>
+</div>
 
-        // Add Game Function
-        function add() {
-            let n = document.getElementById('gName').value;
-            let p = document.getElementById('gPrice').value;
-            if(n && p) {
-                let data = JSON.parse(localStorage.getItem('final_db') || '[]');
-                data.push({n, p});
-                localStorage.setItem('final_db', JSON.stringify(data));
-                document.getElementById('gName').value = '';
-                document.getElementById('gPrice').value = '';
-                loadData();
-            }
-        }
+<div id="dashboard" style="display:none;">
 
-        // Load Data Function
-        function loadData() {
-            let data = JSON.parse(localStorage.getItem('final_db') || '[]');
-            let listDiv = document.getElementById('list');
-            listDiv.innerHTML = '<h3>Live Inventory:</h3>';
-            data.forEach(item => {
-                listDiv.innerHTML += `
-                    <div class="game-card">
-                        <span>🎮 ${item.n}</span>
-                        <span style="color:var(--gold)">₹${item.p}</span>
-                    </div>`;
-            });
-        }
-    </script>
+<div class="card">
+<h2>Dashboard</h2>
+<input type="text" id="name" placeholder="Game Name">
+<input type="number" id="price" placeholder="Game Price">
+<button class="btn-success" onclick="addGame()">Add Game</button>
+<button class="btn-danger" onclick="logout()">Logout</button>
+</div>
+
+<div class="card">
+<h3>Game List</h3>
+<div id="gameList"></div>
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+let token="";
+
+async function login(){
+    const email=document.getElementById("email").value;
+    const password=document.getElementById("password").value;
+
+    const res=await fetch("/api/login",{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({email,password})
+    });
+
+    const data=await res.json();
+
+    if(data.token){
+        token=data.token;
+        document.getElementById("loginBox").style.display="none";
+        document.getElementById("dashboard").style.display="block";
+        loadGames();
+    }else{
+        alert("Login Failed");
+    }
+}
+
+async function addGame(){
+    const name=document.getElementById("name").value;
+    const price=document.getElementById("price").value;
+
+    await fetch("/api/games",{
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json",
+            "Authorization":token
+        },
+        body:JSON.stringify({name,price})
+    });
+
+    loadGames();
+}
+
+async function loadGames(){
+    const res=await fetch("/api/games",{
+        headers:{"Authorization":token}
+    });
+
+    const games=await res.json();
+
+    const list=document.getElementById("gameList");
+    list.innerHTML="";
+
+    games.forEach(g=>{
+        list.innerHTML+=\`
+        <div class="game-card">
+            <div>\${g.name} - ₹\${g.price}</div>
+            <button class="btn-danger" onclick="deleteGame(\${g.id})">Delete</button>
+        </div>\`;
+    });
+}
+
+async function deleteGame(id){
+    await fetch("/api/games/"+id,{
+        method:"DELETE",
+        headers:{"Authorization":token}
+    });
+    loadGames();
+}
+
+function logout(){
+    token="";
+    location.reload();
+}
+
+</script>
+
 </body>
 </html>
+`);
+});
+
+/* ================= START ================= */
+
+app.listen(5000, () => {
+    console.log("🚀 Professional Admin running on http://localhost:5000");
+});
