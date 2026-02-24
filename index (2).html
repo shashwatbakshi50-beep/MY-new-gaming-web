@@ -1,20 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Royal Admin Login</title>
+<meta charset="UTF-8">
+<title>Royal Empire Admin</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <style>
 body{
 margin:0;
+font-family:'Segoe UI',sans-serif;
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+color:white;
+}
+
+/* LOGIN SECTION */
+.login-section{
 height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
-background:linear-gradient(135deg,#141e30,#243b55);
-font-family:Segoe UI;
-color:white;
 }
-.login-box{
+
+.login-card{
 background:rgba(255,255,255,0.08);
 backdrop-filter:blur(20px);
 padding:50px;
@@ -23,6 +30,12 @@ width:350px;
 text-align:center;
 box-shadow:0 0 40px rgba(0,0,0,0.6);
 }
+
+.login-card h1{
+color:gold;
+margin-bottom:20px;
+}
+
 input{
 width:100%;
 padding:12px;
@@ -30,46 +43,178 @@ margin:10px 0;
 border:none;
 border-radius:8px;
 }
+
 button{
-width:100%;
-padding:12px;
+padding:10px 15px;
 border:none;
 border-radius:8px;
-background:gold;
 font-weight:bold;
 cursor:pointer;
 }
+
+.login-btn{
+width:100%;
+background:gold;
+}
+
+.dashboard{
+display:none;
+padding:30px;
+}
+
+.topbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:rgba(0,0,0,0.5);
+padding:20px;
+border-radius:15px;
+margin-bottom:30px;
+}
+
+.logout-btn{
+background:red;
+color:white;
+}
+
+.add-btn{
+background:#0ecb81;
+color:black;
+margin-left:10px;
+}
+
+.delete-btn{
+background:red;
+color:white;
+}
+
+.game-form{
+margin-bottom:30px;
+}
+
+.game-item{
+background:rgba(255,255,255,0.08);
+padding:15px;
+border-radius:10px;
+margin-bottom:10px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
 </style>
 </head>
+
 <body>
 
-<div class="login-box">
+<!-- LOGIN -->
+<div class="login-section" id="loginSection">
+<div class="login-card">
 <h1>👑 Empire Admin</h1>
-<p>Secure Email Login</p>
-
 <input type="email" id="email" placeholder="Enter Email">
 <input type="password" id="password" placeholder="Enter Password">
-<button onclick="login()">Login</button>
+<button class="login-btn" onclick="login()">Login</button>
+</div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="dashboard" id="dashboardSection">
+
+<div class="topbar">
+<h2>Bakshi Empire Control 👑</h2>
+<button class="logout-btn" onclick="logout()">Logout</button>
+</div>
+
+<div class="game-form">
+<input type="text" id="gameName" placeholder="Game Name">
+<input type="number" id="gamePrice" placeholder="Price">
+<button class="add-btn" onclick="addGame()">Add Game</button>
+</div>
+
+<h3>Game List</h3>
+<div id="gameList"></div>
 
 </div>
 
 <script>
 
+/* 🔐 YOUR ADMIN CREDENTIALS */
 const ADMIN_EMAIL = "shashwatbakshi80@outlook.com";
 const ADMIN_PASSWORD = "admin@123";
 
+/* LOGIN FUNCTION */
 function login(){
+let email=document.getElementById("email").value;
+let pass=document.getElementById("password").value;
 
-let email = document.getElementById("email").value;
-let pass = document.getElementById("password").value;
-
-if(email === ADMIN_EMAIL && pass === ADMIN_PASSWORD){
+if(email===ADMIN_EMAIL && pass===ADMIN_PASSWORD){
 localStorage.setItem("adminAuth","true");
-window.location.href="admin-dashboard.html";
+showDashboard();
 }else{
 alert("Invalid Email or Password ❌");
 }
+}
 
+/* SHOW DASHBOARD */
+function showDashboard(){
+document.getElementById("loginSection").style.display="none";
+document.getElementById("dashboardSection").style.display="block";
+loadGames();
+}
+
+/* LOGOUT */
+function logout(){
+localStorage.removeItem("adminAuth");
+document.getElementById("dashboardSection").style.display="none";
+document.getElementById("loginSection").style.display="flex";
+}
+
+/* CHECK AUTH ON LOAD */
+window.onload=function(){
+if(localStorage.getItem("adminAuth")==="true"){
+showDashboard();
+}
+}
+
+/* GAME FUNCTIONS */
+function loadGames(){
+let games=JSON.parse(localStorage.getItem("games"))||[];
+let list=document.getElementById("gameList");
+list.innerHTML="";
+
+games.forEach((game,index)=>{
+list.innerHTML+=`
+<div class="game-item">
+<div><b>${game.name}</b> - ₹${game.price}</div>
+<button class="delete-btn" onclick="deleteGame(${index})">Delete</button>
+</div>
+`;
+});
+}
+
+function addGame(){
+let name=document.getElementById("gameName").value;
+let price=document.getElementById("gamePrice").value;
+
+if(name===""||price===""){
+alert("Fill all fields");
+return;
+}
+
+let games=JSON.parse(localStorage.getItem("games"))||[];
+games.push({name:name,price:price});
+localStorage.setItem("games",JSON.stringify(games));
+
+document.getElementById("gameName").value="";
+document.getElementById("gamePrice").value="";
+loadGames();
+}
+
+function deleteGame(index){
+let games=JSON.parse(localStorage.getItem("games"))||[];
+games.splice(index,1);
+localStorage.setItem("games",JSON.stringify(games));
+loadGames();
 }
 
 </script>
