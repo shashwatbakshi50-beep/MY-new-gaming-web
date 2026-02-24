@@ -45,24 +45,33 @@ cursor:pointer;
 
 <div class="login-box">
 <h1>👑 Empire Admin</h1>
-<p>Secure Login Access</p>
+<p>Secure Email Login</p>
+
+<input type="email" id="email" placeholder="Enter Email">
 <input type="password" id="password" placeholder="Enter Password">
 <button onclick="login()">Login</button>
+
 </div>
 
 <script>
-const ADMIN_PASSWORD = "Empire@2026"; // change here
+
+const ADMIN_EMAIL = "shashwatbakshi80@outlook.com";
+const ADMIN_PASSWORD = "admin@123";
 
 function login(){
-let pass=document.getElementById("password").value;
 
-if(pass===ADMIN_PASSWORD){
+let email = document.getElementById("email").value;
+let pass = document.getElementById("password").value;
+
+if(email === ADMIN_EMAIL && pass === ADMIN_PASSWORD){
 localStorage.setItem("adminAuth","true");
 window.location.href="admin-dashboard.html";
 }else{
-alert("Wrong Password ❌");
+alert("Invalid Email or Password ❌");
 }
+
 }
+
 </script>
 
 </body>
