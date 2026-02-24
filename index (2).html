@@ -58,7 +58,6 @@ margin:15px 0;
 display:flex;
 flex-direction:column;
 }
-
 .game-card img{
 max-width:150px;
 margin-top:10px;
@@ -72,8 +71,8 @@ border-radius:8px;
 
 <h1>👑 Empire Admin Panel</h1>
 
-<!-- LOGIN -->
-<div class="card" id="loginBox">
+<!-- LOGIN PAGE -->
+<div class="card" id="loginPage">
 <h2>Admin Login</h2>
 <input type="email" id="email" placeholder="Enter Email">
 <input type="password" id="password" placeholder="Enter Password">
@@ -104,40 +103,47 @@ border-radius:8px;
 </div>
 
 </div>
-
 </div>
 
 <script>
 
-const ADMIN_EMAIL="shashwatbakshi80@outlook.com";
-const ADMIN_PASSWORD="admin@123";
+/* ===== ADMIN CREDENTIALS ===== */
+const ADMIN_EMAIL = "shashwatbakshi80@outlook.com";
+const ADMIN_PASSWORD = "admin@123";
 
-// LOGIN
+/* ===== LOGIN SYSTEM ===== */
 function login(){
-const email=document.getElementById("email").value;
-const password=document.getElementById("password").value;
+let email = document.getElementById("email").value;
+let password = document.getElementById("password").value;
 
-if(email===ADMIN_EMAIL && password===ADMIN_PASSWORD){
-localStorage.setItem("adminLoggedIn","true");
+if(email === ADMIN_EMAIL && password === ADMIN_PASSWORD){
+localStorage.setItem("adminAuth","true");
 showDashboard();
 }else{
-alert("Invalid Login");
+alert("Invalid Email or Password");
 }
 }
 
 function showDashboard(){
-document.getElementById("loginBox").style.display="none";
+document.getElementById("loginPage").style.display="none";
 document.getElementById("dashboard").style.display="block";
 loadGames();
 }
 
-window.onload=function(){
-if(localStorage.getItem("adminLoggedIn")==="true"){
+/* ===== PAGE LOAD CHECK ===== */
+window.onload = function(){
+if(localStorage.getItem("adminAuth") === "true"){
 showDashboard();
 }
 }
 
-// ADD GAME WITH FILE
+/* ===== LOGOUT ===== */
+function logout(){
+localStorage.removeItem("adminAuth");
+location.reload();
+}
+
+/* ===== ADD GAME ===== */
 function addGame(){
 const name=document.getElementById("name").value;
 const price=document.getElementById("price").value;
@@ -151,7 +157,6 @@ return;
 
 let reader=new FileReader();
 let imgReader=new FileReader();
-
 let games=JSON.parse(localStorage.getItem("games"))||[];
 
 let newGame={
@@ -193,7 +198,7 @@ alert("Game Added Successfully");
 }
 }
 
-// LOAD GAMES
+/* ===== LOAD GAMES ===== */
 function loadGames(){
 let games=JSON.parse(localStorage.getItem("games"))||[];
 const list=document.getElementById("gameList");
@@ -213,7 +218,7 @@ ${g.imageData?`<img src="${g.imageData}">`:""}
 });
 }
 
-// DOWNLOAD
+/* ===== DOWNLOAD ===== */
 function downloadGame(data,fileName){
 if(!data){
 alert("No file uploaded");
@@ -225,7 +230,7 @@ a.download=fileName;
 a.click();
 }
 
-// DELETE
+/* ===== DELETE ===== */
 function deleteGame(id){
 let games=JSON.parse(localStorage.getItem("games"))||[];
 games=games.filter(g=>g.id!==id);
@@ -233,13 +238,6 @@ localStorage.setItem("games",JSON.stringify(games));
 loadGames();
 }
 
-// LOGOUT
-function logout(){
-localStorage.removeItem("adminLoggedIn");
-location.reload();
-}
-
 </script>
-
 </body>
 </html>
