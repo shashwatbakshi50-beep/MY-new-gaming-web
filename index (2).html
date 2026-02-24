@@ -76,7 +76,60 @@ margin-top:10px;
 </style>
 </head>
 <body>
+ <div class="empire-card">
+    <div class="stats-box">
+        <div>
+            <p>Total Customers</p>
+            <h2 id="cust-count">0</h2> 
+        </div>
+        <div>
+            <p>Total Earnings</p>
+            <h2 id="total-money" style="color: #00ff00;">₹0</h2>
+        </div>
+    </div>
 
+    <table class="empire-table">
+        <thead>
+            <tr>
+                <th style="color:gold;">Customer Name</th>
+                <th style="color:gold;">Payment</th>
+            </tr>
+        </thead>
+        <tbody id="payment-table"></tbody>
+    </table>
+</div>
+
+    <div style="margin-top: 20px;">
+        <button onclick="addEntry()" style="background: gold; color: black; border: none; padding: 10px; cursor: pointer; border-radius: 5px; font-weight: bold;">+ Add New Payment</button>
+    </div>
+
+    <table style="width: 100%; margin-top: 20px; border-collapse: collapse;">
+        <thead style="border-bottom: 2px solid gold;">
+            <tr>
+                <th style="text-align: left; padding: 5px;">Name</th>
+                <th style="text-align: left; padding: 5px;">Amount</th>
+            </tr>
+        </thead>
+        <tbody id="payment-table">
+            </tbody>
+    </table>
+</div>
+<div id="stats-container" class="card" style="display: flex; justify-content: space-around; text-align: center;">
+    <div>
+        <h3>Total Customers</h3>
+        <p id="totalCustomers">0</p>
+    </div>
+    <div>
+        <h3>Total Earnings</h3>
+        <p id="totalEarnings">₹0</p>
+    </div>
+</div>
+
+<div class="card">
+    <h2>Customer & Payment History</h2>
+    <div id="customerList">
+        </div>
+</div>
 <div class="container">
 
 <h1>👑 Empire Admin Panel</h1>
@@ -261,7 +314,50 @@ games=games.filter(g=>g.id!==id);
 localStorage.setItem("games",JSON.stringify(games));
 loadGames();
 }
+// --- EMPIRE LOGIC ---
 
+// Page load hote hi data dikhao
+window.onload = function() {
+    updateUI();
+};
+
+function addEntry() {
+    let name = prompt("Customer ka naam kya hai?");
+    let amount = prompt("Kitne paise diye?");
+
+    if (name && amount) {
+        // Purana data nikalo
+        let records = JSON.parse(localStorage.getItem("empireRecords")) || [];
+        
+        // Naya data add karo
+        records.push({ name: name, amount: Number(amount) });
+        
+        // Save karo
+        localStorage.setItem("empireRecords", JSON.stringify(records));
+        
+        alert("Entry Successful, Bhai!");
+        updateUI();
+    }
+}
+
+function updateUI() {
+    let records = JSON.parse(localStorage.getItem("empireRecords")) || [];
+    let table = document.getElementById("payment-table");
+    let countDisp = document.getElementById("cust-count");
+    let moneyDisp = document.getElementById("total-money");
+
+    table.innerHTML = "";
+    let total = 0;
+
+    records.forEach(r => {
+        total += r.amount;
+        table.innerHTML += <tr style="border-bottom: 1px solid #333;"><td style="padding: 5px;">${r.name}</td><td style="padding: 5px; color: #00ff00;">₹${r.amount}</td></tr>;
+    });
+
+    countDisp.innerText = records.length;
+    moneyDisp.innerText = "₹" + total;
+}
+  updateUI();
 </script>
 
 </body>
