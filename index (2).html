@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Empire Full Admin Panel</title>
+<title>Empire Admin Panel</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 body{
@@ -10,7 +10,7 @@ font-family:Segoe UI;
 background:linear-gradient(135deg,#141e30,#243b55);
 color:white;
 }
-.container{max-width:1100px;margin:auto;padding:30px;}
+.container{max-width:900px;margin:auto;padding:30px;}
 .card{
 background:rgba(255,255,255,0.08);
 padding:20px;
@@ -59,8 +59,8 @@ margin:5px 0;
 <!-- LOGIN -->
 <div id="loginPage" class="card">
 <h2>Admin Login</h2>
-<input type="email" id="email" placeholder="Enter Email">
-<input type="password" id="password" placeholder="Enter Password">
+<input type="email" id="loginEmail" placeholder="Enter Email">
+<input type="password" id="loginPassword" placeholder="Enter Password">
 <button class="btn-yellow" onclick="login()">Login</button>
 <p id="error" style="color:red;"></p>
 </div>
@@ -76,128 +76,46 @@ margin:5px 0;
 <button class="btn-red" onclick="logout()">Logout</button>
 </div>
 
-<div class="card">
-<h2>Add Game</h2>
-<input id="gName" placeholder="Game Name">
-<input id="gPrice" type="number" placeholder="Price ₹">
-<button class="btn-green" onclick="addGame()">Add</button>
-<div id="gList"></div>
-</div>
-
-<div class="card">
-<h2>Add Customer</h2>
-<input id="cName" placeholder="Customer Name">
-<button class="btn-green" onclick="addCustomer()">Add</button>
-<div id="cList"></div>
-</div>
-
-<div class="card">
-<h2>Add Donation</h2>
-<input id="dName" placeholder="Donor Name">
-<input id="dAmt" type="number" placeholder="Amount ₹">
-<button class="btn-green" onclick="addDonation()">Add</button>
-<div id="dList"></div>
-</div>
-
-<div class="card">
-<h2>Add Purchase</h2>
-<input id="pName" placeholder="Buyer Name">
-<input id="pGame" placeholder="Game Name">
-<input id="pAmt" type="number" placeholder="Amount ₹">
-<button class="btn-green" onclick="addPurchase()">Add</button>
-<div id="pList"></div>
-</div>
-
 </div>
 </div>
 
 <script>
 
-// ===== LOGIN DETAILS =====
+// LOGIN DETAILS
 const ADMIN_EMAIL = "admin@gmail.com";
 const ADMIN_PASSWORD = "admin123";
 
-// ===== LOGIN =====
+// LOGIN FUNCTION
 function login(){
-let email=email.value.trim();
-let password=password.value.trim();
+let emailValue = document.getElementById("loginEmail").value.trim();
+let passwordValue = document.getElementById("loginPassword").value.trim();
+let errorBox = document.getElementById("error");
 
-if(email===ADMIN_EMAIL && password===ADMIN_PASSWORD){
+if(emailValue === ADMIN_EMAIL && passwordValue === ADMIN_PASSWORD){
 localStorage.setItem("adminLogged","true");
 showDashboard();
 }else{
-document.getElementById("error").innerText="Invalid Email or Password!";
+errorBox.innerText="Invalid Email or Password!";
 }
 }
 
-// ===== SHOW DASHBOARD =====
+// SHOW DASHBOARD
 function showDashboard(){
 document.getElementById("loginPage").style.display="none";
 document.getElementById("dashboard").style.display="block";
-loadData();
 }
 
-// ===== AUTO LOGIN CHECK =====
+// AUTO LOGIN
 window.onload=function(){
 if(localStorage.getItem("adminLogged")==="true"){
 showDashboard();
 }
 }
 
-// ===== LOGOUT =====
+// LOGOUT
 function logout(){
 localStorage.removeItem("adminLogged");
 location.reload();
-}
-
-// ===== DATA FUNCTIONS =====
-
-function addGame(){
-let games=JSON.parse(localStorage.getItem("games"))||[];
-games.push({n:gName.value,p:gPrice.value});
-localStorage.setItem("games",JSON.stringify(games));
-gName.value="";gPrice.value="";
-loadData();
-}
-
-function addCustomer(){
-let customers=JSON.parse(localStorage.getItem("customers"))||[];
-customers.push(cName.value);
-localStorage.setItem("customers",JSON.stringify(customers));
-cName.value="";
-loadData();
-}
-
-function addDonation(){
-let donations=JSON.parse(localStorage.getItem("donations"))||[];
-donations.push({n:dName.value,a:+dAmt.value});
-localStorage.setItem("donations",JSON.stringify(donations));
-dName.value="";dAmt.value="";
-loadData();
-}
-
-function addPurchase(){
-let purchases=JSON.parse(localStorage.getItem("purchases"))||[];
-purchases.push({n:pName.value,g:pGame.value,a:+pAmt.value});
-localStorage.setItem("purchases",JSON.stringify(purchases));
-pName.value="";pGame.value="";pAmt.value="";
-loadData();
-}
-
-function loadData(){
-let games=JSON.parse(localStorage.getItem("games"))||[];
-let customers=JSON.parse(localStorage.getItem("customers"))||[];
-let donations=JSON.parse(localStorage.getItem("donations"))||[];
-let purchases=JSON.parse(localStorage.getItem("purchases"))||[];
-
-gList.innerHTML=games.map(x=>`<div class="box">${x.n} - ₹${x.p}</div>`).join("");
-cList.innerHTML=customers.map(x=>`<div class="box">${x}</div>`).join("");
-dList.innerHTML=donations.map(x=>`<div class="box">${x.n} - ₹${x.a}</div>`).join("");
-pList.innerHTML=purchases.map(x=>`<div class="box">${x.n} bought ${x.g} - ₹${x.a}</div>`).join("");
-
-cCount.innerText=customers.length;
-dTotal.innerText=donations.reduce((s,x)=>s+x.a,0);
-pTotal.innerText=purchases.reduce((s,x)=>s+x.a,0);
 }
 
 </script>
