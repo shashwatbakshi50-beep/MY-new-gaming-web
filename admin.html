@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Empire Ultimate Admin Panel</title>
+<title>Empire Pro Admin Panel</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
@@ -45,13 +45,12 @@ margin-top:6px;
 display:flex;
 justify-content:space-between;
 align-items:center;
+flex-wrap:wrap;
 }
 #dashboard{display:none;}
 canvas{background:white;border-radius:10px;padding:10px;}
-.small-btn{
-padding:4px 8px;
-font-size:12px;
-}
+.small-btn{padding:4px 8px;font-size:12px;margin-left:5px;}
+.file-info{font-size:12px;color:#ccc;}
 </style>
 </head>
 <body>
@@ -85,10 +84,11 @@ font-size:12px;
 </div>
 
 <div class="card">
-<h2>Add Game</h2>
+<h2>Upload Game</h2>
 <input id="gName" placeholder="Game Name">
 <input id="gPrice" type="number" placeholder="Price ₹">
-<button class="btn-green" onclick="addGame()">Add Game</button>
+<input type="file" id="gFile">
+<button class="btn-green" onclick="addGame()">Upload Game</button>
 <div id="gList"></div>
 </div>
 
@@ -113,7 +113,7 @@ font-size:12px;
 
 <script>
 
-// FIRST LOAD
+// INITIAL LOAD
 window.onload=function(){
 if(!localStorage.getItem("adminPassword")){
 document.getElementById("setupBox").style.display="block";
@@ -124,67 +124,64 @@ document.getElementById("loginBox").style.display="block";
 }
 }
 
-// SET PASSWORD
+// PASSWORD SYSTEM
 function setPassword(){
-let pass=document.getElementById("newPass").value.trim();
-if(pass.length<4){
-alert("Password must be at least 4 characters");
-return;
-}
+let pass=newPass.value.trim();
+if(pass.length<4){ alert("Minimum 4 characters"); return; }
 localStorage.setItem("adminPassword",pass);
-alert("Password Set Successfully!");
+alert("Password Set!");
 location.reload();
 }
 
-// LOGIN
 function login(){
-let pass=document.getElementById("loginPass").value.trim();
-let saved=localStorage.getItem("adminPassword");
-
-if(pass===saved){
+let pass=loginPass.value.trim();
+if(pass===localStorage.getItem("adminPassword")){
 localStorage.setItem("adminLogin","true");
 showDashboard();
 }else{
-document.getElementById("error").innerText="Wrong Password";
+error.innerText="Wrong Password";
 }
 }
 
-// SHOW DASHBOARD
-function showDashboard(){
-document.getElementById("setupBox").style.display="none";
-document.getElementById("loginBox").style.display="none";
-document.getElementById("dashboard").style.display="block";
-loadData();
-drawChart();
-}
-
-// LOGOUT
 function logout(){
 localStorage.removeItem("adminLogin");
 location.reload();
 }
 
-// CHANGE PASSWORD
 function changePassword(){
-let newPass=prompt("Enter New Password:");
-if(newPass && newPass.length>=4){
-localStorage.setItem("adminPassword",newPass);
+let np=prompt("Enter New Password:");
+if(np && np.length>=4){
+localStorage.setItem("adminPassword",np);
 alert("Password Changed!");
-}else{
-alert("Password must be at least 4 characters");
 }
 }
 
-// ADD GAME
+// DASHBOARD
+function showDashboard(){
+setupBox.style.display="none";
+loginBox.style.display="none";
+dashboard.style.display="block";
+loadData();
+drawChart();
+}
+
+// GAME UPLOAD
 function addGame(){
 let games=JSON.parse(localStorage.getItem("games"))||[];
-games.push({name:gName.value,price:gPrice.value});
+let fileInput=document.getElementById("gFile");
+let fileName=fileInput.files[0] ? fileInput.files[0].name : "No File";
+
+games.push({
+name:gName.value,
+price:gPrice.value,
+file:fileName
+});
+
 localStorage.setItem("games",JSON.stringify(games));
-gName.value="";gPrice.value="";
+gName.value="";gPrice.value="";gFile.value="";
 loadData();
 }
 
-// DELETE GAME
 function deleteGame(i){
 let games=JSON.parse(localStorage.getItem("games"))||[];
 games.splice(i,1);
@@ -192,7 +189,7 @@ localStorage.setItem("games",JSON.stringify(games));
 loadData();
 }
 
-// ADD CUSTOMER
+// CUSTOMER
 function addCustomer(){
 let customers=JSON.parse(localStorage.getItem("customers"))||[];
 customers.push({name:cName.value,email:cEmail.value});
@@ -201,7 +198,7 @@ cName.value="";cEmail.value="";
 loadData();
 }
 
-// ADD PURCHASE
+// PURCHASE
 function addPurchase(){
 let purchases=JSON.parse(localStorage.getItem("purchases"))||[];
 purchases.push({name:pName.value,amount:+pAmt.value});
@@ -218,8 +215,13 @@ let customers=JSON.parse(localStorage.getItem("customers"))||[];
 let purchases=JSON.parse(localStorage.getItem("purchases"))||[];
 
 gList.innerHTML=games.map((g,i)=>
-`<div class="box">${g.name} - ₹${g.price}
-<button class="btn-red small-btn" onclick="deleteGame(${i})">Delete</button></div>`).join("");
+`<div class="box">
+<div>
+<b>${g.name}</b> - ₹${g.price}
+<div class="file-info">File: ${g.file}</div>
+</div>
+<button class="btn-red small-btn" onclick="deleteGame(${i})">Delete</button>
+</div>`).join("");
 
 cList.innerHTML=customers.map(c=>
 `<div class="box">${c.name} - ${c.email}</div>`).join("");
@@ -228,17 +230,15 @@ pList.innerHTML=purchases.map(p=>
 `<div class="box">${p.name} - ₹${p.amount}</div>`).join("");
 }
 
-// DRAW CHART
+// SALES GRAPH
 function drawChart(){
 let purchases=JSON.parse(localStorage.getItem("purchases"))||[];
 let labels=purchases.map(p=>p.name);
 let data=purchases.map(p=>p.amount);
 
-if(window.salesChartInstance){
-window.salesChartInstance.destroy();
-}
+if(window.chartInstance){ window.chartInstance.destroy(); }
 
-window.salesChartInstance=new Chart(document.getElementById("salesChart"),{
+window.chartInstance=new Chart(salesChart,{
 type:"bar",
 data:{
 labels:labels,
