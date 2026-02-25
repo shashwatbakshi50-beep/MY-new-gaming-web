@@ -1,64 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Empire Admin</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body{
+margin:0;
+font-family:Segoe UI;
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+color:white;
+}
+.container{max-width:1000px;margin:auto;padding:40px;}
+.card{
+background:rgba(255,255,255,0.08);
+padding:30px;
+border-radius:15px;
+margin-bottom:20px;
+}
+input{
+width:100%;
+padding:12px;
+margin:10px 0;
+border:none;
+border-radius:8px;
+}
+button{
+padding:10px 15px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+font-weight:bold;
+}
+.btn-primary{background:#f0b90b;color:black;}
+.btn-success{background:#00c853;color:white;}
+.btn-danger{background:#ff1744;color:white;}
+.game-card{
+background:#111c26;
+padding:15px;
+border-radius:10px;
+margin-top:10px;
+}
+img{max-width:120px;margin-top:10px;border-radius:8px;}
+h1{text-align:center;color:#f0b90b;}
+</style>
+</head>
+<body>
+
+<div class="container">
+<h1>👑 Empire Admin Panel</h1>
+
+<div id="loginPage" class="card">
+<h2>Admin Login</h2>
+<input type="email" id="email" placeholder="Email">
+<input type="password" id="password" placeholder="Password">
+<button class="btn-primary" onclick="login()">Login</button>
+</div>
+
+<div id="dashboard" style="display:none;">
+
+<div class="card">
+<h2>Add Game</h2>
+<input type="text" id="gameName" placeholder="Game Name">
+<input type="number" id="gamePrice" placeholder="Price ₹">
+<input type="file" id="gameFile">
+<input type="file" id="gameImage" accept="image/*">
+<button class="btn-success" onclick="addGame()">Add Game</button>
+<button class="btn-danger" onclick="logout()">Logout</button>
+</div>
+
+<div class="card">
+<h2>Game List</h2>
+<div id="gameList"></div>
+</div>
+
+</div>
+</div>
+
 <script>
 
-/* ================= ADMIN SETUP ================= */
+// ===== DEFAULT LOGIN =====
+const ADMIN_EMAIL="shashwatbakshi80@outlook.com";
+const ADMIN_PASSWORD="admin@123";
 
-// Auto create default admin if not exists
-if(!localStorage.getItem("adminUser")){
-    const defaultAdmin = {
-        email: "shashwatbakshi80@outlook.com",
-        password: btoa("admin@123") // simple encoded
-    };
-    localStorage.setItem("adminUser", JSON.stringify(defaultAdmin));
-}
-
-/* ================= LOGIN SYSTEM ================= */
-
+// ===== LOGIN =====
 function login(){
 let email=document.getElementById("email").value;
 let password=document.getElementById("password").value;
 
-let admin = JSON.parse(localStorage.getItem("adminUser"));
-
-if(email === admin.email && btoa(password) === admin.password){
-    localStorage.setItem("adminAuth","true");
-    showDashboard();
+if(email===ADMIN_EMAIL && password===ADMIN_PASSWORD){
+localStorage.setItem("adminAuth","true");
+showDashboard();
 }else{
-    alert("Invalid Email or Password");
+alert("Wrong Login Details");
 }
 }
 
+// ===== SHOW DASHBOARD =====
 function showDashboard(){
 document.getElementById("loginPage").style.display="none";
 document.getElementById("dashboard").style.display="block";
 loadGames();
 }
 
-// Prevent direct access
+// ===== AUTO LOGIN CHECK =====
 window.onload=function(){
 if(localStorage.getItem("adminAuth")==="true"){
 showDashboard();
 }
 }
 
+// ===== LOGOUT =====
 function logout(){
 localStorage.removeItem("adminAuth");
 location.reload();
 }
 
-/* ================= CHANGE PASSWORD ================= */
-
-function changePassword(){
-let newPass = prompt("Enter New Password:");
-if(!newPass) return;
-
-let admin = JSON.parse(localStorage.getItem("adminUser"));
-admin.password = btoa(newPass);
-localStorage.setItem("adminUser", JSON.stringify(admin));
-alert("Password Updated Successfully");
-}
-
-/* ================= ADD GAME ================= */
-
+// ===== ADD GAME =====
 function addGame(){
 
 let name=document.getElementById("gameName").value;
@@ -70,9 +127,6 @@ if(!name || !price){
 alert("Fill all fields");
 return;
 }
-
-let reader=new FileReader();
-let imgReader=new FileReader();
 
 let games=JSON.parse(localStorage.getItem("games"))||[];
 
@@ -86,6 +140,7 @@ imageData:""
 };
 
 if(file){
+let reader=new FileReader();
 reader.onload=function(e){
 newGame.fileData=e.target.result;
 saveImage();
@@ -97,6 +152,7 @@ saveImage();
 
 function saveImage(){
 if(image){
+let imgReader=new FileReader();
 imgReader.onload=function(e){
 newGame.imageData=e.target.result;
 saveGame();
@@ -111,12 +167,11 @@ function saveGame(){
 games.push(newGame);
 localStorage.setItem("games",JSON.stringify(games));
 loadGames();
-alert("Game Added Successfully");
+alert("Game Added");
 }
 }
 
-/* ================= LOAD GAMES ================= */
-
+// ===== LOAD GAMES =====
 function loadGames(){
 let games=JSON.parse(localStorage.getItem("games"))||[];
 let list=document.getElementById("gameList");
@@ -125,40 +180,28 @@ list.innerHTML="";
 games.forEach(g=>{
 list.innerHTML+=`
 <div class="game-card">
-
-<div class="game-info">
-<h3>${g.name}</h3>
-<p>Price: ₹${g.price}</p>
-<p>File: ${g.fileName}</p>
-
+<b>${g.name}</b><br>
+Price: ₹${g.price}<br>
+File: ${g.fileName}<br>
+${g.imageData?`<img src="${g.imageData}">`:""}
+<br>
 <button class="btn-primary" onclick="downloadGame('${g.fileData}','${g.fileName}')">Download</button>
 <button class="btn-danger" onclick="deleteGame(${g.id})">Delete</button>
-</div>
-
-<div>
-${g.imageData?`<img src="${g.imageData}">`:""}
-</div>
-
 </div>
 `;
 });
 }
 
-/* ================= DOWNLOAD ================= */
-
-function downloadGame(data,fileName){
-if(!data){
-alert("No File Uploaded");
-return;
-}
+// ===== DOWNLOAD =====
+function downloadGame(data,name){
+if(!data){alert("No file");return;}
 let a=document.createElement("a");
 a.href=data;
-a.download=fileName;
+a.download=name;
 a.click();
 }
 
-/* ================= DELETE ================= */
-
+// ===== DELETE =====
 function deleteGame(id){
 let games=JSON.parse(localStorage.getItem("games"))||[];
 games=games.filter(g=>g.id!==id);
@@ -167,3 +210,6 @@ loadGames();
 }
 
 </script>
+
+</body>
+</html>
