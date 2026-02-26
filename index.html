@@ -3,252 +3,190 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BCE INFINITY | The Global Empire</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>BCE INFINITY | Global Executive</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Inter:wght@300;500;800&display=swap');
+        
         :root {
-            --gold: #D4AF37;
-            --dark-bg: #050A18;
-            --glass: rgba(255, 255, 255, 0.05);
-            --shimmer: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.2), transparent);
+            --gold: #FFD700;
+            --dark: #020617;
+            --accent: #B8860B;
         }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
 
         body {
-            background: var(--dark-bg);
+            background-color: var(--dark);
             color: white;
-            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at top right, #1e1b4b, #020617);
+            min-height: 100vh;
         }
 
-        /* PREMIUM GOLD HEADER */
-        header {
-            padding: 40px 20px;
-            text-align: center;
-            border-bottom: 2px solid var(--gold);
-            background: linear-gradient(to bottom, #0a122a, var(--dark-bg));
+        .gold-text {
+            background: linear-gradient(to right, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: 'Syncopate', sans-serif;
         }
 
-        .logo {
-            font-size: 3rem;
-            font-weight: 900;
-            color: var(--gold);
-            text-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
-            letter-spacing: 5px;
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        /* DASHBOARD STATS */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            padding: 40px;
-            max-width: 1200px;
-            margin: auto;
+        .glass-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 20px rgba(212, 175, 55, 0.2);
         }
 
-        .stat-card {
-            background: var(--glass);
-            border: 1px solid var(--gold);
-            padding: 30px;
-            text-align: center;
-            border-radius: 15px;
+        .glow-btn {
+            background: linear-gradient(45deg, var(--accent), var(--gold));
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
             transition: 0.3s;
         }
 
-        .stat-card:hover { transform: translateY(-10px); box-shadow: 0 0 20px var(--gold); }
-        .stat-card h2 { font-size: 2.5rem; color: var(--gold); margin-bottom: 10px; }
-
-        /* PRODUCT CARDS */
-        .product-section { padding: 50px 20px; max-width: 1200px; margin: auto; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-
-        .card {
-            background: #10182b;
-            border-radius: 20px;
-            overflow: hidden;
-            border: 1px solid #222;
+        .glow-btn:hover {
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.8);
+            transform: scale(1.05);
         }
 
-        .card img { width: 100%; height: 200px; object-fit: cover; }
-        .card-body { padding: 25px; text-align: center; }
-        .card-body h3 { color: var(--gold); margin-bottom: 15px; }
-
-        .btn {
-            background: var(--gold);
-            color: black;
-            padding: 12px 25px;
-            border: none;
-            border-radius: 50px;
-            font-weight: bold;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            transition: 0.3s;
-        }
-
-        .btn:hover { background: #fff; transform: scale(1.05); }
-
-        /* ADMIN PANEL MODAL */
+        /* Admin Panel Styling */
         #admin-panel {
             display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: #0d1526;
-            padding: 30px;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
             border: 2px solid var(--gold);
-            z-index: 1000;
-            width: 90%;
-            max-width: 500px;
-            border-radius: 20px;
-        }
-
-        input {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            background: #1a243a;
-            border: 1px solid #444;
-            color: white;
-            border-radius: 8px;
-        }
-
-        .overlay {
-            display: none;
-            position: fixed;
-            top:0; left:0; width:100%; height:100%;
-            background: rgba(0,0,0,0.8);
-            z-index: 999;
+            box-shadow: 0 0 50px rgba(0,0,0,1);
         }
     </style>
 </head>
-<body>
+<body class="p-4 md:p-8">
 
-<header>
-    <div class="logo">BCE INFINITY</div>
-    <p style="color: #888;">Empowering Seva & Success | Yamuna Nagar</p>
-</header>
+    <nav class="flex justify-between items-center mb-12 max-w-7xl mx-auto">
+        <h1 class="text-2xl md:text-4xl font-bold gold-text">BCE INFINITY</h1>
+        <div class="hidden md:block text-gray-400 text-sm uppercase tracking-widest">Global Assets & Seva</div>
+        <button onclick="openAdmin()" class="opacity-20 hover:opacity-100 transition"><i class="fas fa-user-shield text-gold"></i></button>
+    </nav>
 
-<div class="stats-grid">
-    <div class="stat-card">
-        <h2 id="stat-revenue">0</h2>
-        <p>REVENUE (₹)</p>
-    </div>
-    <div class="stat-card">
-        <h2 id="stat-donations">0</h2>
-        <p>DONATIONS (₹)</p>
-    </div>
-    <div class="stat-card">
-        <h2 id="stat-seva">0</h2>
-        <p>DOGS FED 🐾</p>
-    </div>
-</div>
-
-<div class="product-section">
-    <h2 style="color: var(--gold); margin-bottom: 30px; text-align:center;">GLOBAL SYSTEMS</h2>
-    <div class="grid" id="product-list">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-7xl mx-auto mb-16">
+        <div class="glass-card p-8 rounded-3xl text-center">
+            <p class="text-gray-400 text-xs uppercase mb-2 tracking-tighter">Total Revenue</p>
+            <h2 class="text-4xl font-extrabold gold-text">₹<span id="rev-val">0</span></h2>
         </div>
-</div>
+        <div class="glass-card p-8 rounded-3xl text-center border-blue-500/20">
+            <p class="text-gray-400 text-xs uppercase mb-2">Seva Donations</p>
+            <h2 class="text-4xl font-extrabold text-blue-400">₹<span id="don-val">0</span></h2>
+        </div>
+        <div class="glass-card p-8 rounded-3xl text-center border-green-500/20">
+            <p class="text-gray-400 text-xs uppercase mb-2">Dogs Fed Today</p>
+            <h2 class="text-4xl font-extrabold text-green-400"><span id="seva-val">0</span> 🐾</h2>
+        </div>
+    </div>
 
-<footer style="padding: 50px; text-align: center; border-top: 1px solid #222;">
-    <button onclick="askPassword()" style="background:transparent; border:none; color:#222; cursor:pointer;">Admin Access</button>
-    <p>© 2026 BCE Empire - Harnaksh Special Edition</p>
-</footer>
+    <div class="max-w-7xl mx-auto">
+        <h3 class="text-xl font-bold mb-8 flex items-center gap-3">
+            <span class="h-1 w-12 bg-gold"></span> ACTIVE SYSTEMS
+        </h3>
+        <div id="product-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            </div>
+    </div>
 
-<div class="overlay" id="overlay"></div>
-<div id="admin-panel">
-    <h2 style="color:var(--gold)">BCE ADMIN CONTROL</h2>
-    <input type="text" id="upi-input" placeholder="Update UPI ID">
-    <input type="number" id="revenue-input" placeholder="Add Revenue Amount">
-    <input type="number" id="seva-input" placeholder="Update Seva Count">
-    <input type="text" id="photo-input" placeholder="Paste New Photo URL">
-    
-    <button class="btn" onclick="saveAdminData()">SAVE CHANGES</button>
-    <button class="btn" onclick="closeAdmin()" style="background:#ff4d4d; margin-top:10px;">CLOSE</button>
-    <button class="btn" onclick="resetAllData()" style="background:gray; margin-top:10px; font-size:10px;">RESET BALANCE</button>
-</div>
-
-
-
-<script>
-    // --- BCE DATABASE ---
-    let bceDB = JSON.parse(localStorage.getItem('bce_db')) || {
-        revenue: 9800,
-        donations: 1500,
-        seva: 124,
-        upi: "harnaksh@paytm",
-        systems: [ 
-    };
-
-    function init() {
-        document.getElementById('stat-revenue').innerText = bceDB.revenue;
-        document.getElementById('stat-donations').innerText = bceDB.donations;
-        document.getElementById('stat-seva').innerText = bceDB.seva;
-        renderProducts();
-    }
-
-    function renderProducts() {
-        const list = document.getElementById('product-list');
-        list.innerHTML = bceDB.systems.map(s => `
-            <div class="card">
-                <img src="${s.img}" alt="BCE">
-                <div class="card-body">
-                    <h3>${s.name}</h3>
-                    <p style="color:white; font-size: 20px; margin-bottom:15px;">₹${s.price}</p>
-                    <button class="btn" onclick="handlePayment('${s.price}')">BUY / DONATE NOW</button>
+    <div id="admin-panel" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md p-8 rounded-3xl z-50">
+        <h2 class="text-2xl font-bold gold-text mb-6">CEO CONTROL CENTER</h2>
+        <div class="space-y-4">
+            <div>
+                <label class="text-xs text-gray-400">Update UPI ID</label>
+                <input id="in-upi" type="text" class="w-full bg-white/5 border border-white/10 p-3 rounded-xl mt-1 focus:border-gold outline-none">
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="text-xs text-gray-400">Add Revenue</label>
+                    <input id="in-rev" type="number" class="w-full bg-white/5 border border-white/10 p-3 rounded-xl mt-1 outline-none">
+                </div>
+                <div>
+                    <label class="text-xs text-gray-400">Seva Count</label>
+                    <input id="in-seva" type="number" class="w-full bg-white/5 border border-white/10 p-3 rounded-xl mt-1 outline-none">
                 </div>
             </div>
-        `).join('');
-    }
+            <div>
+                <label class="text-xs text-gray-400">Seva Photo Link (URL)</label>
+                <input id="in-pic" type="text" class="w-full bg-white/5 border border-white/10 p-3 rounded-xl mt-1 outline-none">
+            </div>
+            <button onclick="updateSystem()" class="w-full glow-btn p-4 rounded-xl text-black font-bold uppercase mt-4">Save Configuration</button>
+            <button onclick="closeAdmin()" class="w-full text-gray-500 text-sm mt-2">Exit Admin</button>
+        </div>
+    </div>
 
-    function handlePayment(amount) {
-        const upiLink = upi://pay?pa=${bceDB.upi}&am=${amount}&cu=INR&tn=BCE_EMPIRE;
-        window.location.href = upiLink;
-        alert("Bhai, Payment Request Sent to your Paytm/UPI App!");
-    }
+    <script>
+        let db = JSON.parse(localStorage.getItem('bce_ultra')) || {
+            revenue: 25400,
+            donations: 4200,
+            seva: 84,
+            upi: "harnaksh@paytm",
+            photo: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee",
+            systems: [
+                { name: "Infinity Al-Bot", price: 85, icon: "fa-robot" },
+                { name: "Gold Sniper v12", price: 150, icon: "fa-crosshairs" },
+                { name: "Seva Support", price: 50, isSeva: true }
+            ]
+        };
 
-    // --- ADMIN LOGIC ---
-    function askPassword() {
-        let pass = prompt("Enter CEO Password:");
-        if (pass === "bce700") {
-            document.getElementById('admin-panel').style.display = 'block';
-            document.getElementById('overlay').style.display = 'block';
-        } else { alert("Hat! Chor kahin ka."); }
-    }
+        function render() {
+            document.getElementById('rev-val').innerText = db.revenue.toLocaleString();
+            document.getElementById('don-val').innerText = db.donations.toLocaleString();
+            document.getElementById('seva-val').innerText = db.seva;
 
-    function saveAdminData() {
-        const rev = document.getElementById('revenue-input').value;
-        const sev = document.getElementById('seva-input').value;
-        const upi = document.getElementById('upi-input').value;
-        const pic = document.getElementById('photo-input').value;
+            const container = document.getElementById('product-container');
+            container.innerHTML = db.systems.map(s => `
+                <div class="glass-card rounded-3xl overflow-hidden">
+                    <div class="h-48 bg-gray-900 flex items-center justify-center relative">
+                        ${s.isSeva ? <img src="${db.photo}" class="w-full h-full object-cover opacity-60"> : <i class="fas ${s.icon} text-6xl text-gold/20"></i>}
+                        <div class="absolute bottom-4 left-4 bg-black/60 backdrop-blur px-3 py-1 rounded-full text-xs text-gold border border-gold/30">PREMIUM</div>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="text-xl font-bold mb-2 uppercase">${s.name}</h4>
+                        <div class="flex justify-between items-center mt-6">
+                            <span class="text-2xl font-black italic">₹${s.price}</span>
+                            <button onclick="pay('${s.price}')" class="glow-btn px-6 py-2 rounded-full text-black font-bold text-sm">ACTIVATE</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
 
-        if(rev) bceDB.revenue += parseInt(rev);
-        if(sev) bceDB.seva = parseInt(sev);
-        if(upi) bceDB.upi = upi;
-        if(pic) bceDB.systems[2].img = pic; // Updates the 3rd card (Seva card)
+        function pay(amt) {
+            window.location.href = upi://pay?pa=${db.upi}&am=${amt}&cu=INR&tn=BCE_INFINITY;
+            alert("Bhai, Payment Interface opening...");
+        }
 
-        localStorage.setItem('bce_db', JSON.stringify(bceDB));
-        location.reload();
-    }
+        function openAdmin() {
+            if(prompt("CEO PASSWORD:") === "bce700") {
+                document.getElementById('admin-panel').style.display = 'block';
+            }
+        }
 
-    function resetAllData() {
-        if(confirm("Bhai, sach mein balance zero karna hai?")) {
-            bceDB.revenue = 0;
-            bceDB.donations = 0;
-            localStorage.setItem('bce_db', JSON.stringify(bceDB));
+        function updateSystem() {
+            const r = document.getElementById('in-rev').value;
+            const s = document.getElementById('in-seva').value;
+            const u = document.getElementById('in-upi').value;
+            const p = document.getElementById('in-pic').value;
+
+            if(r) db.revenue += parseInt(r);
+            if(s) db.seva = parseInt(s);
+            if(u) db.upi = u;
+            if(p) db.photo = p;
+
+            localStorage.setItem('bce_ultra', JSON.stringify(db));
             location.reload();
         }
-    }
 
-    function closeAdmin() {
-        document.getElementById('admin-panel').style.display = 'none';
-        document.getElementById('overlay').style.display = 'none';
-    }
+        function closeAdmin() { document.getElementById('admin-panel').style.display = 'none'; }
 
-    init();
-</script>
-
+        render();
+    </script>
 </body>
 </html>
