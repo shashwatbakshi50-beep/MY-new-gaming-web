@@ -1,211 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BCE INFINITY | Global Executive</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>BCE Infinity</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Inter:wght@300;500;800&display=swap');
-        
-        :root {
-            --gold: #FFD700;
-            --dark: #020617;
-            --accent: #B8860B;
-        }
-
-        body {
-            background-color: var(--dark);
-            color: white;
-            font-family: 'Inter', sans-serif;
-            …
-[3:04 pm, 26/2/2026] shashwatbakshi50: .<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BCE INFINITY | Global Empire HQ</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Inter:wght@300;400;600;800&display=swap');
-        :root { --gold: #D4AF37; --dark: #050A18; }
-        body { background: var(--dark); color: white; font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
-        .gold-text { background: linear-gradient(to right, #BF953F, #FCF6BA, #AA771C); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-family: 'Syncopate', sans-serif; }
-        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(212, 175, 55, 0.1); }
-        .admin-btn { position: fixed; bottom: 20px; right: 20px; opacity: 0.3; transition: 0.3s; z-index: 100; }
-        .admin-btn:hover { opacity: 1; }
-        .section-padding { padding: 100px 20px; }
+        body { background: #0a192f; color: white; font-family: sans-serif; text-align: center; padding: 50px; }
+        .stats { display: flex; justify-content: center; gap: 20px; margin-top: 30px; }
+        .card { background: #112240; padding: 20px; border-radius: 15px; width: 150px; border: 1px solid #ffcf70; }
+        h1 { color: #ffcf70; }
     </style>
 </head>
 <body>
-
-    <nav class="fixed w-full z-50 glass border-b border-gold/10 px-8 py-4 flex justify-between items-center">
-        <h1 class="gold-text text-xl">BCE INFINITY</h1>
-        <div class="hidden md:flex gap-8 text-xs font-bold tracking-widest uppercase">
-            <a href="#home" class="hover:text-gold">Home</a>
-            <a href="#mission" class="hover:text-gold">Mission</a>
-            <a href="#systems" class="hover:text-gold">Systems</a>
-            <a href="#seva" class="hover:text-gold">Seva</a>
-        </div>
-    </nav>
-
-    <section id="home" class="h-screen flex flex-col justify-center items-center text-center px-4 pt-20">
-        <div class="inline-block px-4 py-1 border border-gold/30 rounded-full text-gold text-[10px] mb-6 tracking-[5px] uppercase">Yamuna Nagar HQ</div>
-        <h1 class="text-5xl md:text-8xl font-black mb-6 uppercase tracking-tighter">The Future of <br><span class="gold-text">Wealth & Seva</span></h1>
-        <p class="max-w-2xl text-gray-400 text-lg mb-10">Premium trading algorithms designed for global dominance, fueled by the spirit of selfless service.</p>
-        <div class="flex gap-4">
-            <a href="#systems" class="bg-gold text-black px-8 py-4 rounded-full font-bold uppercase text-sm hover:scale-105 transition">View Systems</a>
-            <a href="#mission" class="border border-white/20 px-8 py-4 rounded-full font-bold uppercase text-sm hover:bg-white/5 transition">Our Vision</a>
-        </div>
-    </section>
-
-    <section class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 px-4">
-        <div class="glass p-10 rounded-[40px] text-center">
-            <h3 class="text-gray-500 uppercase text-xs mb-2 tracking-widest">Total Revenue</h3>
-            <span class="text-4xl font-black gold-text">₹<span id="rev-val">0</span></span>
-        </div>
-        <div class="glass p-10 rounded-[40px] text-center border-blue-500/20">
-            <h3 class="text-gray-500 uppercase text-xs mb-2 tracking-widest">Seva Goal</h3>
-            <span class="text-4xl font-black text-blue-400">₹<span id="don-val">0</span></span>
-        </div>
-        <div class="glass p-10 rounded-[40px] text-center border-green-500/20">
-            <h3 class="text-gray-500 uppercase text-xs mb-2 tracking-widest">Dogs Nourished</h3>
-            <span class="text-4xl font-black text-green-400"><span id="seva-val">0</span> 🐾</span>
-        </div>
-    </section>
-
-    <section id="mission" class="section-padding max-w-7xl mx-auto">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
-            <div>
-                <h2 class="gold-text text-4xl font-bold mb-8 uppercase">Our Foundation</h2>
-                <div class="space-y-8">
-                    <div>
-                        <h4 class="text-white font-bold mb-2">MISSION</h4>
-                        <p class="text-gray-500 leading-relaxed">Technology aur Humanity ka ek aisa sangam banana jahan High-Performance Systems se log financial freedom pa sakein.</p>
-                    </div>
-                    <div>
-                        <h4 class="text-white font-bold mb-2">VISION</h4>
-                        <p class="text-gray-500 leading-relaxed">2030 tak BCE Infinity ko duniya ka sabse bada "Profit with Purpose" network banana aur har roz 10,000+ dogs ki seva karna.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="glass p-2 rounded-[50px] rotate-3 hover:rotate-0 transition duration-500">
-                <img src="https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&w=800" class="rounded-[48px] grayscale hover:grayscale-0 transition duration-700">
-            </div>
-        </div>
-    </section>
-
-    <section id="systems" class="section-padding bg-black/30">
-        <div class="max-w-7xl mx-auto text-center mb-16">
-            <h2 class="gold-text text-4xl font-bold uppercase mb-4">Global Systems</h2>
-            <p class="text-gray-500">Choose your weapon for the financial markets.</p>
-        </div>
-        <div id="product-list" class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 px-4">
-            </div>
-    </section>
-
-    <section id="seva" class="section-padding max-w-7xl mx-auto text-center">
-        <h2 class="text-4xl font-bold mb-12">SEVA IN ACTION 🐾</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <img id="main-seva-img" src="https://images.unsplash.com/photo-1541591494577-4340c7b04683" class="w-full h-[400px] object-cover rounded-3xl border border-gold/20">
-            <div class="glass p-12 flex flex-col justify-center rounded-3xl">
-                <h3 class="text-2xl font-bold mb-4 gold-text">Why We Feed?</h3>
-                <p class="text-gray-400 italic">"Bezubaan jaanwaro ki seva hi asli kamai hai."</p>
-                <button onclick="pay('50')" class="mt-8 bg-white text-black font-bold py-3 rounded-full hover:bg-gold transition">Donate ₹50 for a Meal</button>
-            </div>
-        </div>
-    </section>
-
-    <footer class="py-20 border-t border-white/5 text-center">
-        <p class="text-gray-600 text-xs tracking-widest uppercase mb-4">© 2026 BCE INFINITY | Harnaksh Special Edition</p>
-        <p class="text-gray-800 text-[10px]">Yamuna Nagar | Haryana | India</p>
-    </footer>
-
-    <button onclick="openAdmin()" class="admin-btn text-white/20 hover:text-gold"><i class="fas fa-shield-halved text-2xl"></i></button>
-
-    <div id="admin-panel" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-md glass p-10 rounded-[40px] hidden z-[100]">
-        <h2 class="gold-text text-xl mb-6">CEO CONTROL</h2>
-        <input id="in-upi" type="text" placeholder="UPI ID" class="w-full bg-white/5 p-4 rounded-2xl mb-4 border border-white/10 outline-none">
-        <input id="in-rev" type="number" placeholder="Add Revenue (₹)" class="w-full bg-white/5 p-4 rounded-2xl mb-4 border border-white/10">
-        <input id="in-seva" type="number" placeholder="Dogs Count" class="w-full bg-white/5 p-4 rounded-2xl mb-4 border border-white/10">
-        <input id="in-pic" type="text" placeholder="Seva Image URL" class="w-full bg-white/5 p-4 rounded-2xl mb-6 border border-white/10">
-        <button onclick="saveChanges()" class="w-full bg-gold text-black font-bold py-4 rounded-2xl uppercase">Save Global Update</button>
-        <button onclick="closeAdmin()" class="w-full text-gray-500 mt-4 text-xs">Close Panel</button>
+    <h1>THE FUTURE OF WEALTH & SEVA</h1>
+    <div class="stats">
+        <div class="card"><h3>Revenue</h3><p id="rev">₹0</p></div>
+        <div class="card"><h3>Goal</h3><p id="goal">₹0</p></div>
+        <div class="card"><h3>Dogs</h3><p id="dogs">0</p></div>
     </div>
 
-    <script>
-        let db = JSON.parse(localStorage.getItem('bce_v20')) || {
-            revenue: 35000, donations: 5000, seva: 156, upi: "harnaksh@paytm",
-            photo: "https://images.unsplash.com/photo-1541591494577-4340c7b04683",
-            systems: [
-                { name: "Infinity Bot v1", price: 85, icon: "fa-bolt" },
-                { name: "Gold Sniper Pro", price: 150, icon: "fa-crosshairs" },
-                { name: "Asset Manager", price: 299, icon: "fa-gem" }
-            ]
-        };
-
-        function render() {
-            document.getElementById('rev-val').innerText = db.revenue.toLocaleString();
-            document.getElementById('don-val').innerText = db.donations.toLocaleString();
-            document.getElementById('seva-val').innerText = db.seva;
-            document.getElementById('main-seva-img').src = db.photo;
-
-            const list = document.getElementById('product-list');
-            list.innerHTML = db.systems.map(s => `
-                <div class="glass p-8 rounded-[40px] hover:scale-105 transition">
-                    <i class="fas ${s.icon} text-4xl text-gold/30 mb-6"></i>
-                    <h4 class="text-xl font-bold mb-4">${s.name}</h4>
-                    <p class="text-3xl font-black mb-8">₹${s.price}</p>
-                    <button onclick="pay('${s.price}')" class="w-full py-3 border border-gold/30 rounded-full hover:bg-gold hover:text-black font-bold transition">ACTIVATE</button>
-                </div>
-            `).join('');
-        }
-
-        function pay(amt) {
-            window.location.href = upi://pay?pa=${db.upi}&am=${amt}&cu=INR&tn=BCE_EMPIRE;
-        }
-
-        function openAdmin() { if(prompt("CEO PASSWORD:") === "bce700") document.getElementById('admin-panel').style.display='block'; }
-        function closeAdmin() { document.getElementById('admin-panel').style.display='none'; }
-
-        function saveChanges() {
-            const r = document.getElementById('in-rev').value;
-            const s = document.getElementById('in-seva').value;
-            const u = document.getElementById('in-upi').value;
-            const p = document.getElementById('in-pic').value;
-            if(r) db.revenue += parseInt(r);
-            if(s) db.seva = parseInt(s);
-            if(u) db.upi = u;
-            if(p) db.photo = p;
-            localStorage.setItem('bce_v20', JSON.stringify(db));
-            location.reload();
-        }
-        render();
-    </script>
     <script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyDxPQIDogthqjT63RJ6CxBPk-g9lJWZ29E",
-    authDomain: "bakshi-the-ceo-web.firebaseapp.com",
-    projectId: "bakshi-the-ceo-web",
-    storageBucket: "bakshi-the-ceo-web.firebasestorage.app",
-    messagingSenderId: "984702926499",
-    appId: "1:984702926499:web:2c9ea195a5102430044916",
-    measurementId: "G-89DSG3RHTK"
-  };
+        // Yahan apni keys daalo (Firebase Console se copy karke)
+        const firebaseConfig = {
+          apiKey: "YOUR_API_KEY",
+          authDomain: "bakshi-the-ceo-web.firebaseapp.com",
+          projectId: "bakshi-the-ceo-web",
+          storageBucket: "bakshi-the-ceo-web.firebasestorage.app",
+          appId: "YOUR_APP_ID"
+        };
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
 
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-</script>
+        async function load() {
+            const snap = await getDoc(doc(db, "stats", "liveStats"));
+            if (snap.exists()) {
+                const d = snap.data();
+                document.getElementById('rev').innerText = "₹" + d.revenue;
+                document.getElementById('goal').innerText = "₹" + d.goal;
+                document.getElementById('dogs').innerText = d.dogs;
+            }
+        }
+        load();
+    </script>
 </body>
 </html>
