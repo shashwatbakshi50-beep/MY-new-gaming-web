@@ -1,47 +1,96 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <title>Admin - BCE Infinity</title>
-    <style>
-        body { background: #0a192f; color: white; text-align: center; padding: 50px; font-family: sans-serif; }
-        input { padding: 10px; margin: 10px; border-radius: 5px; border: none; }
-        button { background: #ffcf70; padding: 10px 25px; border: none; cursor: pointer; font-weight: bold; border-radius: 5px; }
-    </style>
+<title>Admin Panel</title>
+<style>
+body{font-family:Arial;background:#000;color:white;text-align:center}
+.card{background:#222;padding:15px;margin:10px;border-radius:10px}
+button{padding:8px 15px;margin:5px;background:red;color:white;border:none;border-radius:5px;cursor:pointer}
+input{padding:8px;margin:5px;border-radius:5px;border:none}
+</style>
 </head>
 <body>
-    <h2>Admin Control Panel</h2>
-    <input type="number" id="revIn" placeholder="Revenue Amount">
-    <input type="number" id="goalIn" placeholder="Goal Amount">
-    <input type="number" id="dogIn" placeholder="Dogs Number">
-    <br>
-    <button id="upBtn">Update Empire</button>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+<h1>🔐 Admin Login</h1>
 
-        // Yahan WAHI Firebase keys daalein jo index.html mein daali thi
-        const firebaseConfig = {
-          apiKey: "YOUR_API_KEY",
-          authDomain: "bakshi-the-ceo-web.firebaseapp.com",
-          projectId: "bakshi-the-ceo-web",
-          storageBucket: "bakshi-the-ceo-web.firebasestorage.app",
-          appId: "YOUR_APP_ID"
-        };
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
+<div id="loginBox">
+<input id="adminEmail" placeholder="Admin Email">
+<input id="adminPass" type="password" placeholder="Password">
+<button onclick="adminLogin()">Login</button>
+</div>
 
-        document.getElementById('upBtn').onclick = async () => {
-            const rev = document.getElementById('revIn').value;
-            const goal = document.getElementById('goalIn').value;
-            const dogs = document.getElementById('dogIn').value;
+<div id="panel" style="display:none;">
 
-            await setDoc(doc(db, "stats", "liveStats"), {
-                revenue: rev, goal: goal, dogs: dogs
-            });
-            alert("Empire Stats Updated Successfully!");
-        };
-    </script>
+<h2>Admin Dashboard</h2>
+
+<h3>Add Game</h3>
+<input id="gname" placeholder="Game Name">
+<input id="gprice" placeholder="Price">
+<input id="gfile" placeholder="Game File URL">
+<button onclick="addGame()">Add Game</button>
+
+<h3>Games List</h3>
+<div id="games"></div>
+
+<h3>Total Sales: ₹<span id="sales">0</span></h3>
+<h3>Total Customers: <span id="customers">0</span></h3>
+
+</div>
+
+<script>
+
+const ADMIN_EMAIL="admin@gmail.com";
+const ADMIN_PASS="admin123";
+
+function adminLogin(){
+ if(adminEmail.value===ADMIN_EMAIL && adminPass.value===ADMIN_PASS){
+   loginBox.style.display="none";
+   panel.style.display="block";
+   load();
+ }else{
+   alert("Wrong Admin Details");
+ }
+}
+
+function load(){
+ loadGames();
+ sales.innerText=localStorage.sales||0;
+ customers.innerText=JSON.parse(localStorage.users||"[]").length;
+}
+
+function addGame(){
+ let games = JSON.parse(localStorage.games||"[]");
+ games.push({
+   id:Date.now(),
+   name:gname.value,
+   price:parseInt(gprice.value),
+   file:gfile.value
+ });
+ localStorage.games = JSON.stringify(games);
+ loadGames();
+}
+
+function loadGames(){
+ let games = JSON.parse(localStorage.games||"[]");
+ let html="";
+ games.forEach(g=>{
+   html+=`
+   <div class="card">
+   <h4>${g.name} - ₹${g.price}</h4>
+   <button onclick="deleteGame(${g.id})">Delete</button>
+   </div>`;
+ });
+ document.getElementById("games").innerHTML=html;
+}
+
+function deleteGame(id){
+ let games = JSON.parse(localStorage.games||"[]");
+ games = games.filter(g=>g.id!=id);
+ localStorage.games = JSON.stringify(games);
+ loadGames();
+}
+
+</script>
+
 </body>
 </html>
-
