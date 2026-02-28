@@ -144,7 +144,6 @@
     </div>
 </section>
 
-<script>
     function animateValue(id, end, duration) {
         let current = 0;
         let stepTime = Math.abs(Math.floor(duration / end));
@@ -158,29 +157,16 @@
     animateValue("players", 500, 20);
     animateValue("downloads", 1200, 20);
     animateValue("community", 800, 20);
-<script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
-
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyB9EMA70-el714GD9X-WaE5tm_mPAzdk9Q",
-    authDomain: "bakshi-the-ceo-webs-9f67e.firebaseapp.com",
-    projectId: "bakshi-the-ceo-webs-9f67e",
-    storageBucket: "bakshi-the-ceo-webs-9f67e.firebasestorage.app",
-    messagingSenderId: "872138894613",
-    appId: "1:872138894613:web:2f49f3571d5356fc208d1c",
-    measurementId: "G-4SDNE6NQ59"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
+    <h3>Stats Update Karein:</h3>
+<input type="number" id="input-players" placeholder="Naye Players count">
+<input type="number" id="input-games" placeholder="Naye Games count">
+<input type="number" id="input-revenue" placeholder="Naya Revenue">
+<button onclick="saveData()">Save Changes</button>
+    <h3>Stats Update Karein:</h3>
+<input type="number" id="input-players" placeholder="Naye Players count">
+<input type="number" id="input-games" placeholder="Naye Games count">
+<input type="number" id="input-revenue" placeholder="Naya Revenue">
+<button onclick="saveData()">Save Changes</button>
 </script>
-
 </body>
 </html>
