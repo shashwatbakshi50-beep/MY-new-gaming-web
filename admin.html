@@ -1,72 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <title>Royal Dashboard</title>
-</head>
-<body class="bg-slate-950 text-white min-h-screen p-8">
+<html>
+<body>
+    <h2>Admin Panel - BCE Empire</h2>
+    <input type="number" id="revIn" placeholder="Revenue">
+    <input type="number" id="goalIn" placeholder="Goal">
+    <input type="number" id="dogIn" placeholder="Dogs">
+    <button id="upBtn">Update</button>
 
-    <h1 class="text-3xl font-bold text-yellow-500 mb-8">Admin Portal: Control Everything</h1>
-
-    <section class="bg-slate-900 p-6 rounded-xl border border-yellow-700 mb-10">
-        <h2 class="text-xl font-bold mb-4">Manage Games</h2>
-        <div class="flex gap-4 mb-6">
-            <input type="text" placeholder="Game Name" class="bg-slate-800 p-2 rounded border border-slate-700 w-full">
-            <button class="bg-yellow-500 text-black px-6 py-2 rounded font-bold hover:bg-yellow-400">Add New Game</button>
-        </div>
-        <table class="w-full text-left">
-            <tr class="border-b border-slate-700 text-slate-400">
-                <th class="p-2">Game Name</th>
-                <th class="p-2">Price</th>
-                <th class="p-2">Actions</th>
-            </tr>
-            <tr class="border-b border-slate-700">
-                <td class="p-2">Forex Trading Pro</td>
-                <td class="p-2">₹199</td>
-                <td class="p-2"><button class="text-red-500 hover:text-red-400">Delete</button></td>
-            </tr>
-        </table>
-    </section>
-
-    <section class="bg-slate-900 p-6 rounded-xl border border-slate-700">
-        <h2 class="text-xl font-bold mb-4">Recent Payments</h2>
-        <table class="w-full text-left">
-            <tr class="border-b border-slate-700 text-slate-400">
-                <th class="p-2">User Name</th>
-                <th class="p-2">Game</th>
-                <th class="p-2">Payment ID</th>
-                <th class="p-2">Status</th>
-            </tr>
-            <tr class="border-b border-slate-700">
-                <td class="p-2">Rahul</td>
-                <td class="p-2">Forex Pro</td>
-                <td class="p-2">PAY_123456789</td>
-                <td class="p-2 text-green-500">Completed</td>
-            </tr>
-        </table>
-    </section>
     <script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyDxPQIDogthqjT63RJ6CxBPk-g9lJWZ29E",
-    authDomain: "bakshi-the-ceo-web.firebaseapp.com",
-    projectId: "bakshi-the-ceo-web",
-    storageBucket: "bakshi-the-ceo-web.firebasestorage.app",
-    messagingSenderId: "984702926499",
-    appId: "1:984702926499:web:2c9ea195a5102430044916",
-    measurementId: "G-89DSG3RHTK"
-  };
+        // Yahan WAHI keys daalo jo index.html mein daali thi
+        const firebaseConfig = {
+          apiKey: "YOUR_API_KEY",
+          authDomain: "bakshi-the-ceo-web.firebaseapp.com",
+          projectId: "bakshi-the-ceo-web",
+          storageBucket: "bakshi-the-ceo-web.firebasestorage.app",
+          appId: "YOUR_APP_ID"
+        };
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
 
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-</script>
+        document.getElementById('upBtn').onclick = async () => {
+            await setDoc(doc(db, "stats", "liveStats"), {
+                revenue: document.getElementById('revIn').value,
+                goal: document.getElementById('goalIn').value,
+                dogs: document.getElementById('dogIn').value
+            });
+            alert("Empire Stats Updated!");
+        };
+    </script>
 </body>
 </html>
