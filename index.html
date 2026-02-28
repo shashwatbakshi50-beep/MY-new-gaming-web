@@ -1,27 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>BCE Infinity</title>
+    <meta charset="UTF-8">
+    <title>BCE Infinity | Future of Wealth</title>
     <style>
-        body { background: #0a192f; color: white; font-family: sans-serif; text-align: center; padding: 50px; }
-        .stats { display: flex; justify-content: center; gap: 20px; margin-top: 30px; }
-        .card { background: #112240; padding: 20px; border-radius: 15px; width: 150px; border: 1px solid #ffcf70; }
-        h1 { color: #ffcf70; }
+        body { background: #0a192f; color: #ffffff; font-family: 'Segoe UI', sans-serif; text-align: center; margin: 0; padding: 50px; }
+        h1 { color: #ffcf70; font-size: 2.5rem; }
+        .stats-container { display: flex; justify-content: center; gap: 30px; margin-top: 50px; }
+        .card { background: #112240; padding: 30px; border-radius: 15px; width: 200px; border: 1px solid #ffcf70; }
+        .value { font-size: 1.5rem; font-weight: bold; color: #ffcf70; margin-top: 10px; }
     </style>
 </head>
 <body>
     <h1>THE FUTURE OF WEALTH & SEVA</h1>
-    <div class="stats">
-        <div class="card"><h3>Revenue</h3><p id="rev">₹0</p></div>
-        <div class="card"><h3>Goal</h3><p id="goal">₹0</p></div>
-        <div class="card"><h3>Dogs</h3><p id="dogs">0</p></div>
+    <div class="stats-container">
+        <div class="card"><h3>Total Revenue</h3><p id="rev" class="value">₹0</p></div>
+        <div class="card"><h3>Seva Goal</h3><p id="goal" class="value">₹0</p></div>
+        <div class="card"><h3>Dogs Nourished</h3><p id="dogs" class="value">0</p></div>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
         import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
-        // Yahan apni keys daalo (Firebase Console se copy karke)
+        // Yahan apni Firebase Config keys daalein
         const firebaseConfig = {
           apiKey: "YOUR_API_KEY",
           authDomain: "bakshi-the-ceo-web.firebaseapp.com",
@@ -29,19 +31,22 @@
           storageBucket: "bakshi-the-ceo-web.firebasestorage.app",
           appId: "YOUR_APP_ID"
         };
+
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        async function load() {
-            const snap = await getDoc(doc(db, "stats", "liveStats"));
-            if (snap.exists()) {
-                const d = snap.data();
-                document.getElementById('rev').innerText = "₹" + d.revenue;
-                document.getElementById('goal').innerText = "₹" + d.goal;
-                document.getElementById('dogs').innerText = d.dogs;
-            }
+        async function loadStats() {
+            try {
+                const docSnap = await getDoc(doc(db, "stats", "liveStats"));
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    document.getElementById('rev').innerText = "₹" + data.revenue;
+                    document.getElementById('goal').innerText = "₹" + data.goal;
+                    document.getElementById('dogs').innerText = data.dogs;
+                }
+            } catch (e) { console.error("Error loading stats", e); }
         }
-        load();
+        loadStats();
     </script>
 </body>
 </html>
