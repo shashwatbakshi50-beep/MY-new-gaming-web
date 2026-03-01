@@ -2,6 +2,12 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+
+<!-- Basic Security Headers -->
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="X-Frame-Options" content="DENY">
+<meta http-equiv="X-XSS-Protection" content="1; mode=block">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Shashwat Gaming Studios</title>
 
@@ -176,12 +182,13 @@ footer{
         <a href="#services">Services</a>
         <a href="#games">Games</a>
         <a href="#donation">Donation</a>
+        <a href="#rules">Rules</a>
     </nav>
 </header>
 
 <div class="hero">
     <h1>Big Dreams. Big Empire.</h1>
-    <p>We build next-generation games, provide professional hosting, and empower creators with custom domain solutions.</p>
+    <p>We build next-generation games, our ceeo is in class 9th and want to fufill his mothers every dream</p>
 </div>
 
 <section id="services">
@@ -196,8 +203,8 @@ footer{
             <p>High performance servers optimized for gaming platforms.</p>
         </div>
         <div class="card">
-            <h3>about our founder</h3>
-            <p>our ceo is a 9th class student they want to fullfill his mothers every drem.</p>
+            <h3>Custom Domain Setup</h3>
+            <p>Premium branding and domain solutions for gaming companies.</p>
         </div>
     </div>
 </section>
@@ -215,6 +222,18 @@ footer{
         <button class="btn" onclick="openLogin()">Donate to Company</button>
         <button class="btn" onclick="openLogin()">Donate for Dogs 🐶</button>
         <button class="btn" onclick="openLogin()">Proceed to Payment</button>
+    </div>
+</section>
+
+<!-- RULES SECTION ADDED -->
+<section id="rules">
+    <h2 class="section-title">Rules & Regulations</h2>
+    <div class="card">
+        <p>• Unauthorized system access is strictly prohibited.</p>
+        <p>• Attempting to modify or exploit our platform will lead to permanent bans.</p>
+        <p>• Server activity is monitored.</p>
+        <p>• All transactions are logged for security purposes.</p>
+        <p>• Legal action will be taken against cyber attacks.</p>
     </div>
 </section>
 
@@ -240,6 +259,17 @@ function openLogin(){
 
 function closeLogin(){
     document.getElementById("loginModal").style.display="none";
+}
+
+/* Basic Frontend Protection */
+document.addEventListener("contextmenu", function(e){
+    e.preventDefault();
+});
+
+document.onkeydown = function(e) {
+    if (e.keyCode == 123) { return false; } // F12 block
+    if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) { return false; }
+    if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { return false; }
 }
 </script>
 
