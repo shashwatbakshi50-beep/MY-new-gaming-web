@@ -5,306 +5,242 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Shashwat Gaming Studios</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
 <style>
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Segoe UI',sans-serif;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
 }
 
 body{
-background:linear-gradient(135deg,#0f172a,#020617);
-color:#e2e8f0;
+    background:#0f172a;
+    color:#e2e8f0;
 }
 
+/* NAVBAR */
 header{
-background:#111827;
-padding:20px 40px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-border-bottom:2px solid #22d3ee;
+    background:#1e293b;
+    padding:20px 8%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    position:fixed;
+    width:100%;
+    top:0;
+    z-index:1000;
 }
 
-.logo{
-font-size:22px;
-font-weight:bold;
-color:#22d3ee;
+header h2{
+    color:#22d3ee;
 }
 
-nav button{
-background:none;
-border:none;
-color:#cbd5e1;
-margin-left:20px;
-font-weight:bold;
-cursor:pointer;
-transition:0.3s;
+nav a{
+    color:#cbd5e1;
+    margin-left:20px;
+    text-decoration:none;
+    font-weight:600;
 }
 
-nav button:hover{
-color:#22d3ee;
+nav a:hover{
+    color:#22d3ee;
 }
 
+/* HERO */
 .hero{
-text-align:center;
-padding:100px 20px;
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:0 20px;
 }
 
 .hero h1{
-font-size:40px;
-color:#22d3ee;
+    font-size:3rem;
+    color:#22d3ee;
 }
 
 .hero p{
-margin-top:20px;
-font-size:18px;
-color:#94a3b8;
-}
-
-.section{
-padding:80px 20px;
-display:none;
-text-align:center;
-}
-
-.active{
-display:block;
-}
-
-.box{
-background:#111827;
-padding:30px;
-max-width:450px;
-margin:20px auto;
-border-radius:15px;
-box-shadow:0 0 25px rgba(34,211,238,0.2);
-}
-
-input{
-width:100%;
-padding:12px;
-margin:10px 0;
-border-radius:8px;
-border:1px solid #334155;
-background:#0f172a;
-color:white;
+    margin-top:15px;
+    max-width:600px;
+    opacity:0.8;
 }
 
 .btn{
-width:100%;
-padding:12px;
-background:#22d3ee;
-color:#0f172a;
-border:none;
-border-radius:8px;
-font-weight:bold;
-cursor:pointer;
-transition:0.3s;
+    background:#22d3ee;
+    color:#0f172a;
+    padding:12px 30px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:600;
+    margin-top:20px;
+    transition:0.3s;
 }
 
 .btn:hover{
-background:#06b6d4;
-transform:scale(1.05);
+    background:#06b6d4;
 }
 
-.game-card{
-background:#1e293b;
-padding:15px;
-margin:10px 0;
-border-radius:10px;
+/* SECTIONS */
+section{
+    padding:100px 8%;
+    border-bottom:1px solid #334155;
+}
+
+.section-title{
+    text-align:center;
+    margin-bottom:40px;
+    color:#22d3ee;
+    font-size:2rem;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:30px;
+}
+
+.card{
+    background:#1e293b;
+    padding:30px;
+    border-radius:12px;
+    text-align:center;
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+}
+
+video{
+    width:100%;
+    border-radius:12px;
+}
+
+/* MODAL LOGIN */
+.modal{
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.8);
+    justify-content:center;
+    align-items:center;
+}
+
+.modal-box{
+    background:#1e293b;
+    padding:40px;
+    border-radius:12px;
+    text-align:center;
+    width:300px;
+}
+
+.modal-box input{
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    border-radius:6px;
+    border:1px solid #475569;
+    background:#0f172a;
+    color:white;
+}
+
+.close{
+    float:right;
+    cursor:pointer;
+    color:red;
 }
 
 footer{
-text-align:center;
-padding:30px;
-color:#64748b;
-border-top:1px solid #1f2937;
-margin-top:50px;
+    text-align:center;
+    padding:30px;
+    background:#1e293b;
+    opacity:0.7;
 }
 </style>
 </head>
+
 <body>
 
 <header>
-<div class="logo">Shashwat Gaming Studios 🚀</div>
-<nav>
-<button onclick="showSection('home')">Home</button>
-<button onclick="showSection('dashboard')">Dashboard</button>
-<button onclick="showSection('donation')">Donation</button>
-<button onclick="showSection('login')">Login</button>
-<button onclick="logoutUser()">Logout</button>
-</nav>
+    <h2>Shashwat Gaming Studios</h2>
+    <nav>
+        <a href="#services">Services</a>
+        <a href="#games">Games</a>
+        <a href="#donation">Donation</a>
+    </nav>
 </header>
 
-<div id="home" class="hero active">
-<h1>Building The Next Gaming Empire</h1>
-<p>From Class 9 Dreamer to Global Gaming Founder ❤️</p>
+<div class="hero">
+    <h1>Big Dreams. Big Empire.</h1>
+    <p>We build next-generation games, provide professional hosting, and empower creators with custom domain solutions.</p>
 </div>
 
-<div id="login" class="section">
-<div class="box">
-<h2>Login / Register</h2>
-<input type="email" id="email" placeholder="Email">
-<input type="password" id="password" placeholder="Password">
-<button class="btn" onclick="loginUser()">Login</button>
-<button class="btn" style="margin-top:10px;background:#6366f1;color:white;" onclick="registerUser()">Register</button>
-</div>
-</div>
+<section id="services">
+    <h2 class="section-title">Our Services</h2>
+    <div class="grid">
+        <div class="card">
+            <h3>Game Publishing</h3>
+            <p>Launch your games globally with professional distribution.</p>
+        </div>
+        <div class="card">
+            <h3>Professional Hosting</h3>
+            <p>High performance servers optimized for gaming platforms.</p>
+        </div>
+        <div class="card">
+            <h3>about our founder</h3>
+            <p>our ceo is a 9th class student they want to fullfill his mothers every drem.</p>
+        </div>
+    </div>
+</section>
 
-<div id="dashboard" class="section">
+<section id="games">
+    <h2 class="section-title">Game Trailer</h2>
+    <video controls>
+        <source src="your-game-trailer.mp4" type="video/mp4">
+    </video>
+</section>
 
-<div class="box">
-<h2>Profile</h2>
-<p id="userEmail"></p>
-</div>
-
-<div class="box">
-<h2>Publish Your Game</h2>
-<input type="text" id="gameTitle" placeholder="Game Title">
-<input type="text" id="gameLink" placeholder="Game URL">
-<button class="btn" onclick="publishGame()">Publish</button>
-</div>
-
-<div class="box">
-<h2>Published Games</h2>
-<div id="gamesList"></div>
-</div>
-
-</div>
-
-<div id="donation" class="section">
-
-<div class="box">
-<h2>Support The Studio ❤️</h2>
-<input type="number" id="donationAmount" placeholder="Enter Amount ₹">
-<button class="btn" onclick="donate('general')">Donate</button>
-<div id="generalDonations"></div>
-</div>
-
-<div class="box">
-<h2>Help Street Dogs 🐶</h2>
-<input type="number" id="dogDonationAmount" placeholder="Enter Amount ₹">
-<button class="btn" onclick="donate('dogs')">Donate for Dogs</button>
-<div id="dogDonations"></div>
-</div>
-
-</div>
+<section id="donation">
+    <h2 class="section-title">Support The Empire</h2>
+    <div style="text-align:center;">
+        <button class="btn" onclick="openLogin()">Donate to Company</button>
+        <button class="btn" onclick="openLogin()">Donate for Dogs 🐶</button>
+        <button class="btn" onclick="openLogin()">Proceed to Payment</button>
+    </div>
+</section>
 
 <footer>
-© 2026 Shashwat Gaming Studios | Future Unicorn Startup 💎
+    © 2026 Shashwat Gaming Studios | All Rights Reserved
 </footer>
 
-<script type="module">
+<!-- LOGIN MODAL -->
+<div class="modal" id="loginModal">
+    <div class="modal-box">
+        <span class="close" onclick="closeLogin()">X</span>
+        <h3>Login Required</h3>
+        <input type="email" placeholder="Email Address">
+        <input type="password" placeholder="Password">
+        <button class="btn">Login & Continue</button>
+    </div>
+</div>
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } 
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-import { getFirestore, collection, addDoc, getDocs } 
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-const firebaseConfig = {
-apiKey: "YOUR_REAL_API_KEY",
-authDomain: "the-ceo-web.firebaseapp.com",
-projectId: "the-ceo-web",
-storageBucket: "the-ceo-web.appspot.com",
-messagingSenderId: "729264914822",
-appId: "1:729264914822:web:c6e123edca812c50586c07"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-window.showSection = function(id){
-document.querySelectorAll(".section,.hero").forEach(sec=>sec.classList.remove("active"));
-document.getElementById(id).classList.add("active");
+<script>
+function openLogin(){
+    document.getElementById("loginModal").style.display="flex";
 }
 
-function getVal(id){return document.getElementById(id).value;}
-
-window.loginUser=function(){
-signInWithEmailAndPassword(auth,getVal("email"),getVal("password"))
-.then(()=>alert("Login Successful 🚀"))
-.catch(e=>alert(e.message));
+function closeLogin(){
+    document.getElementById("loginModal").style.display="none";
 }
-
-window.registerUser=function(){
-createUserWithEmailAndPassword(auth,getVal("email"),getVal("password"))
-.then(()=>alert("Account Created 🎉"))
-.catch(e=>alert(e.message));
-}
-
-window.logoutUser=function(){
-signOut(auth);
-alert("Logged Out");
-}
-
-onAuthStateChanged(auth,(user)=>{
-if(user){
-document.getElementById("userEmail").innerText="Logged in as: "+user.email;
-showSection("dashboard");
-loadGames();
-loadDonations();
-}else{
-showSection("login");
-}
-});
-
-window.publishGame=async function(){
-await addDoc(collection(db,"games"),{
-title:getVal("gameTitle"),
-link:getVal("gameLink"),
-owner:auth.currentUser.email
-});
-alert("Game Published 🚀");
-loadGames();
-}
-
-async function loadGames(){
-const snapshot=await getDocs(collection(db,"games"));
-let html="";
-snapshot.forEach(doc=>{
-const g=doc.data();
-html+=`<div class="game-card">
-<strong>${g.title}</strong><br>
-<a href="${g.link}" target="_blank">${g.link}</a>
-</div>`;
-});
-document.getElementById("gamesList").innerHTML=html;
-}
-
-window.donate=async function(type){
-let amount= type==="general"?getVal("donationAmount"):getVal("dogDonationAmount");
-
-await addDoc(collection(db,"donations"),{
-type:type,
-amount:amount,
-user:auth.currentUser?auth.currentUser.email:"Guest",
-date:new Date()
-});
-
-alert("Thank You ❤️");
-loadDonations();
-}
-
-async function loadDonations(){
-const snapshot=await getDocs(collection(db,"donations"));
-let gHTML="", dHTML="";
-snapshot.forEach(doc=>{
-const d=doc.data();
-if(d.type==="general"){
-gHTML+=`<div>₹${d.amount} - ${d.user}</div>`;
-}else{
-dHTML+=`<div>₹${d.amount} - ${d.user}</div>`;
-}
-});
-document.getElementById("generalDonations").innerHTML=gHTML;
-document.getElementById("dogDonations").innerHTML=dHTML;
-}
-
 </script>
 
 </body>
