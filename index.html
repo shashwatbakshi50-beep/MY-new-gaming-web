@@ -3,339 +3,258 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shashwat Gaming Studios | Royal Gaming Empire</title>
+<title>Shashwat Gaming Studios</title>
 
-<meta name="description" content="Official Website of Shashwat Gaming Studios - Royal Premium Gaming Experience">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
-
-/* ===== GLOBAL ===== */
-
-body{
-margin:0;
-font-family:'Segoe UI',sans-serif;
-background:#000;
-color:#f5f5f5;
-scroll-behavior:smooth;
-overflow-x:hidden;
-}
-
-/* ===== GOLD ANIMATED BACKGROUND GLOW ===== */
-
-body::before{
-content:"";
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:radial-gradient(circle at 20% 20%,rgba(212,175,55,0.08),transparent 40%),
-radial-gradient(circle at 80% 70%,rgba(212,175,55,0.05),transparent 40%);
-z-index:-1;
-animation:moveGlow 8s infinite alternate;
-}
-
-@keyframes moveGlow{
-from{transform:translateY(-20px);}
-to{transform:translateY(20px);}
-}
-
-/* ===== HEADER ===== */
-
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{background:#0f172a;color:#e2e8f0;overflow-x:hidden;}
 header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px 60px;
+background:#1e293b;
 position:fixed;
 width:100%;
-background:rgba(0,0,0,0.95);
-padding:20px 0;
-text-align:center;
-border-bottom:1px solid #d4af37;
+top:0;
 z-index:1000;
 }
-
+header h2{color:#22d3ee;}
 nav a{
-color:#fff;
-margin:0 20px;
+margin-left:20px;
+color:#e2e8f0;
 text-decoration:none;
-font-weight:600;
-transition:0.3s;
+font-weight:500;
 }
-
-nav a:hover{
-color:#d4af37;
-}
-
-/* ===== SECTION ===== */
-
-section{
-padding:120px 20px;
-text-align:center;
-}
-
-/* ===== HERO ===== */
-
+nav a:hover{color:#22d3ee;}
 .hero{
 height:100vh;
 display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center;
+text-align:center;
+padding-top:80px;
 }
-
-.hero h1{
-font-size:60px;
-color:#d4af37;
-letter-spacing:3px;
-}
-
-.hero p{
-max-width:700px;
-font-size:20px;
-color:#cbd5e1;
-}
-
+.hero h1{font-size:48px;color:#22d3ee;}
+.hero p{margin-top:15px;color:#94a3b8;}
 .btn{
-background:linear-gradient(45deg,#d4af37,#b8860b);
-border:none;
-padding:14px 40px;
-border-radius:30px;
-color:white;
-font-weight:bold;
-cursor:pointer;
-margin-top:20px;
-box-shadow:0 0 20px rgba(212,175,55,0.3);
-}
-
-/* ===== VIDEO ===== */
-
-video{
-width:80%;
-max-width:900px;
-border-radius:20px;
-border:2px solid #d4af37;
-box-shadow:0 0 30px rgba(212,175,55,0.2);
-}
-
-/* ===== CARD CONTAINER ===== */
-
-.card-container{
-display:flex;
-flex-wrap:wrap;
-justify-content:center;
-gap:25px;
-}
-
-/* ===== GAME CARD ===== */
-
-.game-card{
-background:#111;
-width:320px;
-padding:20px;
-border-radius:15px;
-border:1px solid #d4af37;
-box-shadow:0 10px 20px rgba(212,175,55,0.1);
-transition:0.3s;
-text-align:left;
-}
-
-.game-card:hover{
-transform:translateY(-10px);
-box-shadow:0 20px 30px rgba(212,175,55,0.3);
-}
-
-.game-card img{
-width:100%;
-border-radius:10px;
-margin-bottom:15px;
-border:1px solid #d4af37;
-}
-
-.tag{
-background:#d4af37;
-color:black;
-padding:4px 10px;
-border-radius:20px;
-font-size:12px;
-font-weight:bold;
-}
-
-.game-buttons{
 margin-top:15px;
-display:flex;
-gap:10px;
-}
-
-.play-btn{
-background:linear-gradient(45deg,#00c853,#2e7d32);
+padding:10px 25px;
+background:#22d3ee;
 border:none;
-padding:8px 15px;
-border-radius:20px;
-color:white;
+border-radius:8px;
+font-weight:600;
 cursor:pointer;
 }
-
-.download-btn{
-background:linear-gradient(45deg,#d4af37,#b8860b);
-border:none;
-padding:8px 15px;
-border-radius:20px;
+.btn-danger{
+background:#ef4444;
 color:white;
-cursor:pointer;
 }
-
-/* ===== STATS ===== */
-
-.value{
-color:#fbbf24;
-font-size:2rem;
-font-weight:bold;
+section{
+padding:80px 60px;
+text-align:center;
 }
-
-/* ===== FAQ ===== */
-
-.faq-item{
-margin-bottom:15px;
-background:#111;
-padding:15px;
-border-radius:10px;
-border:1px solid #d4af37;
+.card{
+background:#1e293b;
+padding:30px;
+border-radius:12px;
+margin:20px auto;
+max-width:400px;
 }
-
-/* ===== FOOTER ===== */
-
+.card h3{color:#22d3ee;margin-bottom:15px;}
 footer{
-background:#000;
-padding:40px;
-border-top:1px solid #d4af37;
+background:#1e293b;
+padding:20px;
+text-align:center;
+color:#94a3b8;
 }
-
+.modal{
+display:none;
+position:fixed;
+top:0;left:0;
+width:100%;height:100%;
+background:rgba(0,0,0,0.6);
+justify-content:center;
+align-items:center;
+}
+.modal-content{
+background:#1e293b;
+padding:30px;
+border-radius:10px;
+width:300px;
+text-align:center;
+position:relative;
+}
+.modal-content input{
+width:100%;
+padding:10px;
+margin:10px 0;
+border:none;
+border-radius:6px;
+background:#334155;
+color:white;
+}
+.close{
+position:absolute;
+top:15px;
+right:20px;
+cursor:pointer;
+font-size:20px;
+}
+.status{
+margin-left:20px;
+color:#22d3ee;
+}
+.hidden{display:none;}
 </style>
 </head>
 
-<body oncontextmenu="return false;">
+<body>
 
 <header>
+<h2>Shashwat Gaming Studios</h2>
 <nav>
 <a href="#home">Home</a>
-<a href="#trailer">Trailer</a>
-<a href="#games">Games</a>
-<a href="#stats">Stats</a>
-<a href="#team">Team</a>
-<a href="#faq">FAQ</a>
+<a href="#donation">Donation</a>
+<a href="#contact">Contact</a>
+<span class="status" id="userStatus">Not Logged In</span>
+<button class="btn" id="loginBtn" onclick="openModal()">Login</button>
+<button class="btn btn-danger hidden" id="logoutBtn" onclick="logout()">Logout</button>
 </nav>
 </header>
 
-<!-- HERO -->
-<section id="home" class="hero">
-<h1>Shashwat Gaming Studios</h1>
-<p>Building Royal Gaming Experiences with Innovation & Passion.</p>
-<button class="btn">Explore Now</button>
+<div class="hero" id="home">
+<h1>Welcome to Professional Gaming Company</h1>
+<p>Secure • Modern • Professional Platform</p>
+<button class="btn" onclick="scrollToDonation()">Support Us</button>
+</div>
+
+<section id="donation">
+<h2>Donation & Support 🐶</h2>
+
+<div class="card">
+<h3>Help Street Dogs</h3>
+<p>Your donation helps food, shelter and medical care.</p>
+<button class="btn" onclick="makePayment(500)">Donate ₹500</button>
+</div>
+
+<div class="card">
+<h3>Premium Game Support</h3>
+<p>Support our game development journey.</p>
+<button class="btn" onclick="makePayment(999)">Pay ₹999</button>
+</div>
+
+<div class="card">
+<h3>About Our CEO</h3>
+<p>Founder of Shashwat Gaming Studios with a mission to build a secure and innovative gaming platform.</p>
+</div>
+
 </section>
 
-<!-- TRAILER -->
-<section id="trailer">
-<h2 style="color:#d4af37;">🎮 Official Game Trailer</h2>
-<video controls>
-<source src="your-game-trailer.mp4" type="video/mp4">
-</video>
-</section>
-
-<!-- GAMES -->
-<section id="games">
-<h2 style="color:#d4af37;">🔥 Our Games</h2>
-
-<div class="card-container">
-
-<div class="game-card">
-<img src="game1.jpg">
-<h3>Royal Battle Arena</h3>
-<p>Intense multiplayer action strategy game.</p>
-<span class="tag">Action</span>
-<div class="game-buttons">
-<button class="play-btn">Play</button>
-<button class="download-btn">Download</button>
-</div>
-</div>
-
-<div class="game-card">
-<img src="game2.jpg">
-<h3>Empire Tycoon</h3>
-<p>Build your empire and dominate the market.</p>
-<span class="tag">Simulation</span>
-<div class="game-buttons">
-<button class="play-btn">Play</button>
-<button class="download-btn">Download</button>
-</div>
-</div>
-
-<div class="game-card">
-<img src="game3.jpg">
-<h3>Shadow Legends</h3>
-<p>Epic RPG adventure with cinematic story.</p>
-<span class="tag">RPG</span>
-<div class="game-buttons">
-<button class="play-btn">Play</button>
-<button class="download-btn">Download</button>
-</div>
-</div>
-
-</div>
-</section>
-
-<!-- STATS -->
-<section id="stats">
-<h2 style="color:#d4af37;">📊 Live Company Stats</h2>
-<div class="card-container">
-<div class="game-card"><h3>Players</h3><p id="players" class="value">0+</p></div>
-<div class="game-card"><h3>Downloads</h3><p id="downloads" class="value">0+</p></div>
-<div class="game-card"><h3>Community</h3><p id="community" class="value">0+</p></div>
-</div>
-</section>
-
-<!-- TEAM -->
-<section id="team">
-<h2 style="color:#d4af37;">👑 Core Team</h2>
-<div class="card-container">
-<div class="game-card"><h3>Shashwat</h3><p>Founder & CEO</p></div>
-<div class="game-card"><h3>Lead Developer</h3><p>Game Engine Specialist</p></div>
-<div class="game-card"><h3>Creative Director</h3><p>Visual & Story Design</p></div>
-</div>
-</section>
-
-<!-- FAQ -->
-<section id="faq">
-<h2 style="color:#d4af37;">❓ FAQ</h2>
-<div class="faq-item">What type of games do you build?</div>
-<div class="faq-item">Are your games multiplayer?</div>
-<div class="faq-item">How can we collaborate?</div>
+<section id="contact">
+<h2>Contact Us</h2>
+<p>Email: support@shashwatgaming.com</p>
 </section>
 
 <footer>
-<p>© 2026 Shashwat Gaming Studios | All Rights Reserved</p>
+© 2026 Shashwat Gaming Studios. All Rights Reserved.
 </footer>
+
+<!-- LOGIN MODAL -->
+<div class="modal" id="loginModal">
+<div class="modal-content">
+<span class="close" onclick="closeModal()">×</span>
+<h3>Login / Signup</h3>
+<input type="email" id="email" placeholder="Email">
+<input type="password" id="password" placeholder="Password">
+<button class="btn" onclick="signup()">Sign Up</button>
+<button class="btn" onclick="login()">Login</button>
+</div>
+</div>
 
 <script>
 
-/* STATS ANIMATION */
-function animateValue(id,end,duration){
-let current=0;
-let stepTime=Math.abs(Math.floor(duration/end));
-let obj=document.getElementById(id);
-let timer=setInterval(()=>{
-current++;
-obj.innerHTML=current+"+";
-if(current==end) clearInterval(timer);
-},stepTime);
-}
-animateValue("players",500,15);
-animateValue("downloads",1200,15);
-animateValue("community",800,15);
+let loggedInUser = localStorage.getItem("loggedInUser");
 
-/* BASIC PROTECTION */
-document.addEventListener('keydown', function(e) {
-if (e.key === "F12") e.preventDefault();
-if (e.ctrlKey && e.shiftKey && e.key === 'I') e.preventDefault();
-if (e.ctrlKey && e.key === 'U') e.preventDefault();
-});
+updateUI();
+
+function openModal(){
+document.getElementById("loginModal").style.display="flex";
+}
+
+function closeModal(){
+document.getElementById("loginModal").style.display="none";
+}
+
+function signup(){
+let email=emailInput();
+let password=passwordInput();
+
+if(email && password){
+localStorage.setItem(email,password);
+alert("Account Created Successfully");
+}else{
+alert("Fill all fields");
+}
+}
+
+function login(){
+let email=emailInput();
+let password=passwordInput();
+let storedPassword=localStorage.getItem(email);
+
+if(storedPassword===password){
+loggedInUser=email;
+localStorage.setItem("loggedInUser",email);
+updateUI();
+closeModal();
+alert("Login Successful");
+}else{
+alert("Invalid Credentials");
+}
+}
+
+function logout(){
+localStorage.removeItem("loggedInUser");
+loggedInUser=null;
+updateUI();
+alert("Logged Out");
+}
+
+function updateUI(){
+if(loggedInUser){
+document.getElementById("userStatus").innerText="Logged In";
+document.getElementById("loginBtn").classList.add("hidden");
+document.getElementById("logoutBtn").classList.remove("hidden");
+}else{
+document.getElementById("userStatus").innerText="Not Logged In";
+document.getElementById("loginBtn").classList.remove("hidden");
+document.getElementById("logoutBtn").classList.add("hidden");
+}
+}
+
+function makePayment(amount){
+if(loggedInUser){
+window.location.href="https://buy.stripe.com/YOUR_REAL_STRIPE_LINK";
+}else{
+alert("Please Login First");
+openModal();
+}
+}
+
+function scrollToDonation(){
+document.getElementById("donation").scrollIntoView({behavior:'smooth'});
+}
+
+function emailInput(){
+return document.getElementById("email").value;
+}
+function passwordInput(){
+return document.getElementById("password").value;
+}
 
 </script>
 
