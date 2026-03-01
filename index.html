@@ -6,12 +6,12 @@
 <title>Shashwat Gaming Studios</title>
 
 <style>
-body{margin:0;padding:0;font-family:'Segoe UI',sans-serif;background:#0f172a;color:#e2e8f0;display:flex;flex-direction:column;align-items:center;}
+body{margin:0;padding:0;font-family:'Segoe UI',sans-serif;background:#0f172a;color:#e2e8f0;display:flex;flex-direction:column;align-items:center;scroll-behavior:smooth;}
 .main-container{width:90%;max-width:800px;display:flex;flex-direction:column;align-items:center;text-align:center;}
-header{width:100%;padding:20px 0;border-bottom:2px solid #22d3ee;background:#1e293b;margin-bottom:20px;}
+header{width:100%;padding:20px 0;border-bottom:2px solid #22d3ee;background:#1e293b;margin-bottom:20px;position:sticky;top:0;}
 nav a{color:#cbd5e1;margin:0 15px;text-decoration:none;font-weight:bold;}
 nav a:hover{color:#22d3ee;}
-section{width:100%;padding:40px 0;border-bottom:1px solid #334155;}
+section{width:100%;padding:60px 0;border-bottom:1px solid #334155;}
 .btn{background:#22d3ee;color:#0f172a;padding:12px 30px;border:none;border-radius:8px;cursor:pointer;font-weight:bold;margin-top:20px;transition:0.3s;}
 .btn:hover{background:#06b6d4;transform:scale(1.05);}
 .box{padding:30px;border:1px solid #334155;border-radius:12px;background:#1e293b;margin:20px 0;width:100%;max-width:400px;}
@@ -40,24 +40,36 @@ h1,h2{color:#22d3ee;}
 </section>
 
 <section id="games">
-<h2>Game Trailer</h2>
+<h2>Game trailer</h2>
 <video controls style="width:100%;border:2px solid #22d3ee;border-radius:12px;">
 <source src="your-game-trailer.mp4" type="video/mp4">
 </video>
 </section>
 
-<section id="payment">
+<!-- ✅ FIXED DONATION SECTION -->
+<section id="donation">
+<h2>Donation for Street Dogs 🐶</h2>
+
 <div class="box">
-<h2>Secure Payment</h2>
-<p>Support the Empire:</p>
-
-<!-- UPI Button -->
-<button class="btn" onclick="payUPI()">Pay via UPI</button>
-
-<!-- Stripe Option -->
-<button class="btn" onclick="payStripe()">Pay via Card</button>
-
+<p>Your donation helps food, shelter & medical care.</p>
+<button class="btn" onclick="scrollToPayment()">Donate Now</button>
 </div>
+
+</section>
+
+<!-- ✅ PAYMENT SECTION -->
+<section id="payment">
+<h2>Secure Payment</h2>
+
+<div class="box">
+<p>Select Payment Method:</p>
+
+<button class="btn" onclick="payUPI()">Pay via UPI</button>
+<button class="btn" onclick="payStripe()">Pay via Card (Stripe)</button>
+<button class="btn" onclick="viapaypal()">pay via paypal</button>
+<div class="status" id="paymentStatus"></div>
+</div>
+
 </section>
 
 <section id="login">
@@ -74,56 +86,36 @@ h1,h2{color:#22d3ee;}
 
 </div>
 
-<!-- FIREBASE -->
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } 
-from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
+<script>
 
-const firebaseConfig = {
-apiKey: "YOUR_API_KEY",
-authDomain: "YOUR_PROJECT.firebaseapp.com",
-projectId: "YOUR_PROJECT_ID",
-storageBucket: "YOUR_PROJECT.appspot.com",
-messagingSenderId: "XXXX",
-appId: "XXXX"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-
-window.loginUser = function(){
-let email=document.getElementById("email").value;
-let password=document.getElementById("password").value;
-
-signInWithEmailAndPassword(auth,email,password)
-.then(()=>{
-document.getElementById("loginStatus").innerText="Login Successful!";
-})
-.catch(error=>{
-document.getElementById("loginStatus").innerText=error.message;
-});
+// Scroll from donation to payment
+function scrollToPayment(){
+document.getElementById("payment").scrollIntoView({behavior:"smooth"});
 }
 
-window.signupUser = function(){
-let email=document.getElementById("email").value;
-let password=document.getElementById("password").value;
+// UPI Payment
+function payUPI(){
+let upiLink="upi://pay?pa=8307077846@ybl&pn=ShashwatGaming&cu=INR";
 
-createUserWithEmailAndPassword(auth,email,password)
-.then(()=>{
-document.getElementById("loginStatus").innerText="Account Created Successfully!";
-})
-.catch(error=>{
-document.getElementById("loginStatus").innerText=error.message;
-});
+if(/Android|iPhone/i.test(navigator.userAgent)){
+window.location.href=upiLink;
+}else{
+document.getElementById("paymentStatus").innerText="UPI works only on mobile devices.";
+}
 }
 
-window.payUPI = function(){
-window.location.href="upi://pay?pa=your-upi-id@bank&pn=ShashwatGaming&cu=INR";
+// Stripe Payment
+function payStripe(){
+window.open("https://buy.stripe.com/YOUR_STRIPE_LINK","_blank");
 }
 
-window.payStripe = function(){
-window.location.href="https://buy.stripe.com/YOUR_STRIPE_LINK";
+// Fake Login Demo
+function loginUser(){
+document.getElementById("loginStatus").innerText="Login Successful (Demo Mode)";
+}
+
+function signupUser(){
+document.getElementById("loginStatus").innerText="Account Created (Demo Mode)";
 }
 
 </script>
