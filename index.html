@@ -1,101 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shashwat Gaming Studios</title>
-    <style>
-        body { 
-            margin: 0; padding: 0;
-            font-family: 'Segoe UI', sans-serif; 
-            background: #0f172a; 
-            color: #e2e8f0; 
-            display: flex; flex-direction: column; align-items: center;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shashwat Gaming Studios</title>
 
-        .main-container { width: 90%; max-width: 800px; display: flex; flex-direction: column; align-items: center; text-align: center; }
-
-        header { width: 100%; padding: 20px 0; border-bottom: 2px solid #22d3ee; 
-      background: #1e293b; margin-bottom: 20px; }
-        nav a { color: #cbd5e1; margin: 0 15px; text-decoration: none; font-weight: bold; }
-        
-        section { width: 100%; padding: 40px 0; border-bottom: 1px solid #334155; }
-
-        .btn { 
-            background: #22d3ee; color: #0f172a; padding: 12px 30px; 
-            border: none; border-radius: 8px; cursor: pointer; 
-            font-weight: bold; margin-top: 20px; transition: 0.3s;
-        }
-        .btn:hover { background: #06b6d4; }
-
-        .box { padding: 30px; border: 1px solid #334155; border-radius: 12px; background: #1e293b; margin: 20px 0; width: 100%; max-width: 400px; }
-        input { width: 80%; padding: 12px; margin: 10px 0; border-radius: 6px; border: 1px solid #475569; background: #0f172a; color: white; }
-        h1, h2 { color: #22d3ee; }
-    </style>
+<style>
+body{margin:0;padding:0;font-family:'Segoe UI',sans-serif;background:#0f172a;color:#e2e8f0;display:flex;flex-direction:column;align-items:center;}
+.main-container{width:90%;max-width:800px;display:flex;flex-direction:column;align-items:center;text-align:center;}
+header{width:100%;padding:20px 0;border-bottom:2px solid #22d3ee;background:#1e293b;margin-bottom:20px;}
+nav a{color:#cbd5e1;margin:0 15px;text-decoration:none;font-weight:bold;}
+nav a:hover{color:#22d3ee;}
+section{width:100%;padding:40px 0;border-bottom:1px solid #334155;}
+.btn{background:#22d3ee;color:#0f172a;padding:12px 30px;border:none;border-radius:8px;cursor:pointer;font-weight:bold;margin-top:20px;transition:0.3s;}
+.btn:hover{background:#06b6d4;transform:scale(1.05);}
+.box{padding:30px;border:1px solid #334155;border-radius:12px;background:#1e293b;margin:20px 0;width:100%;max-width:400px;}
+input{width:80%;padding:12px;margin:10px 0;border-radius:6px;border:1px solid #475569;background:#0f172a;color:white;}
+h1,h2{color:#22d3ee;}
+.status{margin-top:10px;font-size:14px;color:#22d3ee;}
+</style>
 </head>
 <body>
 
-    <div class="main-container">
-        <header>
-            <nav>
-                <a href="#home">Home</a>
-                <a href="#games">Games</a>
-                <a href="#donation">Donation</a>
-                <a href="#payment">Payment</a>
-                <a href="#login">Login</a>
-            </nav>
-        </header>
+<div class="main-container">
 
-        <section id="home">
-            <h1>Shashwat Gaming Studios</h1>
-            <p>Big Dreams, Big Empire.</p>
-        </section>
+<header>
+<nav>
+<a href="#home">Home</a>
+<a href="#games">Games</a>
+<a href="#donation">Donation</a>
+<a href="#payment">Payment</a>
+<a href="#login">Login</a>
+</nav>
+</header>
 
-        <section id="games">
-            <h2>Game Trailer</h2>
-            <video controls style="width: 100%; border: 2px solid #22d3ee; border-radius: 12px;">
-                <source src="your-game-trailer.mp4" type="video/mp4">
-            </video>
-        </section>
+<section id="home">
+<h1>Shashwat Gaming Studios</h1>
+<p>Big Dreams, Big Empire.</p>
+</section>
 
-        <section id="payment">
-            <div class="box">
-                <h2>Secure Payment</h2>
-                <p>Support the Empire:</p>
-                <button class="btn" onclick="window.location.href='upi://pay?pa=your-upi-id@bank&pn=ShashwatGaming'">Pay via UPI</button>
-            </div>
-        </section>
+<section id="games">
+<h2>Game Trailer</h2>
+<video controls style="width:100%;border:2px solid #22d3ee;border-radius:12px;">
+<source src="your-game-trailer.mp4" type="video/mp4">
+</video>
+</section>
 
-        <section id="login">
-            <div class="box">
-                <h2>Empire Login</h2>
-                <input type="email" id="email" placeholder="Email Address">
-                <input type="password" id="password" placeholder="Password">
-                <br>
-                <button class="btn" onclick="loginUser()">LOGIN</button>
-            </div>
-        </section>
-    </div>
+<section id="payment">
+<div class="box">
+<h2>Secure Payment</h2>
+<p>Support the Empire:</p>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
-        
-        const firebaseConfig = {
-            apiKey: "the-ceo-web",
-            authDomain: "the-ceo-web.firebaseapp.com",
-            projectId: "the-ceo-web",
-            storageBucket: "the-ceo-web.firebasestorage.app",
-            messagingSenderId: "729264914822",
-            appId: "1:729264914822:web:c6e123edca812c50586c07",
-            measurementId: "G-ZMJJQRBS0V"
-        };
-        initializeApp(firebaseConfig);
-    </script>
+<!-- UPI Button -->
+<button class="btn" onclick="payUPI()">Pay via UPI</button>
 
-    <script>
-        function loginUser() {
-            alert("Login with Server connected!");
-        }
-    </script>
+<!-- Stripe Option -->
+<button class="btn" onclick="payStripe()">Pay via Card</button>
+
+</div>
+</section>
+
+<section id="login">
+<div class="box">
+<h2>Empire Login</h2>
+<input type="email" id="email" placeholder="Email Address">
+<input type="password" id="password" placeholder="Password">
+<br>
+<button class="btn" onclick="loginUser()">LOGIN</button>
+<button class="btn" onclick="signupUser()">SIGN UP</button>
+<div class="status" id="loginStatus"></div>
+</div>
+</section>
+
+</div>
+
+<!-- FIREBASE -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } 
+from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
+
+const firebaseConfig = {
+apiKey: "YOUR_API_KEY",
+authDomain: "YOUR_PROJECT.firebaseapp.com",
+projectId: "YOUR_PROJECT_ID",
+storageBucket: "YOUR_PROJECT.appspot.com",
+messagingSenderId: "XXXX",
+appId: "XXXX"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+window.loginUser = function(){
+let email=document.getElementById("email").value;
+let password=document.getElementById("password").value;
+
+signInWithEmailAndPassword(auth,email,password)
+.then(()=>{
+document.getElementById("loginStatus").innerText="Login Successful!";
+})
+.catch(error=>{
+document.getElementById("loginStatus").innerText=error.message;
+});
+}
+
+window.signupUser = function(){
+let email=document.getElementById("email").value;
+let password=document.getElementById("password").value;
+
+createUserWithEmailAndPassword(auth,email,password)
+.then(()=>{
+document.getElementById("loginStatus").innerText="Account Created Successfully!";
+})
+.catch(error=>{
+document.getElementById("loginStatus").innerText=error.message;
+});
+}
+
+window.payUPI = function(){
+window.location.href="upi://pay?pa=your-upi-id@bank&pn=ShashwatGaming&cu=INR";
+}
+
+window.payStripe = function(){
+window.location.href="https://buy.stripe.com/YOUR_STRIPE_LINK";
+}
+
+</script>
+
 </body>
 </html>
