@@ -2,275 +2,341 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-
-<!-- Basic Security Headers -->
-<meta http-equiv="X-Content-Type-Options" content="nosniff">
-<meta http-equiv="X-Frame-Options" content="DENY">
-<meta http-equiv="X-XSS-Protection" content="1; mode=block">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shashwat Gaming Studios</title>
+<title>Shashwat Gaming Studios | Royal Gaming Empire</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<meta name="description" content="Official Website of Shashwat Gaming Studios - Royal Premium Gaming Experience">
 
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Poppins',sans-serif;
-}
+
+/* ===== GLOBAL ===== */
 
 body{
-    background:#0f172a;
-    color:#e2e8f0;
+margin:0;
+font-family:'Segoe UI',sans-serif;
+background:#000;
+color:#f5f5f5;
+scroll-behavior:smooth;
+overflow-x:hidden;
 }
 
-/* NAVBAR */
+/* ===== GOLD ANIMATED BACKGROUND GLOW ===== */
+
+body::before{
+content:"";
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:radial-gradient(circle at 20% 20%,rgba(212,175,55,0.08),transparent 40%),
+radial-gradient(circle at 80% 70%,rgba(212,175,55,0.05),transparent 40%);
+z-index:-1;
+animation:moveGlow 8s infinite alternate;
+}
+
+@keyframes moveGlow{
+from{transform:translateY(-20px);}
+to{transform:translateY(20px);}
+}
+
+/* ===== HEADER ===== */
+
 header{
-    background:#1e293b;
-    padding:20px 8%;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    position:fixed;
-    width:100%;
-    top:0;
-    z-index:1000;
-}
-
-header h2{
-    color:#22d3ee;
+position:fixed;
+width:100%;
+background:rgba(0,0,0,0.95);
+padding:20px 0;
+text-align:center;
+border-bottom:1px solid #d4af37;
+z-index:1000;
 }
 
 nav a{
-    color:#cbd5e1;
-    margin-left:20px;
-    text-decoration:none;
-    font-weight:600;
+color:#fff;
+margin:0 20px;
+text-decoration:none;
+font-weight:600;
+transition:0.3s;
 }
 
 nav a:hover{
-    color:#22d3ee;
+color:#d4af37;
 }
 
-/* HERO */
+/* ===== SECTION ===== */
+
+section{
+padding:120px 20px;
+text-align:center;
+}
+
+/* ===== HERO ===== */
+
 .hero{
-    height:100vh;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-    padding:0 20px;
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
 }
 
 .hero h1{
-    font-size:3rem;
-    color:#22d3ee;
+font-size:60px;
+color:#d4af37;
+letter-spacing:3px;
 }
 
 .hero p{
-    margin-top:15px;
-    max-width:600px;
-    opacity:0.8;
+max-width:700px;
+font-size:20px;
+color:#cbd5e1;
 }
 
 .btn{
-    background:#22d3ee;
-    color:#0f172a;
-    padding:12px 30px;
-    border:none;
-    border-radius:8px;
-    cursor:pointer;
-    font-weight:600;
-    margin-top:20px;
-    transition:0.3s;
+background:linear-gradient(45deg,#d4af37,#b8860b);
+border:none;
+padding:14px 40px;
+border-radius:30px;
+color:white;
+font-weight:bold;
+cursor:pointer;
+margin-top:20px;
+box-shadow:0 0 20px rgba(212,175,55,0.3);
 }
 
-.btn:hover{
-    background:#06b6d4;
-}
-
-/* SECTIONS */
-section{
-    padding:100px 8%;
-    border-bottom:1px solid #334155;
-}
-
-.section-title{
-    text-align:center;
-    margin-bottom:40px;
-    color:#22d3ee;
-    font-size:2rem;
-}
-
-.grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-    gap:30px;
-}
-
-.card{
-    background:#1e293b;
-    padding:30px;
-    border-radius:12px;
-    text-align:center;
-    transition:0.3s;
-}
-
-.card:hover{
-    transform:translateY(-5px);
-}
+/* ===== VIDEO ===== */
 
 video{
-    width:100%;
-    border-radius:12px;
+width:80%;
+max-width:900px;
+border-radius:20px;
+border:2px solid #d4af37;
+box-shadow:0 0 30px rgba(212,175,55,0.2);
 }
 
-/* MODAL LOGIN */
-.modal{
-    display:none;
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:rgba(0,0,0,0.8);
-    justify-content:center;
-    align-items:center;
+/* ===== CARD CONTAINER ===== */
+
+.card-container{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:25px;
 }
 
-.modal-box{
-    background:#1e293b;
-    padding:40px;
-    border-radius:12px;
-    text-align:center;
-    width:300px;
+/* ===== GAME CARD ===== */
+
+.game-card{
+background:#111;
+width:320px;
+padding:20px;
+border-radius:15px;
+border:1px solid #d4af37;
+box-shadow:0 10px 20px rgba(212,175,55,0.1);
+transition:0.3s;
+text-align:left;
 }
 
-.modal-box input{
-    width:100%;
-    padding:12px;
-    margin:10px 0;
-    border-radius:6px;
-    border:1px solid #475569;
-    background:#0f172a;
-    color:white;
+.game-card:hover{
+transform:translateY(-10px);
+box-shadow:0 20px 30px rgba(212,175,55,0.3);
 }
 
-.close{
-    float:right;
-    cursor:pointer;
-    color:red;
+.game-card img{
+width:100%;
+border-radius:10px;
+margin-bottom:15px;
+border:1px solid #d4af37;
 }
+
+.tag{
+background:#d4af37;
+color:black;
+padding:4px 10px;
+border-radius:20px;
+font-size:12px;
+font-weight:bold;
+}
+
+.game-buttons{
+margin-top:15px;
+display:flex;
+gap:10px;
+}
+
+.play-btn{
+background:linear-gradient(45deg,#00c853,#2e7d32);
+border:none;
+padding:8px 15px;
+border-radius:20px;
+color:white;
+cursor:pointer;
+}
+
+.download-btn{
+background:linear-gradient(45deg,#d4af37,#b8860b);
+border:none;
+padding:8px 15px;
+border-radius:20px;
+color:white;
+cursor:pointer;
+}
+
+/* ===== STATS ===== */
+
+.value{
+color:#fbbf24;
+font-size:2rem;
+font-weight:bold;
+}
+
+/* ===== FAQ ===== */
+
+.faq-item{
+margin-bottom:15px;
+background:#111;
+padding:15px;
+border-radius:10px;
+border:1px solid #d4af37;
+}
+
+/* ===== FOOTER ===== */
 
 footer{
-    text-align:center;
-    padding:30px;
-    background:#1e293b;
-    opacity:0.7;
+background:#000;
+padding:40px;
+border-top:1px solid #d4af37;
 }
+
 </style>
 </head>
 
-<body>
+<body oncontextmenu="return false;">
 
 <header>
-    <h2>Shashwat Gaming Studios</h2>
-    <nav>
-        <a href="#services">Services</a>
-        <a href="#games">Games</a>
-        <a href="#donation">Donation</a>
-        <a href="#rules">Rules</a>
-    </nav>
+<nav>
+<a href="#home">Home</a>
+<a href="#trailer">Trailer</a>
+<a href="#games">Games</a>
+<a href="#stats">Stats</a>
+<a href="#team">Team</a>
+<a href="#faq">FAQ</a>
+</nav>
 </header>
 
-<div class="hero">
-    <h1>Big Dreams. Big Empire.</h1>
-    <p>We build next-generation games, our ceeo is in class 9th and want to fufill his mothers every dream</p>
+<!-- HERO -->
+<section id="home" class="hero">
+<h1>Shashwat Gaming Studios</h1>
+<p>Building Royal Gaming Experiences with Innovation & Passion.</p>
+<button class="btn">Explore Now</button>
+</section>
+
+<!-- TRAILER -->
+<section id="trailer">
+<h2 style="color:#d4af37;">🎮 Official Game Trailer</h2>
+<video controls>
+<source src="your-game-trailer.mp4" type="video/mp4">
+</video>
+</section>
+
+<!-- GAMES -->
+<section id="games">
+<h2 style="color:#d4af37;">🔥 Our Games</h2>
+
+<div class="card-container">
+
+<div class="game-card">
+<img src="game1.jpg">
+<h3>Royal Battle Arena</h3>
+<p>Intense multiplayer action strategy game.</p>
+<span class="tag">Action</span>
+<div class="game-buttons">
+<button class="play-btn">Play</button>
+<button class="download-btn">Download</button>
+</div>
 </div>
 
-<section id="services">
-    <h2 class="section-title">Our Services</h2>
-    <div class="grid">
-        <div class="card">
-            <h3>Game Publishing</h3>
-            <p>Launch your games globally with professional distribution.</p>
-        </div>
-        <div class="card">
-            <h3>Professional Hosting</h3>
-            <p>High performance servers optimized for gaming platforms.</p>
-        </div>
-        <div class="card">
-            <h3>Custom Domain Setup</h3>
-            <p>Premium branding and domain solutions for gaming companies.</p>
-        </div>
-    </div>
+<div class="game-card">
+<img src="game2.jpg">
+<h3>Empire Tycoon</h3>
+<p>Build your empire and dominate the market.</p>
+<span class="tag">Simulation</span>
+<div class="game-buttons">
+<button class="play-btn">Play</button>
+<button class="download-btn">Download</button>
+</div>
+</div>
+
+<div class="game-card">
+<img src="game3.jpg">
+<h3>Shadow Legends</h3>
+<p>Epic RPG adventure with cinematic story.</p>
+<span class="tag">RPG</span>
+<div class="game-buttons">
+<button class="play-btn">Play</button>
+<button class="download-btn">Download</button>
+</div>
+</div>
+
+</div>
 </section>
 
-<section id="games">
-    <h2 class="section-title">Game Trailer</h2>
-    <video controls>
-        <source src="your-game-trailer.mp4" type="video/mp4">
-    </video>
+<!-- STATS -->
+<section id="stats">
+<h2 style="color:#d4af37;">📊 Live Company Stats</h2>
+<div class="card-container">
+<div class="game-card"><h3>Players</h3><p id="players" class="value">0+</p></div>
+<div class="game-card"><h3>Downloads</h3><p id="downloads" class="value">0+</p></div>
+<div class="game-card"><h3>Community</h3><p id="community" class="value">0+</p></div>
+</div>
 </section>
 
-<section id="donation">
-    <h2 class="section-title">Support The Empire</h2>
-    <div style="text-align:center;">
-        <button class="btn" onclick="openLogin()">Donate to Company</button>
-        <button class="btn" onclick="openLogin()">Donate for Dogs 🐶</button>
-        <button class="btn" onclick="openLogin()">Proceed to Payment</button>
-    </div>
+<!-- TEAM -->
+<section id="team">
+<h2 style="color:#d4af37;">👑 Core Team</h2>
+<div class="card-container">
+<div class="game-card"><h3>Shashwat</h3><p>Founder & CEO</p></div>
+<div class="game-card"><h3>Lead Developer</h3><p>Game Engine Specialist</p></div>
+<div class="game-card"><h3>Creative Director</h3><p>Visual & Story Design</p></div>
+</div>
 </section>
 
-<!-- RULES SECTION ADDED -->
-<section id="rules">
-    <h2 class="section-title">Rules & Regulations</h2>
-    <div class="card">
-        <p>• Unauthorized system access is strictly prohibited.</p>
-        <p>• Attempting to modify or exploit our platform will lead to permanent bans.</p>
-        <p>• Server activity is monitored.</p>
-        <p>• All transactions are logged for security purposes.</p>
-        <p>• Legal action will be taken against cyber attacks.</p>
-    </div>
+<!-- FAQ -->
+<section id="faq">
+<h2 style="color:#d4af37;">❓ FAQ</h2>
+<div class="faq-item">What type of games do you build?</div>
+<div class="faq-item">Are your games multiplayer?</div>
+<div class="faq-item">How can we collaborate?</div>
 </section>
 
 <footer>
-    © 2026 Shashwat Gaming Studios | All Rights Reserved
+<p>© 2026 Shashwat Gaming Studios | All Rights Reserved</p>
 </footer>
 
-<!-- LOGIN MODAL -->
-<div class="modal" id="loginModal">
-    <div class="modal-box">
-        <span class="close" onclick="closeLogin()">X</span>
-        <h3>Login Required</h3>
-        <input type="email" placeholder="Email Address">
-        <input type="password" placeholder="Password">
-        <button class="btn">Login & Continue</button>
-    </div>
-</div>
-
 <script>
-function openLogin(){
-    document.getElementById("loginModal").style.display="flex";
-}
 
-function closeLogin(){
-    document.getElementById("loginModal").style.display="none";
+/* STATS ANIMATION */
+function animateValue(id,end,duration){
+let current=0;
+let stepTime=Math.abs(Math.floor(duration/end));
+let obj=document.getElementById(id);
+let timer=setInterval(()=>{
+current++;
+obj.innerHTML=current+"+";
+if(current==end) clearInterval(timer);
+},stepTime);
 }
+animateValue("players",500,15);
+animateValue("downloads",1200,15);
+animateValue("community",800,15);
 
-/* Basic Frontend Protection */
-document.addEventListener("contextmenu", function(e){
-    e.preventDefault();
+/* BASIC PROTECTION */
+document.addEventListener('keydown', function(e) {
+if (e.key === "F12") e.preventDefault();
+if (e.ctrlKey && e.shiftKey && e.key === 'I') e.preventDefault();
+if (e.ctrlKey && e.key === 'U') e.preventDefault();
 });
 
-document.onkeydown = function(e) {
-    if (e.keyCode == 123) { return false; } // F12 block
-    if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) { return false; }
-    if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { return false; }
-}
 </script>
 
 </body>
