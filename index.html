@@ -1,102 +1,240 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shashwat Gaming Studios</title>
-    <style>
-        body { 
-            margin: 0; padding: 0;
-            font-family: 'Segoe UI', sans-serif; 
-            background: #0f172a; 
-            color: #e2e8f0; 
-            display: flex; flex-direction: column; align-items: center;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shashwat Gaming Studios</title>
 
-        .main-container { width: 90%; max-width: 800px; display: flex; flex-direction: column; align-items: center; text-align: center; }
-
-        header { width: 100%; padding: 20px 0; border-bottom: 2px solid #22d3ee; background: #1e293b; margin-bottom: 20px; }
-        nav a { color: #cbd5e1; margin: 0 15px; text-decoration: none; font-weight: bold; }
-        
-        section { width: 100%; padding: 40px 0; border-bottom: 1px solid #334155; }
-
-        .btn { 
-            background: #22d3ee; color: #0f172a; padding: 12px 30px; 
-            border: none; border-radius: 8px; cursor: pointer; 
-            font-weight: bold; margin-top: 20px; transition: 0.3s;
-        }
-        .btn:hover { background: #06b6d4; }
-
-        .box { padding: 30px; border: 1px solid #334155; border-radius: 12px; background: #1e293b; margin: 20px 0; width: 100%; max-width: 400px; }
-        input { width: 80%; padding: 12px; margin: 10px 0; border-radius: 6px; border: 1px solid #475569; background: #0f172a; color: white; }
-        h1, h2 { color: #22d3ee; }
-    </style>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Segoe UI;}
+body{background:#0f172a;color:#e2e8f0;text-align:center;}
+header{background:#111827;padding:20px;border-bottom:2px solid #22d3ee;}
+nav button{
+background:none;border:none;color:#cbd5e1;
+margin:0 10px;font-weight:bold;cursor:pointer;
+}
+nav button:hover{color:#22d3ee;}
+section{padding:60px 20px;display:none;}
+.active{display:block;}
+.box{
+background:#111827;
+padding:30px;
+max-width:400px;
+margin:20px auto;
+border-radius:12px;
+box-shadow:0 0 20px rgba(34,211,238,0.2);
+}
+input{
+width:100%;padding:12px;margin:10px 0;
+border-radius:8px;border:1px solid #334155;
+background:#0f172a;color:white;
+}
+.btn{
+width:100%;padding:12px;
+background:#22d3ee;color:#0f172a;
+border:none;border-radius:8px;
+cursor:pointer;font-weight:bold;
+}
+.btn:hover{background:#06b6d4;}
+.game-item{
+background:#1e293b;
+padding:10px;margin:10px 0;
+border-radius:8px;
+}
+</style>
 </head>
 <body>
 
-    <div class="main-container">
-        <header>
-            <nav>
-                <a href="#home">Home</a>
-                <a href="#games">Games</a>
-                <a href="#donation">Donation</a>
-                <a href="#payment">Payment</a>
-                <a href="#login">Login</a>
-            </nav>
-        </header>
+<header>
+<nav>
+<button onclick="showSection('home')">Home</button>
+<button onclick="showSection('dashboard')">Dashboard</button>
+<button onclick="showSection('donation')">Donation</button>
+<button onclick="showSection('login')">Login</button>
+<button onclick="logoutUser()">Logout</button>
+</nav>
+</header>
 
-        <section id="home">
-            <h1>Shashwat Gaming Studios</h1>
-            <p>Big Dreams, Big Empire. i am 9 th class and want to make my moms every dream real</p>
-        </section>
+<section id="home" class="active">
+<h1>Shashwat Gaming Studios 🚀</h1>
+<p>Building Dreams For Mom ❤️</p>
+</section>
 
-        <section id="games">
-            <h2>Game Trailer</h2>
-            <video controls style="width: 100%; border: 2px solid #22d3ee; border-radius: 12px;">
-                <source src="your-game-trailer.mp4" type="video/mp4">
-            </video>
-        </section>
+<section id="login">
+<div class="box">
+<h2>Login / Register</h2>
+<input type="email" id="email" placeholder="Email">
+<input type="password" id="password" placeholder="Password">
+<button class="btn" onclick="loginUser()">Login</button>
+<button class="btn" style="margin-top:10px;background:#6366f1;color:white" onclick="registerUser()">Register</button>
+</div>
+</section>
 
-        <section id="payment">
-            <div class="box">
-                <h2>Secure Payment</h2>
-                <p>Support the Empire:</p>
-                <button class="btn" onclick="window.location.href='upi://pay?pa=8307077846@ybl' bank&pn=ShashwatGaming'">Pay via UPI</button>
-            </div>
-        </section>
+<section id="dashboard">
 
-        <section id="login">
-            <div class="box">
-                <h2>Empire Login</h2>
-                <input type="email" id="email" placeholder="Email Address">
-                <input type="password" id="password" placeholder="Password">
-                <br>
-                <button class="btn" onclick="loginUser()">LOGIN</button>
-            </div>
-        </section>
-    </div>
+<div class="box">
+<h2>Profile</h2>
+<p id="userEmail"></p>
+</div>
 
-  <script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
+<div class="box">
+<h2>Publish Game</h2>
+<input type="text" id="gameTitle" placeholder="Game Title">
+<input type="text" id="gameLink" placeholder="Game URL">
+<button class="btn" onclick="publishGame()">Publish Game</button>
+</div>
 
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "the-ceo-web",
-    authDomain: "the-ceo-web.firebaseapp.com",
-    projectId: "the-ceo-web",
-    storageBucket: "the-ceo-web.firebasestorage.app",
-    messagingSenderId: "729264914822",
-    appId: "1:729264914822:web:c6e123edca812c50586c07",
-    measurementId: "G-ZMJJQRBS0V"
-  };
+<div class="box">
+<h2>Your Games</h2>
+<div id="gamesList"></div>
+</div>
 
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
+</section>
+
+<section id="donation">
+
+<div class="box">
+<h2>Support Shashwat Gaming ❤️</h2>
+<input type="number" id="donationAmount" placeholder="Enter Amount (₹)">
+<button class="btn" onclick="donate('general')">Donate</button>
+<div id="generalDonations"></div>
+</div>
+
+<div class="box">
+<h2>Donation For Dogs 🐶</h2>
+<input type="number" id="dogDonationAmount" placeholder="Enter Amount (₹)">
+<button class="btn" onclick="donate('dogs')">Donate For Dogs</button>
+<div id="dogDonations"></div>
+</div>
+
+</section>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+getAuth, signInWithEmailAndPassword,
+createUserWithEmailAndPassword,
+onAuthStateChanged, signOut
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+import {
+getFirestore, collection, addDoc, getDocs
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+apiKey: "YOUR_REAL_API_KEY",
+authDomain: "the-ceo-web.firebaseapp.com",
+projectId: "the-ceo-web",
+storageBucket: "the-ceo-web.appspot.com",
+messagingSenderId: "729264914822",
+appId: "1:729264914822:web:c6e123edca812c50586c07"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+window.showSection=function(id){
+document.querySelectorAll("section").forEach(sec=>sec.classList.remove("active"));
+document.getElementById(id).classList.add("active");
+}
+
+window.loginUser=function(){
+const email=emailInput("email");
+const password=emailInput("password");
+signInWithEmailAndPassword(auth,email,password)
+.then(()=>alert("Login Successful"))
+.catch(err=>alert(err.message));
+}
+
+window.registerUser=function(){
+const email=emailInput("email");
+const password=emailInput("password");
+createUserWithEmailAndPassword(auth,email,password)
+.then(()=>alert("Account Created"))
+.catch(err=>alert(err.message));
+}
+
+window.logoutUser=function(){
+signOut(auth);
+alert("Logged Out");
+}
+
+function emailInput(id){return document.getElementById(id).value;}
+
+onAuthStateChanged(auth,(user)=>{
+if(user){
+document.getElementById("userEmail").innerText="Logged in as: "+user.email;
+showSection("dashboard");
+loadGames();
+}else{
+showSection("login");
+}
+});
+
+window.publishGame=async function(){
+await addDoc(collection(db,"games"),{
+title:emailInput("gameTitle"),
+link:emailInput("gameLink"),
+owner:auth.currentUser.email
+});
+alert("Game Published 🚀");
+loadGames();
+}
+
+async function loadGames(){
+const querySnapshot=await getDocs(collection(db,"games"));
+let html="";
+querySnapshot.forEach(doc=>{
+const game=doc.data();
+html+=`<div class="game-item">
+<strong>${game.title}</strong><br>
+<a href="${game.link}" target="_blank">${game.link}</a>
+</div>`;
+});
+document.getElementById("gamesList").innerHTML=html;
+}
+
+window.donate=async function(type){
+let amount;
+if(type==="general"){
+amount=emailInput("donationAmount");
+}else{
+amount=emailInput("dogDonationAmount");
+}
+
+await addDoc(collection(db,"donations"),{
+type:type,
+amount:amount,
+user:auth.currentUser?auth.currentUser.email:"Guest",
+date:new Date()
+});
+
+alert("Thank You For Your Donation ❤️");
+loadDonations();
+}
+
+async function loadDonations(){
+const querySnapshot=await getDocs(collection(db,"donations"));
+let generalHTML="";
+let dogHTML="";
+
+querySnapshot.forEach(doc=>{
+const d=doc.data();
+if(d.type==="general"){
+generalHTML+=`<div>₹${d.amount} - ${d.user}</div>`;
+}else{
+dogHTML+=`<div>₹${d.amount} - ${d.user}</div>`;
+}
+});
+
+document.getElementById("generalDonations").innerHTML=generalHTML;
+document.getElementById("dogDonations").innerHTML=dogHTML;
+}
+
+loadDonations();
+
+</script>
 </body>
 </html>
