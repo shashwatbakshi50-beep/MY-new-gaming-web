@@ -1,262 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shashwat Gaming Studios</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shashwat Gaming Studios</title>
+    <style>
+        body { 
+            margin: 0; padding: 0;
+            font-family: 'Segoe UI', sans-serif; 
+            background: #0f172a; 
+            color: #e2e8f0; 
+            display: flex; flex-direction: column; align-items: center;
+        }
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+        .main-container { width: 90%; max-width: 800px; display: flex; flex-direction: column; align-items: center; text-align: center; }
 
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
-body{background:#0f172a;color:#e2e8f0;overflow-x:hidden;}
-header{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:20px 60px;
-background:#1e293b;
-position:fixed;
-width:100%;
-top:0;
-z-index:1000;
-}
-header h2{color:#22d3ee;}
-nav a{
-margin-left:20px;
-color:#e2e8f0;
-text-decoration:none;
-font-weight:500;
-}
-nav a:hover{color:#22d3ee;}
-.hero{
-height:100vh;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-text-align:center;
-padding-top:80px;
-}
-.hero h1{font-size:48px;color:#22d3ee;}
-.hero p{margin-top:15px;color:#94a3b8;}
-.btn{
-margin-top:15px;
-padding:10px 25px;
-background:#22d3ee;
-border:none;
-border-radius:8px;
-font-weight:600;
-cursor:pointer;
-}
-.btn-danger{
-background:#ef4444;
-color:white;
-}
-section{
-padding:80px 60px;
-text-align:center;
-}
-.card{
-background:#1e293b;
-padding:30px;
-border-radius:12px;
-margin:20px auto;
-max-width:400px;
-}
-.card h3{color:#22d3ee;margin-bottom:15px;}
-footer{
-background:#1e293b;
-padding:20px;
-text-align:center;
-color:#94a3b8;
-}
-.modal{
-display:none;
-position:fixed;
-top:0;left:0;
-width:100%;height:100%;
-background:rgba(0,0,0,0.6);
-justify-content:center;
-align-items:center;
-}
-.modal-content{
-background:#1e293b;
-padding:30px;
-border-radius:10px;
-width:300px;
-text-align:center;
-position:relative;
-}
-.modal-content input{
-width:100%;
-padding:10px;
-margin:10px 0;
-border:none;
-border-radius:6px;
-background:#334155;
-color:white;
-}
-.close{
-position:absolute;
-top:15px;
-right:20px;
-cursor:pointer;
-font-size:20px;
-}
-.status{
-margin-left:20px;
-color:#22d3ee;
-}
-.hidden{display:none;}
-</style>
+        header { width: 100%; padding: 20px 0; border-bottom: 2px solid #22d3ee; 
+      background: #1e293b; margin-bottom: 20px; }
+        nav a { color: #cbd5e1; margin: 0 15px; text-decoration: none; font-weight: bold; }
+        
+        section { width: 100%; padding: 40px 0; border-bottom: 1px solid #334155; }
+
+        .btn { 
+            background: #22d3ee; color: #0f172a; padding: 12px 30px; 
+            border: none; border-radius: 8px; cursor: pointer; 
+            font-weight: bold; margin-top: 20px; transition: 0.3s;
+        }
+        .btn:hover { background: #06b6d4; }
+
+        .box { padding: 30px; border: 1px solid #334155; border-radius: 12px; background: #1e293b; margin: 20px 0; width: 100%; max-width: 400px; }
+        input { width: 80%; padding: 12px; margin: 10px 0; border-radius: 6px; border: 1px solid #475569; background: #0f172a; color: white; }
+        h1, h2 { color: #22d3ee; }
+    </style>
 </head>
-
 <body>
 
-<header>
-<h2>Shashwat Gaming Studios</h2>
-<nav>
-<a href="#home">Home</a>
-<a href="#donation">Donation</a>
-<a href="#contact">Contact</a>
-<span class="status" id="userStatus">Not Logged In</span>
-<button class="btn" id="loginBtn" onclick="openModal()">Login</button>
-<button class="btn btn-danger hidden" id="logoutBtn" onclick="logout()">Logout</button>
-</nav>
-</header>
+    <div class="main-container">
+        <header>
+            <nav>
+                <a href="#home">Home</a>
+                <a href="#games">Games</a>
+                <a href="#donation">Donation</a>
+                <a href="#payment">Payment</a>
+                <a href="#login">Login</a>
+            </nav>
+        </header>
 
-<div class="hero" id="home">
-<h1>Welcome to Professional Gaming Company</h1>
-<p>Secure • Modern • Professional Platform</p>
-<button class="btn" onclick="scrollToDonation()">Support Us</button>
-</div>
+        <section id="home">
+            <h1>Shashwat Gaming Studios</h1>
+            <p>Big Dreams, Big Empire.</p>
+        </section>
 
-<section id="donation">
-<h2>Donation & Support 🐶</h2>
+        <section id="games">
+            <h2>Game Trailer</h2>
+            <video controls style="width: 100%; border: 2px solid #22d3ee; border-radius: 12px;">
+                <source src="your-game-trailer.mp4" type="video/mp4">
+            </video>
+        </section>
 
-<div class="card">
-<h3>Help Street Dogs</h3>
-<p>Your donation helps food, shelter and medical care.</p>
-<button class="btn" onclick="makePayment(500)">Donate ₹500</button>
-</div>
+        <section id="payment">
+            <div class="box">
+                <h2>Secure Payment</h2>
+                <p>Support the Empire:</p>
+                <button class="btn" onclick="window.location.href='upi://pay?pa=your-upi-id@bank&pn=ShashwatGaming'">Pay via UPI</button>
+            </div>
+        </section>
 
-<div class="card">
-<h3>Premium Game Support</h3>
-<p>Support our game development journey.</p>
-<button class="btn" onclick="makePayment(999)">Pay ₹999</button>
-</div>
+        <section id="login">
+            <div class="box">
+                <h2>Empire Login</h2>
+                <input type="email" id="email" placeholder="Email Address">
+                <input type="password" id="password" placeholder="Password">
+                <br>
+                <button class="btn" onclick="loginUser()">LOGIN</button>
+            </div>
+        </section>
+    </div>
 
-<div class="card">
-<h3>About Our CEO</h3>
-<p>Founder of Shashwat Gaming Studios with a mission to build a secure and innovative gaming platform.</p>
-</div>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
+        
+        const firebaseConfig = {
+            apiKey: "the-ceo-web",
+            authDomain: "the-ceo-web.firebaseapp.com",
+            projectId: "the-ceo-web",
+            storageBucket: "the-ceo-web.firebasestorage.app",
+            messagingSenderId: "729264914822",
+            appId: "1:729264914822:web:c6e123edca812c50586c07",
+            measurementId: "G-ZMJJQRBS0V"
+        };
+        initializeApp(firebaseConfig);
+    </script>
 
-</section>
-
-<section id="contact">
-<h2>Contact Us</h2>
-<p>Email: support@shashwatgaming.com</p>
-</section>
-
-<footer>
-© 2026 Shashwat Gaming Studios. All Rights Reserved.
-</footer>
-
-<!-- LOGIN MODAL -->
-<div class="modal" id="loginModal">
-<div class="modal-content">
-<span class="close" onclick="closeModal()">×</span>
-<h3>Login / Signup</h3>
-<input type="email" id="email" placeholder="Email">
-<input type="password" id="password" placeholder="Password">
-<button class="btn" onclick="signup()">Sign Up</button>
-<button class="btn" onclick="login()">Login</button>
-</div>
-</div>
-
-<script>
-
-let loggedInUser = localStorage.getItem("loggedInUser");
-
-updateUI();
-
-function openModal(){
-document.getElementById("loginModal").style.display="flex";
-}
-
-function closeModal(){
-document.getElementById("loginModal").style.display="none";
-}
-
-function signup(){
-let email=emailInput();
-let password=passwordInput();
-
-if(email && password){
-localStorage.setItem(email,password);
-alert("Account Created Successfully");
-}else{
-alert("Fill all fields");
-}
-}
-
-function login(){
-let email=emailInput();
-let password=passwordInput();
-let storedPassword=localStorage.getItem(email);
-
-if(storedPassword===password){
-loggedInUser=email;
-localStorage.setItem("loggedInUser",email);
-updateUI();
-closeModal();
-alert("Login Successful");
-}else{
-alert("Invalid Credentials");
-}
-}
-
-function logout(){
-localStorage.removeItem("loggedInUser");
-loggedInUser=null;
-updateUI();
-alert("Logged Out");
-}
-
-function updateUI(){
-if(loggedInUser){
-document.getElementById("userStatus").innerText="Logged In";
-document.getElementById("loginBtn").classList.add("hidden");
-document.getElementById("logoutBtn").classList.remove("hidden");
-}else{
-document.getElementById("userStatus").innerText="Not Logged In";
-document.getElementById("loginBtn").classList.remove("hidden");
-document.getElementById("logoutBtn").classList.add("hidden");
-}
-}
-
-function makePayment(amount){
-if(loggedInUser){
-window.location.href="https://buy.stripe.com/YOUR_REAL_STRIPE_LINK";
-}else{
-alert("Please Login First");
-openModal();
-}
-}
-
-function scrollToDonation(){
-document.getElementById("donation").scrollIntoView({behavior:'smooth'});
-}
-
-function emailInput(){
-return document.getElementById("email").value;
-}
-function passwordInput(){
-return document.getElementById("password").value;
-}
-
-</script>
-
+    <script>
+        function loginUser() {
+            alert("Login with Server connected!");
+        }
+    </script>
 </body>
 </html>
