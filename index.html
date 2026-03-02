@@ -3,81 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RoyalArc | Elite Global Command</title>
+    <title>RoyalArc | Official Enterprise Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #6366f1; --dark: #020617; --glass: rgba(30, 41, 59, 0.7); }
-        body { background: var(--dark); color: #f8fafc; font-family: 'Inter', sans-serif; margin: 0; display: flex; justify-content: center; min-height: 100vh; }
+        :root { --bg: #020617; --surface: #0f172a; --accent: #6366f1; --text: #f8fafc; --border: #1e293b; }
+        * { box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background: var(--bg); color: var(--text); margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
 
-        /* Centering Lock Wrapper */
-        .page-container { width: 90%; max-width: 1100px; display: grid; grid-template-columns: 260px 1fr; gap: 30px; margin-top: 50px; }
-        
-        .sidebar { background: #0b0f1a; padding: 2rem; border-radius: 20px; border: 1px solid #334155; height: fit-content; }
-        .main-content { display: flex; flex-direction: column; gap: 20px; }
-        .card { background: var(--glass); backdrop-filter: blur(15px); padding: 2rem; border-radius: 20px; border: 1px solid #334155; width: 100%; }
-        
-        .btn-royal { background: var(--primary); color: white; padding: 12px 24px; border-radius: 8px; border: none; cursor: pointer; font-weight: bold; width: 100%; margin-top: 10px; }
-        .hidden { display: none; }
+        /* Master Locked Centered UI */
+        .master-app { 
+            width: 95%; max-width: 1200px; height: 88vh; background: var(--surface); 
+            border-radius: 24px; border: 1px solid var(--border); display: grid; 
+            grid-template-columns: 280px 1fr; overflow: hidden; box-shadow: 0 40px 80px rgba(0,0,0,0.8);
+        }
 
-        /* AI Chat Window */
-        .chat-container { position: fixed; bottom: 30px; right: 30px; width: 320px; background: #0f172a; border-radius: 15px; border: 1px solid var(--primary); padding: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        .sidebar { padding: 40px; border-right: 1px solid var(--border); display: flex; flex-direction: column; gap: 15px; }
+        .nav-item { cursor: pointer; color: #94a3b8; padding: 14px; border-radius: 12px; transition: 0.3s; font-weight: 500; }
+        .nav-item:hover { color: white; background: var(--border); }
+        .nav-active { color: white; background: var(--accent); }
+
+        .main-content { padding: 60px; overflow-y: auto; }
+        .section { display: none; }
+        .section.active { display: block; animation: fadeIn 0.4s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; } }
+
+        .card { background: rgba(30, 41, 59, 0.4); padding: 30px; border-radius: 20px; border: 1px solid var(--border); }
+        .btn-royal { background: var(--accent); color: white; border: none; padding: 16px 32px; border-radius: 12px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 20px; transition: 0.3s; }
+        .btn-royal:hover { opacity: 0.9; }
+
+        /* Floating AI Widget */
+        .ai-fab { position: fixed; bottom: 40px; right: 40px; width: 70px; height: 70px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 1000; box-shadow: 0 10px 25px rgba(99,102,241,0.4); }
     </style>
 </head>
 <body>
 
-<div class="page-container">
+<div class="master-app">
     <aside class="sidebar">
-        <h2>RoyalArc</h2>
-        <nav style="display:flex; flex-direction:column; gap:15px; margin-top:20px;">
-            <p style="cursor:pointer;" onclick="show('dash')">Dashboard</p>
-            <p style="cursor:pointer;" onclick="show('ceo')">About CEO</p>
-            <p style="cursor:pointer;" onclick="show('donate')">Donate</p>
-        </nav>
+        <h2 style="margin-bottom: 40px; color:var(--accent);">RoyalArc</h2>
+        <p class="nav-item nav-active" onclick="App.navigate('dash')">📊 Dashboard</p>
+        <p class="nav-item" onclick="App.navigate('ceo')">👤 CEO Bio</p>
+        <p class="nav-item" onclick="App.navigate('donate')">💎 Donate</p>
+        <p class="nav-item" onclick="App.navigate('auth')">🔒 Security</p>
     </aside>
 
     <main class="main-content">
-        <div id="auth-section" class="card">
-            <h3>Founder Access</h3>
-            <input type="email" id="email" placeholder="Founder Email" style="width:100%; padding:10px; margin-bottom:10px;">
-            <button class="btn-royal" onclick="System.Auth.login()">Login to Empire</button>
+        <div id="auth" class="section active">
+            <h1>System Security Access</h1>
+            <input type="email" placeholder="Founder Email" style="width:100%; padding:15px; margin-bottom:10px; border-radius:8px; border:1px solid var(--border); background:var(--bg); color:white;">
+            <button class="btn-royal" onclick="App.navigate('dash')">Authenticate</button>
         </div>
-
-        <div id="dash-section" class="card hidden">
-            <h1>Empire Statistics</h1>
-            <p>Welcome, Founder.</p>
+        <div id="dash" class="section">
+            <h1>Empire Dashboard</h1>
+            <p>Welcome, Founder. System Status: <strong>Operational</strong>.</p>
         </div>
-
-        <div id="ceo-section" class="card hidden">
+        <div id="ceo" class="section">
             <h1>About CEO</h1>
-            <p>Visionary Builder: Harnessing Global Web Architecture.</p>
+            <p>Harnaksh: Architect of the Global Network and visionary leader.</p>
         </div>
-
-        <div id="donate-section" class="card hidden">
-            <h1>Support the Mission</h1>
-            <button class="btn-royal" onclick="System.Payment.process()">Donate Now</button>
+        <div id="donate" class="section">
+            <div class="card">
+                <h1>Support the Mission</h1>
+                <button class="btn-royal" onclick="alert('Payment Gateway: Connection Secured.')">Execute Donation</button>
+            </div>
         </div>
     </main>
 </div>
 
-<div class="chat-container">
-    <div id="chat-box" style="height: 150px; overflow-y: scroll; margin-bottom: 10px; font-size:14px;">AI: Namaste! How can I help?</div>
-    <input type="text" id="ai-input" placeholder="Ask AI..." style="width:100%; background:transparent; color:white; border:none; border-top:1px solid #475569;" onkeypress="if(event.key==='Enter') System.AI.chat()">
-</div>
+<div class="ai-fab" onclick="alert('AI Brain: System fully operational, Boss.')">💬</div>
 
 <script>
-    const System = {
-        Auth: { login: () => { document.getElementById('auth-section').classList.add('hidden'); document.getElementById('dash-section').classList.remove('hidden'); } },
-        Payment: { process: () => alert("Transaction Verified.") },
-        AI: { 
-            chat: () => { 
-                const box = document.getElementById('chat-box'); 
-                box.innerHTML += <p><b>User:</b> Question Received</p><p style="color:var(--primary);"><b>AI:</b> Operational status confirmed.</p>;
-            } 
+    const App = {
+        navigate: (id) => {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('nav-active'));
+            document.getElementById(id).classList.add('active');
+            event.target.classList.add('nav-active');
         }
     };
-    function show(id) {
-        ['dash', 'ceo', 'donate'].forEach(s => document.getElementById(s+'-section').classList.add('hidden'));
-        document.getElementById(id+'-section').classList.remove('hidden');
-    }
 </script>
 </body>
 </html>
