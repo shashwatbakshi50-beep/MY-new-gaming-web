@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RoyalArc Gaming</title>
+<title>RoyalArc Gaming | Official Platform</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
@@ -13,48 +13,54 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
 body{background:#0b0f1a;color:white;overflow-x:hidden;}
 html{scroll-behavior:smooth;}
-#particles-js{position:fixed;width:100%;height:100%;z-index:-1;background:#0b0f1a;}
+#particles-js{position:fixed;width:100%;height:100%;z-index:-1;}
 
 header{
-position:fixed;width:100%;background:rgba(0,0,0,0.6);
+position:fixed;width:100%;background:rgba(0,0,0,0.7);
 backdrop-filter:blur(10px);
 display:flex;justify-content:space-between;align-items:center;
 padding:15px 8%;z-index:1000;
 }
-
-nav a{margin:0 15px;color:white;text-decoration:none;cursor:pointer;}
+nav a{margin:0 12px;color:white;text-decoration:none;cursor:pointer;font-weight:500;}
 
 .btn{
 padding:12px 25px;border-radius:30px;border:none;
 background:linear-gradient(45deg,#7f5af0,#2cb67d);
 color:white;cursor:pointer;transition:0.3s;
 }
-.btn:hover{transform:scale(1.05);}
+.btn:hover{transform:scale(1.08);}
 
 section{padding:120px 8% 80px;}
-
 .hero{
 display:flex;flex-direction:column;justify-content:center;
 align-items:center;text-align:center;height:100vh;
-background:linear-gradient(135deg,#1f1c2c,#928dab);
+background:linear-gradient(135deg,#141e30,#243b55);
+}
+.hero h1{font-size:50px;font-weight:800;}
+
+.card{
+background:#111827;padding:30px;border-radius:20px;margin-top:20px;
+box-shadow:0 0 25px rgba(0,0,0,0.6);
 }
 
-input{
-width:100%;padding:10px;margin:10px 0;
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+}
+
+input,textarea{
+width:100%;padding:12px;margin:10px 0;
 border-radius:10px;border:none;
 }
 
-.dashboard{
-display:none;background:#111827;
-padding:40px;border-radius:20px;margin-top:40px;
-}
+.dashboard{display:none;margin-top:30px;}
 
-.progress{
-width:100%;background:#222;border-radius:20px;
-overflow:hidden;margin-top:10px;
-}
-.progress-bar{
-height:15px;background:#2cb67d;width:0%;
+.progress{width:100%;background:#222;border-radius:20px;overflow:hidden;margin-top:10px;}
+.progress-bar{height:15px;background:#2cb67d;width:0%;}
+
+footer{
+background:#111827;padding:40px;text-align:center;margin-top:60px;
 }
 
 .modal{
@@ -72,20 +78,6 @@ position:fixed;bottom:20px;right:20px;
 background:#2cb67d;padding:15px 25px;border-radius:10px;
 display:none;
 }
-
-.loader{
-border:4px solid #f3f3f3;
-border-top:4px solid #2cb67d;
-border-radius:50%;
-width:30px;height:30px;
-animation:spin 1s linear infinite;
-margin:auto;display:none;
-}
-
-@keyframes spin{
-0%{transform:rotate(0deg);}
-100%{transform:rotate(360deg);}
-}
 </style>
 </head>
 <body>
@@ -93,34 +85,85 @@ margin:auto;display:none;
 <div id="particles-js"></div>
 
 <header>
-<h2>👑 RoyalArc</h2>
+<h2>👑 RoyalArc Gaming</h2>
 <nav>
-<a onclick="openLogin()">Login</a>
+<a onclick="scrollToSection('services')">Services</a>
 <a onclick="scrollToSection('donation')">Donate</a>
+<a onclick="scrollToSection('about')">CEO</a>
+<a onclick="scrollToSection('contact')">Contact</a>
+<a onclick="openLogin()">Login</a>
 </nav>
 </header>
 
 <section class="hero">
 <h1>Build. Publish. Dominate.</h1>
-<h3>Total Donations: ₹ <span id="totalDonation">0</span></h3>
-<div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+<p>Next-Gen Gaming Startup Platform</p>
 <br>
-<button class="btn" onclick="openLogin()">Get Started</button>
+<button class="btn" onclick="openLogin()">Join Now</button>
 
-<div class="dashboard" id="dashboard">
+<h3 style="margin-top:40px;">Total Donations ₹ <span id="totalDonation">0</span></h3>
+<div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+
+<div class="dashboard card" id="dashboard">
 <h2>Welcome <span id="userEmail"></span></h2>
 <button class="btn" onclick="logout()">Logout</button>
-<h3>Your Donation History</h3>
+<h3>Your Payment History</h3>
 <div id="history"></div>
 </div>
+</section>
 
+<section id="services">
+<h2>🚀 Our Services</h2>
+<div class="grid">
+<div class="card">
+<h3>Game Publishing</h3>
+<p>Launch your indie game globally with RoyalArc publishing system.</p>
+</div>
+<div class="card">
+<h3>Professional Hosting</h3>
+<p>High-speed servers & global CDN integration.</p>
+</div>
+<div class="card">
+<h3>Community Growth</h3>
+<p>Marketing, ranking & leaderboard system for developers.</p>
+</div>
+</div>
 </section>
 
 <section id="donation">
 <h2>🐶 Royal Dogs Foundation</h2>
+<div class="card">
 <input type="number" id="donationAmount" placeholder="Enter Amount (₹)">
 <button class="btn" onclick="donate()">Donate Now</button>
+<div id="lastPayment"></div>
+</div>
+
+<h3 style="margin-top:40px;">🏆 Top Donors</h3>
+<div id="leaderboard"></div>
 </section>
+
+<section id="about">
+<h2>👑 About CEO</h2>
+<div class="card">
+<p><strong>Founder:</strong> Your Name</p>
+<p>RoyalArc Gaming was founded to empower global indie developers and build a premium publishing ecosystem.</p>
+<p>Vision: Make gaming accessible & profitable for creators.</p>
+</div>
+</section>
+
+<section id="contact">
+<h2>📩 Contact Us</h2>
+<div class="card">
+<input type="email" id="shashwatbakshi50@gamil.com" placeholder="Your Email">
+<textarea id="contactMsg" placeholder="Your Message"></textarea>
+<button class="btn" onclick="sendMessage()">Send Message</button>
+</div>
+</section>
+
+<footer>
+<p>© 2025 RoyalArc Gaming. All Rights Reserved.</p>
+<p>Privacy | Terms | Support</p>
+</footer>
 
 <div class="modal" id="loginModal">
 <div class="modal-box">
@@ -129,10 +172,7 @@ margin:auto;display:none;
 <input type="password" id="password" placeholder="Password">
 <button class="btn" onclick="register()">Register</button>
 <button class="btn" onclick="login()">Login</button>
-<button class="btn" onclick="googleLogin()">Google Login</button>
-<button class="btn" onclick="resetPassword()">Reset Password</button>
 <button class="btn" onclick="closeLogin()">Close</button>
-<div class="loader" id="loader"></div>
 </div>
 </div>
 
@@ -145,14 +185,15 @@ margin:auto;display:none;
 <script>
 particlesJS("particles-js",{particles:{number:{value:80},size:{value:3},move:{speed:2}}});
 
-const firebaseConfig = {
+const firebaseConfig={
 apiKey:"YOUR_API_KEY",
-authDomain:"bakshicodingempire.in",
+authDomain:"YOUR_AUTH_DOMAIN",
+projectId:"YOUR_PROJECT_ID"
 };
 
 firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const db = firebase.firestore();
+const auth=firebase.auth();
+const db=firebase.firestore();
 
 function showToast(msg){
 let t=document.getElementById("toast");
@@ -165,74 +206,46 @@ function openLogin(){loginModal.style.display="flex";}
 function closeLogin(){loginModal.style.display="none";}
 
 function register(){
-loader.style.display="block";
 auth.createUserWithEmailAndPassword(email.value,password.value)
-.then(user=>{
-user.user.sendEmailVerification();
-showToast("Verification Email Sent!");
-})
-.catch(e=>showToast(e.message))
-.finally(()=>loader.style.display="none");
+.then(()=>showToast("Registered"))
+.catch(e=>showToast(e.message));
 }
 
 function login(){
-loader.style.display="block";
 auth.signInWithEmailAndPassword(email.value,password.value)
 .then(user=>{
-if(!user.user.emailVerified){
-showToast("Verify Email First!");
-return;
-}
 userEmail.innerText=user.user.email;
 dashboard.style.display="block";
 closeLogin();
 loadHistory();
 })
-.catch(e=>showToast(e.message))
-.finally(()=>loader.style.display="none");
-}
-
-function googleLogin(){
-const provider=new firebase.auth.GoogleAuthProvider();
-auth.signInWithPopup(provider)
-.then(result=>{
-userEmail.innerText=result.user.email;
-dashboard.style.display="block";
-closeLogin();
-})
-.catch(e=>showToast(e.message));
-}
-
-function resetPassword(){
-auth.sendPasswordResetEmail(email.value)
-.then(()=>showToast("Reset Email Sent"))
 .catch(e=>showToast(e.message));
 }
 
 function logout(){
 auth.signOut();
 dashboard.style.display="none";
-showToast("Logged Out");
 }
 
 function donate(){
 if(!auth.currentUser){showToast("Login Required");openLogin();return;}
-
 let amount=parseInt(donationAmount.value);
 if(!amount||amount<10){showToast("Minimum ₹10");return;}
 
 var options={
-key:"YOUR_RAZORPAY_KEY",
+key:"8307077846@ybl",
 amount:amount*100,
 currency:"INR",
 handler:function(response){
+let id=response.razorpay_payment_id;
 db.collection("donations").add({
 email:auth.currentUser.email,
 amount:amount,
-paymentId:response.razorpay_payment_id,
-time:new Date()
+paymentId:id,
+date:new Date()
 });
-showToast("Payment Successful!");
+lastPayment.innerHTML=`<p>Payment ID: ${id}</p>`;
+showToast("Payment Successful");
 }
 };
 new Razorpay(options).open();
@@ -240,11 +253,21 @@ new Razorpay(options).open();
 
 db.collection("donations").onSnapshot(snapshot=>{
 let total=0;
-snapshot.forEach(doc=>total+=doc.data().amount);
+let donors={};
+snapshot.forEach(doc=>{
+let data=doc.data();
+total+=data.amount;
+donors[data.email]=(donors[data.email]||0)+data.amount;
+});
 totalDonation.innerText=total;
+progressBar.style.width=Math.min((total/100000)*100,100)+"%";
 
-let percent=Math.min((total/50000)*100,100);
-progressBar.style.width=percent+"%";
+let sorted=Object.entries(donors).sort((a,b)=>b[1]-a[1]);
+let html="";
+sorted.slice(0,5).forEach(d=>{
+html+=`<div class="card">${d[0]} - ₹${d[1]}</div>`;
+});
+leaderboard.innerHTML=html;
 });
 
 function loadHistory(){
@@ -253,10 +276,24 @@ db.collection("donations")
 .onSnapshot(snapshot=>{
 let html="";
 snapshot.forEach(doc=>{
-html+=`<p>₹${doc.data().amount} | ${doc.data().paymentId}</p>`;
+let d=doc.data();
+html+=`<div class="card">₹${d.amount} | ${d.paymentId}</div>`;
 });
 history.innerHTML=html;
 });
+}
+
+function sendMessage(){
+db.collection("messages").add({
+name:contactName.value,
+email:contactEmail.value,
+message:contactMsg.value,
+time:new Date()
+});
+showToast("Message Sent");
+contactName.value="";
+contactEmail.value="";
+contactMsg.value="";
 }
 
 function scrollToSection(id){
