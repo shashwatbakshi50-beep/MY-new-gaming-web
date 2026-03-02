@@ -4,12 +4,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RoyalArc Gaming</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
 body{background:#0b0f1a;color:white;overflow-x:hidden;}
 html{scroll-behavior:smooth;}
+
+#particles-js{
+position:fixed;
+width:100%;
+height:100%;
+z-index:-1;
+background:#0b0f1a;
+}
 
 header{
 position:fixed;
@@ -23,15 +34,13 @@ padding:15px 8%;
 z-index:1000;
 }
 
-header h2{color:#fff;font-weight:700;}
 nav a{
 margin:0 15px;
 color:white;
 text-decoration:none;
 font-weight:500;
-transition:0.3s;
+cursor:pointer;
 }
-nav a:hover{color:#7f5af0;}
 
 .btn{
 padding:12px 25px;
@@ -55,16 +64,6 @@ text-align:center;
 height:100vh;
 background:linear-gradient(135deg,#1f1c2c,#928dab);
 }
-.hero h1{
-font-size:60px;
-font-weight:800;
-margin-bottom:20px;
-}
-.hero p{
-max-width:700px;
-margin-bottom:30px;
-opacity:0.9;
-}
 
 .cards{
 display:grid;
@@ -72,16 +71,13 @@ grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
 gap:30px;
 margin-top:40px;
 }
+
 .card{
 background:rgba(255,255,255,0.05);
 padding:30px;
 border-radius:20px;
 backdrop-filter:blur(10px);
 transition:0.4s;
-}
-.card:hover{
-transform:translateY(-10px);
-background:rgba(255,255,255,0.08);
 }
 
 .pricing{
@@ -90,16 +86,13 @@ grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
 gap:40px;
 margin-top:50px;
 }
+
 .price-box{
 background:#111827;
 padding:40px;
 border-radius:20px;
 text-align:center;
 }
-.price-box h3{margin-bottom:15px;}
-.price-box h1{margin:20px 0;}
-.price-box ul{list-style:none;margin:20px 0;}
-.price-box ul li{margin:10px 0;opacity:0.8;}
 
 .donation{
 background:linear-gradient(135deg,#ff9966,#ff5e62);
@@ -113,165 +106,214 @@ background:#0f172a;
 padding:60px 8%;
 margin-top:80px;
 }
-.footer-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-gap:40px;
-}
-footer h4{margin-bottom:15px;}
-footer p,footer a{
-opacity:0.8;
-font-size:14px;
-color:white;
-text-decoration:none;
-display:block;
-margin:5px 0;
-}
-footer a:hover{opacity:1;}
 
-@media(max-width:768px){
-.hero h1{font-size:40px;}
+/* LOGIN MODAL */
+.modal{
+position:fixed;
+top:0;left:0;
+width:100%;height:100%;
+background:rgba(0,0,0,0.8);
+display:none;
+justify-content:center;
+align-items:center;
+}
+
+.modal-box{
+background:#111827;
+padding:40px;
+border-radius:20px;
+width:350px;
+text-align:center;
+}
+
+input{
+width:100%;
+padding:10px;
+margin:10px 0;
+border-radius:10px;
+border:none;
+}
+
+.dashboard{
+display:none;
+background:#111827;
+padding:40px;
+border-radius:20px;
+margin-top:40px;
 }
 </style>
 </head>
 
 <body>
 
+<div id="particles-js"></div>
+
 <header>
 <h2>👑 RoyalArc</h2>
 <nav>
-<a href="#home">Home</a>
-<a href="#games">Games</a>
-<a href="#developers">Developers</a>
-<a href="#pricing">Pricing</a>
-<a href="#donation">Dogs Foundation</a>
-<a href="#contact">Contact</a>
+<a onclick="openLogin()">Login</a>
+<a onclick="scrollToSection('donation')">Donate</a>
 </nav>
 </header>
 
-<section class="hero" id="home">
+<section class="hero">
 <h1>Build. Publish. Dominate.</h1>
-<p>RoyalArc Gaming is a next-generation publishing platform empowering indie developers and supporting animal welfare worldwide.</p>
-<button class="btn">Explore Platform</button>
-</section>
+<p>Professional Gaming Publishing Platform</p>
+<button class="btn" onclick="openLogin()">Get Started</button>
+<br><br>
+<h3>Total Donations: ₹ <span id="totalDonation">0</span></h3>
 
-<section id="games">
-<h2 style="text-align:center;font-size:40px;">Featured Games</h2>
-<div class="cards">
-<div class="card">
-<h3>Cyber Storm</h3>
-<p>High intensity futuristic shooter.</p>
+<div class="dashboard" id="dashboard">
+<h2>Welcome <span id="userEmail"></span></h2>
+<button class="btn" onclick="logout()">Logout</button>
+<h3 style="margin-top:20px;">Your Donation History</h3>
+<div id="history"></div>
 </div>
-<div class="card">
-<h3>Mythic Quest</h3>
-<p>Fantasy RPG built for global gamers.</p>
-</div>
-<div class="card">
-<h3>Speed Legends</h3>
-<p>Ultimate racing experience.</p>
-</div>
-</div>
-</section>
 
-<section id="developers">
-<h2 style="text-align:center;font-size:40px;">Developers Program</h2>
-<div class="cards">
-<div class="card">
-<h3>Global Publishing</h3>
-<p>Launch your game worldwide with our distribution engine.</p>
-</div>
-<div class="card">
-<h3>Revenue Sharing</h3>
-<p>Transparent and fair monetization system.</p>
-</div>
-<div class="card">
-<h3>Marketing Boost</h3>
-<p>Professional promotion & influencer reach.</p>
-</div>
-</div>
-</section>
-
-<section id="pricing">
-<h2 style="text-align:center;font-size:40px;">Membership Plans</h2>
-<div class="pricing">
-<div class="price-box">
-<h3>Basic</h3>
-<h1>Free</h1>
-<ul>
-<li>Game Access</li>
-<li>Community</li>
-<li>Standard Support</li>
-</ul>
-<button class="btn">Get Started</button>
-</div>
-<div class="price-box">
-<h3>Pro</h3>
-<h1>₹499/mo</h1>
-<ul>
-<li>Premium Games</li>
-<li>Developer Tools</li>
-<li>Priority Support</li>
-</ul>
-<button class="btn">Upgrade</button>
-</div>
-<div class="price-box">
-<h3>Elite</h3>
-<h1>₹999/mo</h1>
-<ul>
-<li>All Access</li>
-<li>Revenue Boost</li>
-<li>Marketing Priority</li>
-</ul>
-<button class="btn">Go Elite</button>
-</div>
-</div>
 </section>
 
 <section id="donation">
 <div class="donation">
 <h2>🐶 Royal Dogs Foundation</h2>
-<p>We support street dogs with food, shelter & medical care.</p>
+<p>Support street dogs with real donations.</p>
 <br>
-<button class="btn">Donate Now</button>
+<button class="btn" onclick="donate()">Donate ₹500</button>
 </div>
 </section>
 
-<section id="contact">
-<h2 style="text-align:center;font-size:40px;">Contact Us</h2>
-<div style="text-align:center;margin-top:30px;">
-<p>Email: shashwatbakshi50@gamil.com</p>
-<p>Business: shashwatbakshi50gamil.com</p>
-<button class="btn">Login / Register</button>
+<div class="modal" id="loginModal">
+<div class="modal-box">
+<h2>Login / Register</h2>
+<input type="email" id="email" placeholder="Email">
+<input type="password" id="password" placeholder="Password">
+<button class="btn" onclick="register()">Register</button>
+<button class="btn" onclick="login()">Login</button>
+<button class="btn" onclick="closeLogin()">Close</button>
 </div>
-</section>
+</div>
 
 <footer>
-<div class="footer-grid">
-<div>
-<h4>Company</h4>
-<a href="#">About</a>
-<a href="#">Careers</a>
-<a href="#">Blog</a>
-</div>
-<div>
-<h4>Support</h4>
-<a href="#">Help Center</a>
-<a href="#">Privacy Policy</a>
-<a href="#">Terms & Conditions</a>
-</div>
-<div>
-<h4>Community</h4>
-<a href="#">Discord</a>
-<a href="#">Twitter</a>
-<a href="#">YouTube</a>
-</div>
-<div>
-<h4>Legal</h4>
-<p>© 2026 RoyalArc Gaming</p>
-<p>All Rights Reserved</p>
-</div>
-</div>
+<p>© 2026 RoyalArc Gaming | All Rights Reserved</p>
 </footer>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
+
+<script>
+
+// PARTICLES
+particlesJS("particles-js",{
+particles:{number:{value:70},size:{value:3},move:{speed:2}},
+interactivity:{events:{onhover:{enable:true,mode:"repulse"}}}
+});
+
+// FIREBASE CONFIG
+const firebaseConfig = {
+apiKey:"YOUR_API_KEY",
+authDomain:"YOUR_AUTH_DOMAIN",
+projectId:"YOUR_PROJECT_ID",
+storageBucket:"YOUR_BUCKET",
+messagingSenderId:"YOUR_MSG",
+appId:"YOUR_APP"
+};
+
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
+
+// LOGIN MODAL
+function openLogin(){document.getElementById("loginModal").style.display="flex";}
+function closeLogin(){document.getElementById("loginModal").style.display="none";}
+
+// REGISTER
+function register(){
+auth.createUserWithEmailAndPassword(email.value,password.value)
+.then(()=>alert("Registered!"))
+.catch(e=>alert(e.message));
+}
+
+// LOGIN
+function login(){
+auth.signInWithEmailAndPassword(email.value,password.value)
+.then(user=>{
+document.getElementById("userEmail").innerText=user.user.email;
+document.getElementById("dashboard").style.display="block";
+closeLogin();
+loadHistory();
+})
+.catch(e=>alert(e.message));
+}
+
+// LOGOUT
+function logout(){
+auth.signOut();
+document.getElementById("dashboard").style.display="none";
+}
+
+// DONATE
+function donate(){
+if(!auth.currentUser){
+alert("Login Required");
+openLogin();
+return;
+}
+
+var options={
+key:"YOUR_RAZORPAY_KEY",
+amount:500*100,
+currency:"INR",
+name:"Dogs Donation",
+description:"RoyalArc Foundation",
+handler:function(response){
+
+db.collection("donations").add({
+email:auth.currentUser.email,
+amount:500,
+paymentId:response.razorpay_payment_id,
+time:new Date()
+});
+
+alert("Payment Successful!");
+loadTotal();
+loadHistory();
+}
+};
+
+new Razorpay(options).open();
+}
+
+// LOAD TOTAL
+function loadTotal(){
+db.collection("donations").get().then(snapshot=>{
+let total=0;
+snapshot.forEach(doc=>total+=doc.data().amount);
+document.getElementById("totalDonation").innerText=total;
+});
+}
+
+// LOAD HISTORY
+function loadHistory(){
+db.collection("donations")
+.where("email","==",auth.currentUser.email)
+.get()
+.then(snapshot=>{
+let html="";
+snapshot.forEach(doc=>{
+html+=`<p>₹ ${doc.data().amount} | ${doc.data().paymentId}</p>`;
+});
+document.getElementById("history").innerHTML=html;
+});
+}
+
+loadTotal();
+
+function scrollToSection(id){
+document.getElementById(id).scrollIntoView({behavior:"smooth"});
+}
+
+</script>
 
 </body>
 </html>
