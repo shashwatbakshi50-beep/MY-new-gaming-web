@@ -1,246 +1,131 @@
-<!DOCTYPE html>
-<html>
+[4:33 pm, 2/3/2026] shashwatbakshi50: <!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RoyalArc Gaming</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RoyalArc | Global Empire Console</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1; --dark: #0f172a; --surface: #1e293b;
+            --text: #f8fafc; --accent: #22c55e; --glass: rgba(30, 41, 59, 0.7);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        body { background: var(--dark); color: var(--text); overflow-x: hidden; }
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+        /* Premium Layout */
+        .app-shell { display: grid; grid-template-columns: 260px…
+[5:14 pm, 2/3/2026] shashwatbakshi50: <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RoyalArc | Global Command Center</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Variables for Global Branding */
+        :root {
+            --primary: #6366f1; --dark: #0f172a; --surface: #1e293b;
+            --text: #f8fafc; --accent: #22c55e; --glass: rgba(30, 41, 59, 0.7);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        body { background: var(--dark); color: var(--text); min-height: 100vh; display: flex; }
 
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins;}
-body{background:#0b0f1a;color:white;overflow-x:hidden;}
-section{padding:100px 8%;}
-header{
-position:fixed;width:100%;background:#111827;
-display:flex;justify-content:space-between;align-items:center;
-padding:15px 8%;z-index:1000;
-}
-nav a{margin:0 10px;color:white;text-decoration:none;cursor:pointer;}
-nav a:hover{color:#2cb67d;}
-.btn{
-padding:10px 25px;border:none;border-radius:25px;
-background:linear-gradient(45deg,#7f5af0,#2cb67d);
-color:white;cursor:pointer;margin-top:10px;
-}
-.hero{
-height:100vh;display:flex;flex-direction:column;
-justify-content:center;align-items:center;
-background:linear-gradient(135deg,#141e30,#243b55);
-text-align:center;
-}
-.card{
-background:#111827;padding:30px;border-radius:15px;margin-top:20px;
-}
-input,textarea{
-width:100%;padding:10px;margin:8px 0;border-radius:8px;border:none;
-}
-.dashboard{display:none;margin-top:20px;}
-.progress{width:100%;background:#222;border-radius:20px;margin-top:10px;}
-.progress-bar{height:15px;background:#2cb67d;width:0%;}
-footer{background:#111827;padding:40px;text-align:center;}
-.modal{
-position:fixed;top:0;left:0;width:100%;height:100%;
-background:rgba(0,0,0,0.8);
-display:none;justify-content:center;align-items:center;
-}
-.modal-box{
-background:#111827;padding:30px;border-radius:15px;width:300px;text-align:center;
-}
-.toast{
-position:fixed;bottom:20px;right:20px;
-background:#2cb67d;padding:10px 20px;border-radius:10px;
-display:none;
-}
-</style>
+        /* Dashboard Shell */
+        .shell { display: grid; grid-template-columns: 260px 1fr; width: 100%; }
+        .sidebar { background: #0b0f1a; padding: 2rem; border-right: 1px solid #334155; }
+        .content { padding: 3rem; }
+        
+        /* Glassmorphism Components */
+        .card { background: var(--glass); backdrop-filter: blur(12px); border: 1px solid #334155; padding: 2rem; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        
+        /* Inputs & Buttons */
+        input { width: 100%; padding: 15px; margin: 10px 0; border-radius: 10px; border: 1px solid #475569; background: #0f172a; color: white; }
+        .btn-prime { background: var(--primary); color: white; padding: 15px; border-radius: 10px; border: none; cursor: pointer; font-weight: 600; width: 100%; transition: 0.3s; }
+        .btn-prime:hover { filter: brightness(1.2); }
+        
+        .hidden { display: none; }
+    </style>
 </head>
 <body>
 
-<header>
-<h2>👑 RoyalArc</h2>
-<nav>
-<a onclick="scrollToSection('donate')">Donate</a>
-<a onclick="scrollToSection('contact')">Contact</a>
-<a onclick="openLogin()">Login</a>
-</nav>
-</header>
+<div class="shell">
+    <aside class="sidebar">
+        <h2 style="margin-bottom: 2rem; color: var(--primary);">RoyalArc</h2>
+        <nav style="display: flex; flex-direction: column; gap: 15px;">
+            <p>Dashboard</p>
+            <p>Global Treasury</p>
+            <p>Analytics</p>
+            <p onclick="location.reload()" style="cursor:pointer; color:#ef4444; margin-top:20px;">Logout</p>
+        </nav>
+    </aside>
 
-<section class="hero">
-<h1>Elite Gaming Startup Platform</h1>
-<p>Build. Publish. Dominate.</p>
-<button class="btn" onclick="openLogin()">Join Now</button>
+    <main class="content">
+        <header style="margin-bottom: 40px;">
+            <h1>Empire Command Center</h1>
+            <p id="region-tag">System Initializing...</p>
+        </header>
 
-<h3 style="margin-top:30px;">Total Donations ₹ <span id="totalDonation">0</span></h3>
-<div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+        <div id="auth-view" class="card">
+            <h3>System Access</h3>
+            <input type="email" id="email" placeholder="Founder Email">
+            <input type="password" id="pass" placeholder="Password">
+            <button class="btn-prime" onclick="RoyalArcEngine.auth()">Authorize Access</button>
+        </div>
 
-<div class="dashboard card" id="dashboard">
-<h3>Welcome <span id="userEmail"></span></h3>
-<button class="btn" onclick="logout()">Logout</button>
-<h4>Your Donations:</h4>
-<div id="history"></div>
+        <div id="dashboard-view" class="card hidden">
+            <h3>Global Funding Hub</h3>
+            <p>Secure Node: Active</p>
+            <input type="number" id="amt" placeholder="Enter Amount">
+            <button class="btn-prime" style="background:var(--accent);" onclick="RoyalArcEngine.pay()">Execute Transaction</button>
+        </div>
+    </main>
 </div>
-</section>
-
-<section id="donate">
-<h2>🐶 Dogs Donation Support</h2>
-<div class="card">
-<input type="number" id="donationAmount" placeholder="Enter Amount ₹">
-<button class="btn" onclick="donate()">Donate Now</button>
-</div>
-</section>
-
-<section id="contact">
-<h2>📩 Contact Us</h2>
-<div class="card">
-<input type="text" id="contactName" placeholder="Your Name">
-<input type="email" id="contactEmail" placeholder="Your Email">
-<textarea id="contactMsg" placeholder="Message"></textarea>
-<button class="btn" onclick="sendMessage()">Send Message</button>
-</div>
-</section>
-
-<footer>
-<p>© 2025 RoyalArc Gaming</p>
-</footer>
-
-<div class="modal" id="loginModal">
-<div class="modal-box">
-<h3>Login / Register</h3>
-<input type="email" id="email" placeholder="Email">
-<input type="password" id="password" placeholder="Password">
-<button class="btn" onclick="register()">Register</button>
-<button class="btn" onclick="login()">Login</button>
-<button class="btn" onclick="closeLogin()">Close</button>
-</div>
-</div>
-
-<div class="toast" id="toast"></div>
-
-<!-- Firebase -->
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
 
 <script>
-const firebaseConfig = {
-apiKey: "YOUR_API_KEY",
-authDomain: "bakshicodingempire.in",
-projectId: "YOUR_PROJECT_ID"
-};
+    /**
+     * RoyalArc Core Engine v3.0
+     * Professional Modular Pattern
+     */
+    const RoyalArcEngine = {
+        isIndia: true,
 
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const db = firebase.firestore();
+        // Authentication Module
+        auth: () => {
+            const e = document.getElementById('email').value;
+            const p = document.getElementById('pass').value;
+            if(e && p) {
+                document.getElementById('auth-view').classList.add('hidden');
+                document.getElementById('dashboard-view').classList.remove('hidden');
+            } else {
+                alert("Access Denied: Check Credentials");
+            }
+        },
 
-emailjs.init("YOUR_EMAILJS_PUBLIC_KEY");
+        // Payment Module (Smart Routing)
+        pay: () => {
+            const amt = document.getElementById('amt').value;
+            if(RoyalArcEngine.isIndia) {
+                alert(Routing to Razorpay Gateway: ₹${amt});
+            } else {
+                alert(Routing to Stripe Global Gateway: $${amt});
+            }
+        },
 
-auth.onAuthStateChanged(user=>{
-if(user){
-document.getElementById("dashboard").style.display="block";
-document.getElementById("userEmail").innerText=user.email;
+        // Initialization
+        init: async () => {
+            try {
+                const res = await fetch('https://ipapi.co/json/');
+                const data = await res.json();
+                RoyalArcEngine.isIndia = (data.country_code === 'IN');
+                document.getElementById('region-tag').innerText = Active Node: ${data.country_name};
+            } catch(e) {
+                document.getElementById('region-tag').innerText = "Active Node: Global (Standard)";
+            }
+        }
+    };
 
-db.collection("donations")
-.where("email","==",user.email)
-.onSnapshot(snapshot=>{
-let html="";
-snapshot.forEach(doc=>{
-html+=`₹ ${doc.data().amount} <br>`;
-});
-document.getElementById("history").innerHTML=html;
-});
-}
-});
-
-function register(){
-auth.createUserWithEmailAndPassword(email.value,password.value)
-.then((cred)=>{
-db.collection("users").doc(cred.user.uid).set({
-email:cred.user.email,
-created:new Date()
-});
-showToast("Registered");
-})
-.catch(e=>showToast(e.message));
-}
-
-function login(){
-auth.signInWithEmailAndPassword(email.value,password.value)
-.then(()=>closeLogin())
-.catch(e=>showToast(e.message));
-}
-
-function logout(){
-auth.signOut();
-document.getElementById("dashboard").style.display="none";
-}
-
-function donate(){
-if(!auth.currentUser){
-showToast("Login First");
-openLogin();
-return;
-}
-
-let amount=parseInt(document.getElementById("donationAmount").value);
-if(!amount||amount<10){
-showToast("Minimum ₹10");
-return;
-}
-
-var options={
-key:"8307077846@ybl",
-amount:amount*100,
-currency:"INR",
-name:"Royal Gaming system",
-description:"Dogs Donation",
-handler:function(response){
-
-db.collection("donations").add({
-email:auth.currentUser.email,
-amount:amount,
-paymentId:response.razorpay_payment_id,
-date:new Date()
-});
-
-showToast("Payment Successful ❤️");
-}
-};
-
-new Razorpay(options).open();
-}
-
-db.collection("donations").onSnapshot(snapshot=>{
-let total=0;
-snapshot.forEach(doc=>total+=doc.data().amount);
-document.getElementById("totalDonation").innerText=total;
-document.getElementById("progressBar").style.width=Math.min((total/100000)*100,100)+"%";
-});
-
-function sendMessage(){
-let params={
-name:contactName.value,
-email:contactEmail.value,
-message:contactMsg.value
-};
-
-emailjs.send("YOUR_SERVICE_ID","YOUR_TEMPLATE_ID",params)
-.then(()=>showToast("Message Sent"))
-.catch(()=>showToast("Error Sending"));
-}
-
-function openLogin(){loginModal.style.display="flex";}
-function closeLogin(){loginModal.style.display="none";}
-function showToast(msg){
-toast.innerText=msg;
-toast.style.display="block";
-setTimeout(()=>toast.style.display="none",3000);
-}
-function scrollToSection(id){
-document.getElementById(id).scrollIntoView({behavior:"smooth"});
-}
+    RoyalArcEngine.init();
 </script>
-
 </body>
 </html>
