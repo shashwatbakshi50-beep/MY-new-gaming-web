@@ -13,6 +13,29 @@
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-storage-compat.js"></script>
+    <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyC7TY1t33rqX-4_db-TRO18R3I3VTh_49k",
+    authDomain: "bakshithecoder.firebaseapp.com",
+    projectId: "bakshithecoder",
+    storageBucket: "bakshithecoder.firebasestorage.app",
+    messagingSenderId: "623883848787",
+    appId: "1:623883848787:web:85f8a49a85b74f2fa2caa6",
+    measurementId: "G-60E8F2VH45"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
 
 <!-- Razorpay -->
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
