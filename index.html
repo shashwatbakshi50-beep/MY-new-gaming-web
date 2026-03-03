@@ -3,184 +3,185 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RoyalArc Gaming Empire</title>
+<title>bakshi Gaming Empire</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <style>
-  body{margin:0;font-family:'Inter',sans-serif;background:#020617;color:white;}
-  h2,h3{color:#6366f1;margin:0 0 10px 0;}
-  input,button,select{padding:8px;margin:5px 0;width:100%;border-radius:10px;border:none;outline:none;}
-  button{cursor:pointer;font-weight:bold;transition:0.3s;}
-  button:hover{opacity:0.85;}
-  .btn-primary{background:#6366f1;color:white;}
-  .btn-buy{background:#00ff9d;color:black;}
-  .card{background:rgba(30,41,59,0.6);padding:20px;margin:10px 0;border-radius:20px;backdrop-filter:blur(10px);box-shadow:0 8px 20px rgba(0,0,0,0.5);}
-  table{width:100%;border-collapse:collapse;margin-top:10px;}
-  th,td{padding:6px;border-bottom:1px solid #222;text-align:left;}
-  #dashboard,#adminPanel,#gameSection,#leaderboard{display:none;}
-  @media(max-width:768px){
-    body{padding:10px;}
-    .card{padding:15px;}
-  }
+body{margin:0;font-family:'Inter',sans-serif;background:#010417;color:white;}
+h2,h3{color:#7f5af0;margin:0 0 10px 0;}
+input,button,select{padding:10px;margin:5px 0;width:100%;border-radius:15px;border:none;outline:none;transition:0.3s;}
+button{cursor:pointer;font-weight:bold;transition:0.3s;}
+button:hover{opacity:0.85;}
+.btn-primary{background:#7f5af0;color:white;}
+.btn-buy{background:#00ff9d;color:black;}
+.card{background:rgba(20,20,40,0.6);padding:20px;margin:15px 0;border-radius:25px;backdrop-filter:blur(15px);box-shadow:0 10px 25px rgba(0,0,0,0.6);}
+table{width:100%;border-collapse:collapse;margin-top:10px;}
+th,td{padding:8px;border-bottom:1px solid #333;text-align:left;}
+#dashboard,#adminPanel,#gameSection,#leaderboard,#aboutCEO,#dogDonation{display:none;}
+.fadeIn{animation:fadeIn 1s;}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@media(max-width:768px){body{padding:10px}.card{padding:15px}}
 </style>
 </head>
 <body>
 
-<!-- AUTH SECTION -->
-<div id="authSection" class="card">
-  <h2>Login / Signup</h2>
-  <input type="email" id="email" placeholder="Email">
-  <input type="password" id="password" placeholder="Password">
-  <button class="btn-primary" onclick="signup()">Sign Up</button>
-  <button class="btn-primary" onclick="login()">Login</button>
-  <p id="authStatus"></p>
+<!-- AUTH -->
+<div id="authSection" class="card fadeIn">
+<h2>Login / Signup</h2>
+<input type="email" id="email" placeholder="Email">
+<input type="password" id="password" placeholder="Password">
+<button class="btn-primary" onclick="signup()">Sign Up</button>
+<button class="btn-primary" onclick="login()">Login</button>
+<p id="authStatus"></p>
 </div>
 
-<!-- USER DASHBOARD -->
-<div id="dashboard" class="card">
-  <h2>Welcome, <span id="userEmail"></span></h2>
+<!-- DASHBOARD -->
+<div id="dashboard" class="card fadeIn">
+<h2>Welcome, <span id="userEmail"></span></h2>
 
-  <!-- GAME SECTION -->
-  <div id="gameSection">
-    <h3>Games</h3>
-    <div class="card">
-      <p>Stock Market Simulator</p>
-      <button class="btn-buy" onclick="playGame('stock')">Play (₹2 / $3)</button>
-    </div>
-    <div class="card">
-      <p>Forex Simulator</p>
-      <button class="btn-buy" onclick="playGame('forex')">Play (₹2 / $3)</button>
-    </div>
-  </div>
+<!-- GAMES -->
+<div id="gameSection">
+<h3>Games</h3>
+<div class="card fadeIn">
+<p>Stock Market Simulator</p>
+<button class="btn-buy" onclick="playGame('stock')">Play (₹2 / $3)</button>
+</div>
+<div class="card fadeIn">
+<p>Forex Simulator</p>
+<button class="btn-buy" onclick="playGame('forex')">Play (₹2 / $3)</button>
+</div>
+</div>
 
-  <!-- LEADERBOARD -->
-  <div id="leaderboard" class="card">
-    <h3>Leaderboard</h3>
-    <table>
-      <thead><tr><th>User</th><th>Score</th></tr></thead>
-      <tbody id="leaderboardBody"></tbody>
-    </table>
-  </div>
+<!-- ABOUT CEO -->
+<div id="aboutCEO" class="card fadeIn">
+<h3>About Our CEO</h3>
+<p>Shashwat Bakshi – 14 years old, founder & CEO of bakshi coding Gaming Empire. Passionate about building global gaming experiences for everyone.and want to fufill his mothers every dream</p>
+</div>
 
-  <button class="btn-primary" onclick="logout()">Logout</button>
+<!-- DOG DONATION -->
+<div id="dogDonation" class="card fadeIn">
+<h3>Support Dogs</h3>
+<p>Donate to help stray dogs survive & get care.</p>
+<button class="btn-buy" onclick="donate('dog',200)">₹2 (India)</button>
+<button class="btn-buy" onclick="donate('dog',300)">$3 (World)</button>
+</div>
+
+<!-- LEADERBOARD -->
+<div id="leaderboard" class="card fadeIn">
+<h3>Leaderboard</h3>
+<table>
+<thead><tr><th>User</th><th>Score</th></tr></thead>
+<tbody id="leaderboardBody"></tbody>
+</table>
+</div>
+
+<button class="btn-primary" onclick="logout()">Logout</button>
 </div>
 
 <!-- ADMIN PANEL -->
-<div id="adminPanel" class="card">
-  <h2>Admin Panel</h2>
-  <div id="usersList"></div>
+<div id="adminPanel" class="card fadeIn">
+<h2>Admin Panel</h2>
+<div id="usersList"></div>
 </div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { getFirestore, collection, addDoc, getDocs, query, where, doc, updateDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, query, doc, updateDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 // 🔹 Firebase Config
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  appId: "YOUR_APP_ID"
+apiKey:"YOUR_API_KEY",
+authDomain:"bakshicodingempire.in",
+projectId:"YOUR_PROJECT_ID",
+appId:"YOUR_APP_ID"
 };
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
 // 🔹 SIGNUP
-window.signup = async function(){
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-  try{
-    const userCredential = await createUserWithEmailAndPassword(auth,email,password);
-    const user = userCredential.user;
-    await setDoc(doc(db,"users",user.uid),{email:user.email,isPremium:false,score:0});
-    document.getElementById("authStatus").innerText="Signup Successful";
-  }catch(e){document.getElementById("authStatus").innerText=e.message;}
+window.signup=async function(){
+const email=document.getElementById("email").value;
+const password=document.getElementById("password").value;
+try{
+const userCredential=await createUserWithEmailAndPassword(auth,email,password);
+const user=userCredential.user;
+await setDoc(doc(db,"users",user.uid),{email:user.email,isPremium:false,score:0});
+document.getElementById("authStatus").innerText="Signup Successful";
+}catch(e){document.getElementById("authStatus").innerText=e.message;}
 }
 
 // 🔹 LOGIN
-window.login = async function(){
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-  try{
-    await signInWithEmailAndPassword(auth,email,password);
-    document.getElementById("authStatus").innerText="Login Successful";
-  }catch(e){document.getElementById("authStatus").innerText=e.message;}
+window.login=async function(){
+const email=document.getElementById("email").value;
+const password=document.getElementById("password").value;
+try{await signInWithEmailAndPassword(auth,email,password);
+document.getElementById("authStatus").innerText="Login Successful";
+}catch(e){document.getElementById("authStatus").innerText=e.message;}
 }
 
 // 🔹 LOGOUT
-window.logout = async function(){await signOut(auth);}
+window.logout=async function(){await signOut(auth);}
 
-// 🔹 ON AUTH CHANGE
-onAuthStateChanged(auth, async(user)=>{
-  if(user){
-    document.getElementById("authSection").style.display="none";
-    document.getElementById("dashboard").style.display="block";
-    document.getElementById("userEmail").innerText=user.email;
-    loadLeaderboard();
-    checkAdmin(user.email);
-  }else{
-    document.getElementById("authSection").style.display="block";
-    document.getElementById("dashboard").style.display="none";
-    document.getElementById("adminPanel").style.display="none";
-  }
+// 🔹 AUTH STATE CHANGE
+onAuthStateChanged(auth,async(user)=>{
+if(user){
+document.getElementById("authSection").style.display="none";
+document.getElementById("dashboard").style.display="block";
+document.getElementById("userEmail").innerText=user.email;
+document.getElementById("gameSection").style.display="block";
+document.getElementById("aboutCEO").style.display="block";
+document.getElementById("dogDonation").style.display="block";
+loadLeaderboard();
+checkAdmin(user.email);
+}else{
+document.getElementById("authSection").style.display="block";
+document.getElementById("dashboard").style.display="none";
+document.getElementById("adminPanel").style.display="none";
+}
 });
 
-// 🔹 PLAY GAME + RAZORPAY INTEGRATION
-window.playGame = async function(game){
-  const user = auth.currentUser;
-  if(!user) return;
+// 🔹 PLAY GAME / PAYMENT
+window.playGame=async function(game){
+const user=auth.currentUser;if(!user)return;
+let region=prompt("Enter region: India / World").toLowerCase();
+let amount=(region==="india")?200:300; // ₹2 / $3 real
+var options={"key":"YOUR_RAZORPAY_KEY_ID","amount":amount,"currency":"INR","name":"RoyalArc Gaming Empire","description":"Unlock "+game,"handler":async function(response){
+alert("Payment Successful! Payment ID: "+response.razorpay_payment_id);
+await updateDoc(doc(db,"users",user.uid),{isPremium:true});
+},"theme":{"color":"#7f5af0"}};
+var rzp=new Razorpay(options);rzp.open();
+}
 
-  let region = prompt("Enter region: India / World").toLowerCase();
-  let amount = (region==="india")?200:300; // ₹2 = 200 paise, $3 ~ 300 for demo
-
-  var options = {
-    "key": "YOUR_RAZORPAY_KEY_ID", // Replace with your Razorpay Key ID
-    "amount": amount,
-    "currency": "INR",
-    "name": "RoyalArc Gaming Empire",
-    "description": "Unlock "+game,
-    "handler": async function (response){
-      alert("Payment Successful! Payment ID: " + response.razorpay_payment_id);
-      const userRef = doc(db,"users",user.uid);
-      await updateDoc(userRef,{isPremium:true});
-    },
-    "theme": {"color":"#6366f1"}
-  };
-  var rzp1 = new Razorpay(options);
-  rzp1.open();
+// 🔹 DOG DONATION
+window.donate=async function(item,amount){
+const user=auth.currentUser;if(!user)return;
+var options={"key":"YOUR_RAZORPAY_KEY_ID","amount":amount,"currency":"INR","name":"RoyalArc Donation","description":"Donate for "+item,"handler":async function(response){
+alert("Donation Successful! Payment ID: "+response.razorpay_payment_id);
+}};var rzp=new Razorpay(options);rzp.open();
 }
 
 // 🔹 LEADERBOARD
 async function loadLeaderboard(){
-  const q = query(collection(db,"users"));
-  const snapshot = await getDocs(q);
-  const tbody = document.getElementById("leaderboardBody");
-  tbody.innerHTML="";
-  snapshot.forEach(doc=>{
-    let tr=document.createElement("tr");
-    tr.innerHTML=`<td>${doc.data().email}</td><td>${doc.data().score || 0}</td>`;
-    tbody.appendChild(tr);
-  });
+const snapshot=await getDocs(collection(db,"users"));
+const tbody=document.getElementById("leaderboardBody");tbody.innerHTML="";
+snapshot.forEach(doc=>{
+let tr=document.createElement("tr");
+tr.innerHTML=`<td>${doc.data().email}</td><td>${doc.data().score||0}</td>`;tbody.appendChild(tr);
+});
 }
 
 // 🔹 ADMIN CHECK
 async function checkAdmin(email){
-  if(email==="YOUR_ADMIN_EMAIL"){ // Replace with your email
-    document.getElementById("adminPanel").style.display="block";
-    loadUsers();
-  }
+if(email==="shashwatbakshi80@outlook.com"){document.getElementById("adminPanel").style.display="block";loadUsers();}
 }
 
 // 🔹 ADMIN: LIST USERS
 async function loadUsers(){
-  const snapshot = await getDocs(collection(db,"users"));
-  const div = document.getElementById("usersList");
-  div.innerHTML="";
-  snapshot.forEach(doc=>{
-    div.innerHTML+=`<p>${doc.data().email} | Premium: ${doc.data().isPremium || false} | Score: ${doc.data().score || 0}</p>`;
-  });
+const snapshot=await getDocs(collection(db,"users"));
+const div=document.getElementById("usersList");div.innerHTML="";
+snapshot.forEach(doc=>{div.innerHTML+=`<p>${doc.data().email} | Premium: ${doc.data().isPremium||false} | Score: ${doc.data().score||0}</p>`;});
 }
 </script>
 </body>
