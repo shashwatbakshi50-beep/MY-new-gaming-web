@@ -1,293 +1,313 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Bakshi Gaming Empire - Admin Pro</title>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<title>Royal Gaming Admin Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-storage-compat.js"></script>
 <style>
-body{
-margin:0;
-font-family:Segoe UI, sans-serif;
-background:#0f0f0f;
-color:white;
-}
-
-#loginPage{
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
-background:linear-gradient(135deg,#000,#141414);
-}
-
-.login-box{
-background:#1a1a1a;
-padding:40px;
-border-radius:12px;
-width:350px;
-box-shadow:0 0 40px rgba(0,0,0,0.7);
-text-align:center;
-}
-
-input{
-width:100%;
-padding:12px;
-margin:10px 0;
-border:none;
-border-radius:6px;
-}
-
-button{
-width:100%;
-padding:12px;
-border:none;
-border-radius:6px;
-background:linear-gradient(45deg,#2979ff,#00c853);
-color:white;
-font-weight:bold;
-cursor:pointer;
-}
-
-#adminPanel{
-display:none;
-}
-
-.sidebar{
-width:220px;
-height:100vh;
-position:fixed;
-background:#111;
-padding-top:20px;
-}
-
-.sidebar h2{
-text-align:center;
-}
-
-.sidebar a{
-display:block;
-padding:15px;
-color:white;
-text-decoration:none;
-}
-
-.sidebar a:hover{
-background:#222;
-}
-
-.main{
-margin-left:220px;
-padding:30px;
-}
-
-.card{
-background:#1a1a1a;
-padding:20px;
-border-radius:10px;
-margin-bottom:20px;
-}
-
-.progress{
-height:10px;
-background:#222;
-border-radius:10px;
-margin-top:10px;
-overflow:hidden;
-}
-
-.progress-bar{
-height:100%;
-width:0%;
-background:#00c853;
-}
-table{
-width:100%;
-margin-top:20px;
-border-collapse:collapse;
-}
-td,th{
-padding:10px;
-border-bottom:1px solid #333;
-}
+body{margin:0;font-family:'Poppins',sans-serif;background:#0a0f1e;color:white;}
+header{padding:20px;background:#111428;display:flex;justify-content:space-between;align-items:center;box-shadow:0 0 20px #00ffff;}
+header h1{font-family:'Orbitron',sans-serif;color:#00ffff;}
+button{padding:10px 15px;margin:5px;background:#00ffff;border:none;border-radius:8px;cursor:pointer;color:white;transition:0.3s;text-shadow:0 0 10px #00ffff;}
+button:hover{background:#ff00ff;box-shadow:0 0 15px #ff00ff,0 0 30px #00ffff;}
+.container{padding:20px;}
+input, select{padding:8px;margin:5px;border-radius:8px;border:none;background:#111428;color:white;width:100%;}
+table{width:100%;border-collapse:collapse;margin-top:20px;}
+table, th, td{border:1px solid #00ffff;}
+th, td{padding:10px;text-align:left;}
+th{background:#111428;color:#00ffff;}
+tr:hover{background:#1b1f33;}
+h2{color:#00ffff;font-family:'Orbitron',sans-serif;}
+.modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);display:none;justify-content:center;align-items:center;z-index:1000;backdrop-filter:blur(5px);}
+.modal-content{background:#1b1f33;padding:30px;border-radius:15px;width:90%;max-width:400px;text-align:center;box-shadow:0 0 20px #00ffff,0 0 40px #ff00ff;transform:scale(0);transition:0.3s;}
+.modal.show .modal-content{transform:scale(1);}
 </style>
 </head>
-
 <body>
 
-<div id="loginPage">
-<div class="login-box">
-<h2>Admin Login</h2>
-<input type="email" id="adminEmail" placeholder="Email">
-<input type="password" id="adminPass" placeholder="Password">
-<button onclick="login()">Login</button>
-<p id="loginMsg"></p>
-</div>
-</div>
+<header>
+<h1>Royal Gaming Admin</h1>
+<button id="logoutBtn" onclick="logout()">Logout</button>
+</header>
 
-<div id="adminPanel">
+<div class="container">
+<h2>Add / Edit Game</h2>
+<input type="text" id="gameName" placeholder="Game Name">
+<input type="text" id="gameCategory" placeholder="Category">
+<input type="number" id="gamePrice" placeholder="Price (₹)">
+<input type="number" id="gameRating" placeholder="Rating (0-5)">
+<input type="file" id="gameImage">
+<input type="file" id="gameZip">
+<button onclick="addGame()">Add Game</button>
 
-<div class="sidebar">
-<h2>Empire Admin</h2>
-<a href="#">Dashboard</a>
-<a href="#" onclick="logout()">Logout</a>
-</div>
-
-<div class="main">
-
-<h1>🎮 Gaming Empire Control Panel</h1>
-
-<div class="card">
-<h3>Upload New Game</h3>
-<input type="text" id="gameTitle" placeholder="Game Title">
-<input type="file" id="gameFile">
-<button onclick="uploadGame()">Upload Game</button>
-
-<div class="progress">
-<div class="progress-bar" id="progressBar"></div>
-</div>
-
-<p id="uploadStatus"></p>
-</div>
-
-<div class="card">
-<h3>📂 Uploaded Games</h3>
-<table>
-<thead>
-<tr>
-<th>Title</th>
-<th>Download Link</th>
-<th>Date</th>
-</tr>
-</thead>
-<tbody id="gameList"></tbody>
+<h2>Games List</h2>
+<table id="gamesTable">
+<thead><tr><th>Name</th><th>Category</th><th>Price</th><th>Rating</th><th>Actions</th></tr></thead>
+<tbody></tbody>
 </table>
-</div>
+
+<h2>Purchases</h2>
+<table id="purchasesTable">
+<thead><tr><th>User</th><th>Game</th><th>Amount</th><th>Payment ID</th><th>Date</th></tr></thead>
+<tbody></tbody>
+</table>
+
+<h2>Donations</h2>
+<table id="donationsTable">
+<thead><tr><th>User</th><th>Amount</th><th>Payment ID</th><th>Date</th></tr></thead>
+<tbody></tbody>
+</table>
 
 </div>
+
+<script>
+// ================= FIREBASE =================
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Royal Gaming Admin Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-storage-compat.js"></script>
+<style>
+body{margin:0;font-family:'Poppins',sans-serif;background:#0a0f1e;color:white;}
+header{padding:20px;background:#111428;display:flex;justify-content:space-between;align-items:center;box-shadow:0 0 20px #00ffff;}
+header h1{font-family:'Orbitron',sans-serif;color:#00ffff;}
+button{padding:10px 15px;margin:5px;background:#00ffff;border:none;border-radius:8px;cursor:pointer;color:white;transition:0.3s;text-shadow:0 0 10px #00ffff;}
+button:hover{background:#ff00ff;box-shadow:0 0 15px #ff00ff,0 0 30px #00ffff;}
+.container{padding:20px;}
+input, select{padding:8px;margin:5px;border-radius:8px;border:none;background:#111428;color:white;width:100%;}
+table{width:100%;border-collapse:collapse;margin-top:20px;}
+table, th, td{border:1px solid #00ffff;}
+th, td{padding:10px;text-align:left;}
+th{background:#111428;color:#00ffff;}
+tr:hover{background:#1b1f33;}
+h2{color:#00ffff;font-family:'Orbitron',sans-serif;}
+.modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);display:none;justify-content:center;align-items:center;z-index:1000;backdrop-filter:blur(5px);}
+.modal-content{background:#1b1f33;padding:30px;border-radius:15px;width:90%;max-width:400px;text-align:center;box-shadow:0 0 20px #00ffff,0 0 40px #ff00ff;transform:scale(0);transition:0.3s;}
+.modal.show .modal-content{transform:scale(1);}
+</style>
+</head>
+<body>
+
+<header>
+<h1>Royal Gaming Admin</h1>
+<button id="logoutBtn" onclick="logout()">Logout</button>
+</header>
+
+<div class="container">
+<h2>Add / Edit Game</h2>
+<input type="text" id="gameName" placeholder="Game Name">
+<input type="text" id="gameCategory" placeholder="Category">
+<input type="number" id="gamePrice" placeholder="Price (₹)">
+<input type="number" id="gameRating" placeholder="Rating (0-5)">
+<input type="file" id="gameImage">
+<input type="file" id="gameZip">
+<button onclick="addGame()">Add Game</button>
+
+<h2>Games List</h2>
+<table id="gamesTable">
+<thead><tr><th>Name</th><th>Category</th><th>Price</th><th>Rating</th><th>Actions</th></tr></thead>
+<tbody></tbody>
+</table>
+
+<h2>Purchases</h2>
+<table id="purchasesTable">
+<thead><tr><th>User</th><th>Game</th><th>Amount</th><th>Payment ID</th><th>Date</th></tr></thead>
+<tbody></tbody>
+</table>
+
+<h2>Donations</h2>
+<table id="donationsTable">
+<thead><tr><th>User</th><th>Amount</th><th>Payment ID</th><th>Date</th></tr></thead>
+<tbody></tbody>
+</table>
+
 </div>
 
-<script type="module">
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } 
-from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-import { getFirestore, collection, addDoc, getDocs } 
-from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-import { getStorage, ref, uploadBytesResumable, getDownloadURL } 
-from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
-
+<script>
+// ================= FIREBASE =================
 const firebaseConfig = {
-apiKey: "YOUR_API_KEY",
-authDomain: "YOUR_PROJECT.firebaseapp.com",
-projectId: "YOUR_PROJECT_ID",
-storageBucket: "YOUR_PROJECT.appspot.com",
-messagingSenderId: "YOUR_ID",
-appId: "YOUR_APP_ID"
+ apiKey: "AIzaSyC7TY1t33rqX-4_db-TRO18R3I3VTh_49k",
+    authDomain: "bakshithecoder.firebaseapp.com",
+    projectId: "bakshithecoder",
+    storageBucket: "bakshithecoder.firebasestorage.app",
+    messagingSenderId: "623883848787",
+    appId: "1:623883848787:web:85f8a49a85b74f2fa2caa6",
+    measurementId: "G-60E8F2VH45"
 };
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
+const storage = firebase.storage();
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-const storage = getStorage(app);
+// ================= ADMIN AUTH =================
+// Replace this with your admin email
+const ADMIN_EMAIL = "admin@yourstore.com";
 
-window.login = function(){
-let email = document.getElementById("adminEmail").value;
-let pass = document.getElementById("adminPass").value;
-
-signInWithEmailAndPassword(auth,email,pass)
-.catch(error=>{
-document.getElementById("loginMsg").innerText=error.message;
+auth.onAuthStateChanged(user=>{
+    if(user){
+        if(user.email!==ADMIN_EMAIL){ alert("Not admin"); auth.signOut(); }
+    } else {
+        const email = prompt("Enter admin email:");
+        const pass = prompt("Enter admin password:");
+        auth.signInWithEmailAndPassword(email, pass)
+        .catch(err=>alert(err.message));
+    }
 });
+
+function logout(){auth.signOut().then(()=>{alert("Logged out");location.reload();});}
+
+// ================= GAMES =================
+function addGame(){
+    const name = document.getElementById('gameName').value;
+    const category = document.getElementById('gameCategory').value;
+    const price = document.getElementById('gamePrice').value;
+    const rating = document.getElementById('gameRating').value;
+    const imageFile = document.getElementById('gameImage').files[0];
+    const zipFile = document.getElementById('gameZip').files[0];
+
+    if(!name || !category || !price || !rating || !imageFile || !zipFile){ alert("Fill all fields"); return; }
+
+    // Upload Image
+    const imgRef = storage.ref('gameImages/'+imageFile.name);
+    imgRef.put(imageFile).then(snapshot=>snapshot.ref.getDownloadURL().then(imgURL=>{
+        // Upload ZIP
+        const zipRef = storage.ref('gameZips/'+zipFile.name);
+        zipRef.put(zipFile).then(snap=>snap.ref.getDownloadURL().then(zipURL=>{
+            db.collection('games').add({name, category, price:parseFloat(price), rating:parseFloat(rating), image:imgURL, file:zipURL})
+            .then(()=>{ alert("Game added!"); loadGames(); });
+        }));
+    }));
 }
 
-window.logout = function(){
-signOut(auth);
+function loadGames(){
+    db.collection('games').get().then(snap=>{
+        const tbody=document.querySelector('#gamesTable tbody'); tbody.innerHTML="";
+        snap.forEach(doc=>{
+            const data = doc.data();
+            tbody.innerHTML+=`<tr>
+            <td>${data.name}</td><td>${data.category}</td><td>${data.price}</td><td>${data.rating}</td>
+            <td><button onclick="deleteGame('${doc.id}')">Delete</button></td></tr>`;
+        });
+    });
 }
-
-onAuthStateChanged(auth,user=>{
-if(user){
-document.getElementById("loginPage").style.display="none";
-document.getElementById("adminPanel").style.display="block";
+function deleteGame(id){ db.collection('games').doc(id).delete().then(()=>loadGames()); }
 loadGames();
-}else{
-document.getElementById("loginPage").style.display="flex";
-document.getElementById("adminPanel").style.display="none";
+
+// ================= PURCHASES =================
+function loadPurchases(){
+    db.collection('purchases').get().then(snap=>{
+        const tbody=document.querySelector('#purchasesTable tbody'); tbody.innerHTML="";
+        snap.forEach(doc=>{
+            const data = doc.data();
+            tbody.innerHTML+=`<tr><td>${data.user}</td><td>${data.game}</td><td>${data.amount || 0}</td><td>${data.paymentId}</td><td>${new Date(data.date.seconds*1000).toLocaleString()}</td></tr>`;
+        });
+    });
 }
-});
+loadPurchases();
 
-window.uploadGame = function(){
-
-let title=document.getElementById("gameTitle").value;
-let file=document.getElementById("gameFile").files[0];
-
-if(!file || !title){
-alert("Please add title and file");
-return;
+// ================= DONATIONS =================
+function loadDonations(){
+    db.collection('donations').get().then(snap=>{
+        const tbody=document.querySelector('#donationsTable tbody'); tbody.innerHTML="";
+        snap.forEach(doc=>{
+            const data = doc.data();
+            tbody.innerHTML+=`<tr><td>${data.user}</td><td>${data.amount}</td><td>${data.paymentId}</td><td>${new Date(data.date.seconds*1000).toLocaleString()}</td></tr>`;
+        });
+    });
 }
-
-let storageRef=ref(storage,"games/"+Date.now()+"_"+file.name);
-let uploadTask=uploadBytesResumable(storageRef,file);
-
-uploadTask.on("state_changed",
-(snapshot)=>{
-let progress=(snapshot.bytesTransferred/snapshot.totalBytes)*100;
-document.getElementById("progressBar").style.width=progress+"%";
-},
-(error)=>{
-document.getElementById("uploadStatus").innerText=error.message;
-},
-()=>{
-getDownloadURL(uploadTask.snapshot.ref).then(async(downloadURL)=>{
-await addDoc(collection(db,"games"),{
-title:title,
-url:downloadURL,
-createdAt:new Date()
-});
-document.getElementById("uploadStatus").innerText="Upload Successful!";
-document.getElementById("progressBar").style.width="0%";
-loadGames();
-});
-});
-}
-
-async function loadGames(){
-let querySnapshot=await getDocs(collection(db,"games"));
-let list=document.getElementById("gameList");
-list.innerHTML="";
-querySnapshot.forEach(doc=>{
-let data=doc.data();
-list.innerHTML+=`
-<tr>
-<td>${data.title}</td>
-<td><a href="${data.url}" target="_blank" style="color:#00c853;">Download</a></td>
-<td>${new Date(data.createdAt.seconds*1000).toLocaleDateString()}</td>
-</tr>
-`;
-});
-}
-<script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
-
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyAz0mG88bcDqwTZttw21_8L4aYVHW_V9D0",
-    authDomain: "the-ceo-web.firebaseapp.com",
-    projectId: "the-ceo-web",
-    storageBucket: "the-ceo-web.firebasestorage.app",
-    messagingSenderId: "729264914822",
-    appId: "1:729264914822:web:c6e123edca812c50586c07",
-    measurementId: "G-ZMJJQRBS0V"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
+loadDonations();
 </script>
+</body>
+</html>
 
+// ================= ADMIN AUTH =================
+// Replace this with your admin email
+const ADMIN_EMAIL = "shashwatbakshi80@outlook.com";
+
+auth.onAuthStateChanged(user=>{
+    if(user){
+        if(user.email!==shashwatbakshi80@outlook.com){ alert("Not admin"); auth.signOut(); }
+    } else {
+        const email = prompt("shashwatbakshi80@outlook.com");
+        const pass = prompt("admin@123");
+        auth.signInWithEmailAndPassword(email, pass)
+        .catch(err=>alert(err.message));
+    }
+});
+
+function logout(){auth.signOut().then(()=>{alert("Logged out");location.reload();});}
+
+// ================= GAMES =================
+function addGame(){
+    const name = document.getElementById('gameName').value;
+    const category = document.getElementById('gameCategory').value;
+    const price = document.getElementById('gamePrice').value;
+    const rating = document.getElementById('gameRating').value;
+    const imageFile = document.getElementById('gameImage').files[0];
+    const zipFile = document.getElementById('gameZip').files[0];
+
+    if(!name || !category || !price || !rating || !imageFile || !zipFile){ alert("Fill all fields"); return; }
+
+    // Upload Image
+    const imgRef = storage.ref('gameImages/'+imageFile.name);
+    imgRef.put(imageFile).then(snapshot=>snapshot.ref.getDownloadURL().then(imgURL=>{
+        // Upload ZIP
+        const zipRef = storage.ref('gameZips/'+zipFile.name);
+        zipRef.put(zipFile).then(snap=>snap.ref.getDownloadURL().then(zipURL=>{
+            db.collection('games').add({name, category, price:parseFloat(price), rating:parseFloat(rating), image:imgURL, file:zipURL})
+            .then(()=>{ alert("Game added!"); loadGames(); });
+        }));
+    }));
+}
+
+function loadGames(){
+    db.collection('games').get().then(snap=>{
+        const tbody=document.querySelector('#gamesTable tbody'); tbody.innerHTML="";
+        snap.forEach(doc=>{
+            const data = doc.data();
+            tbody.innerHTML+=`<tr>
+            <td>${data.name}</td><td>${data.category}</td><td>${data.price}</td><td>${data.rating}</td>
+            <td><button onclick="deleteGame('${doc.id}')">Delete</button></td></tr>`;
+        });
+    });
+}
+function deleteGame(id){ db.collection('games').doc(id).delete().then(()=>loadGames()); }
+loadGames();
+
+// ================= PURCHASES =================
+function loadPurchases(){
+    db.collection('purchases').get().then(snap=>{
+        const tbody=document.querySelector('#purchasesTable tbody'); tbody.innerHTML="";
+        snap.forEach(doc=>{
+            const data = doc.data();
+            tbody.innerHTML+=`<tr><td>${data.user}</td><td>${data.game}</td><td>${data.amount || 0}</td><td>${data.paymentId}</td><td>${new Date(data.date.seconds*1000).toLocaleString()}</td></tr>`;
+        });
+    });
+}
+loadPurchases();
+
+// ================= DONATIONS =================
+function loadDonations(){
+    db.collection('donations').get().then(snap=>{
+        const tbody=document.querySelector('#donationsTable tbody'); tbody.innerHTML="";
+        snap.forEach(doc=>{
+            const data = doc.data();
+            tbody.innerHTML+=`<tr><td>${data.user}</td><td>${data.amount}</td><td>${data.paymentId}</td><td>${new Date(data.date.seconds*1000).toLocaleString()}</td></tr>`;
+        });
+    });
+}
+loadDonations();
+</script>
 </body>
 </html>
