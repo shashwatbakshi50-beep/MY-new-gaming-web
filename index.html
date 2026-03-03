@@ -3,188 +3,220 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Gaming Store</title>
+<title>Royal Gaming Store</title>
 
-<!-- Firebase SDK -->
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-storage-compat.js"></script>
 
-<!-- Razorpay Checkout -->
+<!-- Razorpay -->
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 <style>
-    body { margin:0; font-family: Arial,sans-serif; background:#0b0e11; color:white;}
-    header { background:#131722; padding:20px; display:flex; justify-content:space-between; align-items:center;}
-    header a { color:white; text-decoration:none; margin:0 10px; }
-    .games { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:20px; padding:20px; }
-    .game { background:#1c1f28; padding:15px; border-radius:10px; }
-    .game img { width:100%; border-radius:10px; }
-    button { padding:10px 20px; background:#ff5722; border:none; color:white; cursor:pointer; border-radius:5px; margin-top:10px;}
-    #loginForm, #registerForm, #donationForm { display:none; padding:20px; max-width:400px; margin:30px auto; background:#1c1f28; border-radius:10px; }
-    input { width:100%; padding:10px; margin:10px 0; border-radius:5px; border:none; }
-    h2 { text-align:center; }
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{background:#0a0f1e;color:white;}
+header{background:#111428;padding:15px 30px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 0 10px #ff5722;}
+header h1{font-family:'Orbitron',sans-serif;color:#ff5722;letter-spacing:2px;}
+nav a{margin-left:20px;font-weight:500;transition:0.3s;}
+nav a:hover{color:#ff9800;}
+
+/* Hero */
+.hero{background: linear-gradient(90deg, rgba(255,87,34,0.4), rgba(255,193,7,0.3)), url('https://via.placeholder.com/1500x400') center/cover no-repeat;height:400px;display:flex;justify-content:center;align-items:center;text-align:center;}
+.hero h2{font-size:3rem;font-family:'Orbitron',sans-serif;color:#ff5722;text-shadow:0 0 20px #ff5722;}
+.hero p{color:#fff;margin-top:10px;font-size:1.2rem;text-shadow:0 0 10px black;}
+
+/* Games grid */
+.games{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;padding:30px;}
+.game{background:#1b1f33;border:2px solid #ff5722;border-radius:15px;overflow:hidden;transition:0.4s;position:relative;}
+.game:hover{transform:scale(1.05);border-color:#ff9800;}
+.game img{width:100%;display:block;}
+.game h3{padding:10px;font-family:'Orbitron',sans-serif;color:#ff5722;}
+.game p{padding:0 10px 10px;font-size:0.9rem;}
+.game button{margin:10px;padding:10px;background:#ff5722;border:none;border-radius:8px;cursor:pointer;color:white;font-weight:600;width:calc(100% - 20px);transition:0.3s;}
+.game button:hover{background:#ff9800;box-shadow:0 0 10px #ff9800;}
+
+/* Modals */
+.modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);display:none;justify-content:center;align-items:center;z-index:1000;}
+.modal-content{background:#1b1f33;padding:30px;border-radius:15px;width:90%;max-width:400px;text-align:center;}
+.modal-content h2{font-family:'Orbitron',sans-serif;color:#ff5722;margin-bottom:20px;}
+.modal-content input{width:100%;padding:12px;margin:10px 0;border-radius:8px;border:none;}
+.modal-content button{padding:12px 20px;border:none;border-radius:8px;background:#ff5722;cursor:pointer;color:white;font-weight:600;width:100%;transition:0.3s;}
+.modal-content button:hover{background:#ff9800;}
+
+/* Footer */
+footer{background:#111428;text-align:center;padding:20px;color:#fff;border-top:2px solid #ff5722;}
 </style>
 </head>
 <body>
 
 <header>
-    <h1>My Gaming Store</h1>
-    <div>
-        <a href="#" onclick="showLogin()">Login</a>
-        <a href="#" onclick="showRegister()">Register</a>
-        <a href="#" onclick="showDonation()">Donate</a>
-        <a href="#" id="logoutBtn" style="display:none;" onclick="logout()">Logout</a>
-    </div>
+<h1>Royal Games</h1>
+<nav>
+<a href="#" onclick="showLogin()">Login</a>
+<a href="#" onclick="showRegister()">Register</a>
+<a href="#" onclick="showDonation()">Donate</a>
+<a href="#" id="logoutBtn" style="display:none;" onclick="logout()">Logout</a>
+</nav>
 </header>
 
-<!-- Login Form -->
-<div id="loginForm">
-    <h2>Login</h2>
-    <input type="email" id="loginEmail" placeholder="Email">
-    <input type="password" id="loginPassword" placeholder="Password">
-    <button onclick="login()">Login</button>
+<section class="hero">
+<div>
+<h2>Play. Buy. Conquer.</h2>
+<p>Get the best games & support dogs with your donations</p>
 </div>
+</section>
 
-<!-- Register Form -->
-<div id="registerForm">
-    <h2>Register</h2>
-    <input type="email" id="registerEmail" placeholder="Email">
-    <input type="password" id="registerPassword" placeholder="Password">
-    <button onclick="register()">Register</button>
-</div>
-
-<!-- Donation Form -->
-<div id="donationForm">
-    <h2>Donate for Dogs 🐶</h2>
-    <input type="number" id="donationAmount" placeholder="Enter Amount (₹)">
-    <button onclick="donate()">Donate</button>
-</div>
-
-<!-- Games Section -->
 <div class="games" id="gamesList"></div>
 
+<!-- Modals -->
+<div class="modal" id="loginModal">
+<div class="modal-content">
+<h2>Login</h2>
+<input type="email" id="loginEmail" placeholder="Email">
+<input type="password" id="loginPassword" placeholder="Password">
+<button onclick="login()">Login</button>
+</div>
+</div>
+
+<div class="modal" id="registerModal">
+<div class="modal-content">
+<h2>Register</h2>
+<input type="email" id="registerEmail" placeholder="Email">
+<input type="password" id="registerPassword" placeholder="Password">
+<button onclick="register()">Register</button>
+</div>
+</div>
+
+<div class="modal" id="donationModal">
+<div class="modal-content">
+<h2>Donate for Dogs 🐶</h2>
+<input type="number" id="donationAmount" placeholder="Enter Amount (₹)">
+<button onclick="donate()">Donate</button>
+</div>
+</div>
+
+<footer>
+&copy; 2026 Royal Gaming Store | All Rights Reserved
+</footer>
+
 <script>
-    // ================= FIREBASE CONFIG =================
-    const firebaseConfig = {
-        apiKey: "YOUR_API_KEY",
-        authDomain: "YOUR_PROJECT.firebaseapp.com",
-        projectId: "YOUR_PROJECT",
-        storageBucket: "YOUR_PROJECT.appspot.com",
-        messagingSenderId: "shashwatbakshi80@outlook.com",
-        appId: "YOUR_APP_ID"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-    const db = firebase.firestore();
-    const storage = firebase.storage();
+// ================= FIREBASE CONFIG =================
+const firebaseConfig = {
+apiKey: "YOUR_API_KEY",
+authDomain: "YOUR_PROJECT.firebaseapp.com",
+projectId: "YOUR_PROJECT",
+storageBucket: "YOUR_PROJECT.appspot.com",
+messagingSenderId: "shashwatbakshi80@outlook.com",
+appId: "YOUR_APP_ID"
+};
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
+const storage = firebase.storage();
 
-    // ================= SAMPLE GAMES =================
-    const games = [
-        { name:"Forex Market pro", price:100, image:"https://via.placeholder.com/250x150", file:"forex.zip" },
-        { name:"stock market simulator", price:91, image:"https://via.placeholder.com/250x150", file:"adventure.zip" },
-        { name:"Space Shooter", price:12, image:"https://via.placeholder.com/250x150", file:"spaceshooter.zip" }
-    ];
+// ================= SAMPLE GAMES =================
+const games = [
+{name:"Forex Master", price:100, image:"https://via.placeholder.com/300x150", file:"forex.zip"},
+{name:"stock markt", price:150, image:"https://via.placeholder.com/300x150", file:"adventure.zip"},
+];
 
-    function renderGames() {
-        const container = document.getElementById('gamesList');
-        container.innerHTML = "";
-        games.forEach((game, index)=>{
-            const div = document.createElement('div');
-            div.className="game";
-            div.innerHTML=`
-                <img src="${game.image}" alt="${game.name}">
-                <h3>${game.name}</h3>
-                <p>Price: $${game.price}</p>
-                <button onclick="buyGame(${index})">Buy Now</button>
-            `;
-            container.appendChild(div);
-        });
-    }
-    renderGames();
+function renderGames(){
+const container = document.getElementById('gamesList');
+container.innerHTML="";
+games.forEach((game,index)=>{
+const div=document.createElement('div');
+div.className="game";
+div.innerHTML=`
+<img src="${game.image}" alt="${game.name}">
+<h3>${game.name}</h3>
+<p>Price: ₹${game.price*80}</p>
+<button onclick="buyGame(${index})">Buy Now</button>
+`;
+container.appendChild(div);
+});
+}
+renderGames();
 
-    // ================= SHOW / HIDE FORMS =================
-    function showLogin(){ document.getElementById('loginForm').style.display="block"; document.getElementById('registerForm').style.display="none"; document.getElementById('donationForm').style.display="none"; }
-    function showRegister(){ document.getElementById('registerForm').style.display="block"; document.getElementById('loginForm').style.display="none"; document.getElementById('donationForm').style.display="none"; }
-    function showDonation(){ document.getElementById('donationForm').style.display="block"; document.getElementById('loginForm').style.display="none"; document.getElementById('registerForm').style.display="none"; }
+// ================= MODAL CONTROLS =================
+function showLogin(){document.getElementById('loginModal').style.display="flex"; document.getElementById('registerModal').style.display="none"; document.getElementById('donationModal').style.display="none";}
+function showRegister(){document.getElementById('registerModal').style.display="flex"; document.getElementById('loginModal').style.display="none"; document.getElementById('donationModal').style.display="none";}
+function showDonation(){document.getElementById('donationModal').style.display="flex"; document.getElementById('loginModal').style.display="none"; document.getElementById('registerModal').style.display="none";}
 
-    // ================= AUTHENTICATION =================
-    function register(){
-        const email = document.getElementById('registerEmail').value;
-        const pass = document.getElementById('registerPassword').value;
-        auth.createUserWithEmailAndPassword(email, pass)
-        .then(user=>{ alert("Registered Successfully!"); document.getElementById('registerForm').style.display="none"; })
-        .catch(err=>alert(err.message));
-    }
+// ================= AUTHENTICATION =================
+function register(){
+const email=document.getElementById('registerEmail').value;
+const pass=document.getElementById('registerPassword').value;
+auth.createUserWithEmailAndPassword(email,pass)
+.then(()=>{ alert("Registered Successfully!"); document.getElementById('registerModal').style.display="none"; })
+.catch(err=>alert(err.message));
+}
 
-    function login(){
-        const email = document.getElementById('loginEmail').value;
-        const pass = document.getElementById('loginPassword').value;
-        auth.signInWithEmailAndPassword(email, pass)
-        .then(user=>{ alert("Logged In!"); document.getElementById('loginForm').style.display="none"; document.getElementById('logoutBtn').style.display="inline"; })
-        .catch(err=>alert(err.message));
-    }
+function login(){
+const email=document.getElementById('loginEmail').value;
+const pass=document.getElementById('loginPassword').value;
+auth.signInWithEmailAndPassword(email,pass)
+.then(()=>{ alert("Logged In!"); document.getElementById('loginModal').style.display="none"; document.getElementById('logoutBtn').style.display="inline"; })
+.catch(err=>alert(err.message));
+}
 
-    function logout(){
-        auth.signOut().then(()=>{ alert("Logged Out"); document.getElementById('logoutBtn').style.display="none"; });
-    }
+function logout(){ auth.signOut().then(()=>{ alert("Logged Out"); document.getElementById('logoutBtn').style.display="none"; }); }
 
-    // ================= BUY GAME =================
-    function buyGame(index){
-        const user = auth.currentUser;
-        if(!user){ alert("Please login first"); return; }
-        const game = games[index];
+// ================= BUY GAME =================
+function buyGame(index){
+const user = auth.currentUser;
+if(!user){ alert("Please login first"); return; }
+const game = games[index];
 
-        const options = {
-            "key": "8307077846@ybl", // Replace with your Razorpay Key
-            "amount": game.price*100, // in ruppes
-            "currency": "INR",
-            "name": "My Gaming Store",
-            "description": game.name,
-            "handler": function(response){
-                db.collection('purchases').add({
-                    user:user.email,
-                    game:game.name,
-                    date: new Date(),
-                    paymentId:response.razorpay_payment_id
-                }).then(()=>{
-                    alert(`Payment Successful! Download your game: ${game.file}`);
-                });
-            },
-            "prefill": { "email": user.email }
-        };
-        const rzp = new Razorpay(options);
-        rzp.open();
-    }
+const options = {
+"key": "8307077846@ybl",
+"amount": game.price(choose price according to the game) // in Dollars and Ruppess
+"currency":"INR",
+"name":"Royal Gaming Store",
+"description":game.name,
+"handler": function(response){
+db.collection('purchases').add({
+user:user.email,
+game:game.name,
+date:new Date(),
+paymentId:response.razorpay_payment_id
+}).then(()=>{ alert(`Payment Successful! Download: ${game.file}`); });
+},
+"prefill":{ email:user.email }
+};
+const rzp=new Razorpay(options); rzp.open();
+}
 
-    // ================= DONATION =================
-    function donate(){
-        const amount = document.getElementById('donationAmount').value;
-        const user = auth.currentUser;
-        if(!user){ alert("Please login first"); return; }
-        if(!amount || amount <=0){ alert("Enter valid amount"); return; }
+// ================= DONATION =================
+function donate(){
+const amount = document.getElementById('donationAmount').value;
+const user = auth.currentUser;
+if(!user){ alert("Please login first"); return; }
+if(!amount || amount<=0){ alert("Enter valid amount"); return; }
 
-        const options = {
-            "key": "8307077846@ybl", // Replace with your Razorpay Key
-            "amount": amount*10, // in ruppess
-            "currency": "INR",
-            "name": "My Gaming Store Donations",
-            "description": "Donation for Dogs 🐶",
-            "handler": function(response){
-                db.collection('donations').add({
-                    user:user.email,
-                    amount:amount,
-                    date: new Date(),
-                    paymentId:response.razorpay_payment_id
-                }).then(()=>{ alert("Thank you for your donation!"); document.getElementById('donationForm').style.display="none"; });
-            },
-            "prefill": { "email": user.email }
-        };
-        const rzp = new Razorpay(options);
-        rzp.open();
-    }
-
+const options = {
+"key":"8307077846@ybl",
+"amount":amount*100,
+"currency":"INR,USD",
+"name":"Royal Gaming Store Donations",
+"description":"Donation for Dogs 🐶",
+"handler": function(response){
+db.collection('donations').add({
+user:user.email,
+amount:amount,
+date:new Date(),
+paymentId:response.razorpay_payment_id
+}).then(()=>{ alert("Thank you for your donation!"); document.getElementById('donationModal').style.display="none"; });
+},
+"prefill":{ email:user.email }
+};
+const rzp=new Razorpay(options); rzp.open();
+}
 </script>
+
 </body>
 </html>
