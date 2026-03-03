@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Royal Gaming Store</title>
+<title>Royal Futuristic Gaming Store</title>
 
 <!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
@@ -18,44 +18,96 @@
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 <style>
+/* ============ Global ============ */
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
-body{background:#0a0f1e;color:white;}
-header{background:#111428;padding:15px 30px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 0 10px #ff5722;}
-header h1{font-family:'Orbitron',sans-serif;color:#ff5722;letter-spacing:2px;}
-nav a{margin-left:20px;font-weight:500;transition:0.3s;}
-nav a:hover{color:#ff9800;}
+body{background:#0a0f1e;color:white;overflow-x:hidden;}
+a{text-decoration:none;color:white;}
 
-/* Hero */
-.hero{background: linear-gradient(90deg, rgba(255,87,34,0.4), rgba(255,193,7,0.3)), url('https://via.placeholder.com/1500x400') center/cover no-repeat;height:400px;display:flex;justify-content:center;align-items:center;text-align:center;}
-.hero h2{font-size:3rem;font-family:'Orbitron',sans-serif;color:#ff5722;text-shadow:0 0 20px #ff5722;}
+/* ============ Header ============ */
+header{
+background:#111428;padding:15px 30px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 0 20px #00ffff;
+position:sticky;top:0;z-index:1000;
+}
+header h1{
+font-family:'Orbitron',sans-serif;color:#00ffff;letter-spacing:2px;
+text-shadow:0 0 20px #00ffff,0 0 40px #ff00ff;
+}
+nav a{margin-left:20px;font-weight:500;transition:0.3s;position:relative;}
+nav a::after{content:'';position:absolute;width:0%;height:2px;background:#ff00ff;left:0;bottom:-5px;transition:0.3s;}
+nav a:hover::after{width:100%;}
+nav a:hover{color:#ff00ff;}
+
+/* ============ Hero Section ============ */
+.hero{
+height:450px;background:linear-gradient(90deg, rgba(0,255,255,0.2), rgba(255,0,255,0.2)), url('https://via.placeholder.com/1500x450') center/cover no-repeat;
+display:flex;justify-content:center;align-items:center;text-align:center;
+position:relative;overflow:hidden;
+}
+.hero h2{
+font-size:3rem;font-family:'Orbitron',sans-serif;color:#00ffff;
+text-shadow:0 0 20px #00ffff,0 0 40px #ff00ff,0 0 60px #ff00ff;
+animation: glow 2s ease-in-out infinite alternate;
+}
 .hero p{color:#fff;margin-top:10px;font-size:1.2rem;text-shadow:0 0 10px black;}
 
-/* Games grid */
+/* glow animation */
+@keyframes glow{
+0%{text-shadow:0 0 10px #00ffff,0 0 20px #ff00ff;}
+100%{text-shadow:0 0 20px #00ffff,0 0 40px #ff00ff,0 0 60px #00ffff;}
+}
+
+/* ============ Search Bar ============ */
+#searchBar{margin:20px auto;max-width:600px;display:flex;}
+#searchBar input{flex:1;padding:10px;border-radius:8px 0 0 8px;border:none;background:#111428;color:white;}
+#searchBar input::placeholder{color:#ccc;}
+#searchBar button{padding:10px;border:none;background:#00ffff;color:white;border-radius:0 8px 8px 0;cursor:pointer;transition:0.3s;}
+#searchBar button:hover{background:#ff00ff;box-shadow:0 0 15px #ff00ff,0 0 30px #00ffff;}
+
+/* ============ Games Grid ============ */
 .games{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;padding:30px;}
-.game{background:#1b1f33;border:2px solid #ff5722;border-radius:15px;overflow:hidden;transition:0.4s;position:relative;}
-.game:hover{transform:scale(1.05);border-color:#ff9800;}
-.game img{width:100%;display:block;}
-.game h3{padding:10px;font-family:'Orbitron',sans-serif;color:#ff5722;}
+.game{
+background:#1b1f33;border:2px solid #00ffff;border-radius:15px;overflow:hidden;
+transition:0.4s;position:relative;cursor:pointer;
+box-shadow:0 0 10px #00ffff;
+}
+.game:hover{transform:scale(1.05);border-color:#ff00ff;box-shadow:0 0 20px #ff00ff,0 0 40px #00ffff;}
+.game img{width:100%;display:block;transition:0.3s;}
+.game img:hover{filter:brightness(1.2);}
+.game h3{padding:10px;font-family:'Orbitron',sans-serif;color:#00ffff;}
 .game p{padding:0 10px 10px;font-size:0.9rem;}
-.game button{margin:10px;padding:10px;background:#ff5722;border:none;border-radius:8px;cursor:pointer;color:white;font-weight:600;width:calc(100% - 20px);transition:0.3s;}
-.game button:hover{background:#ff9800;box-shadow:0 0 10px #ff9800;}
+.game button{
+margin:10px;padding:10px;background:#00ffff;border:none;border-radius:8px;
+cursor:pointer;color:white;font-weight:600;width:calc(100% - 20px);
+transition:0.3s;text-shadow:0 0 10px #00ffff;
+}
+.game button:hover{background:#ff00ff;box-shadow:0 0 15px #ff00ff,0 0 30px #00ffff;transform:scale(1.05);}
 
-/* Modals */
-.modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);display:none;justify-content:center;align-items:center;z-index:1000;}
-.modal-content{background:#1b1f33;padding:30px;border-radius:15px;width:90%;max-width:400px;text-align:center;}
-.modal-content h2{font-family:'Orbitron',sans-serif;color:#ff5722;margin-bottom:20px;}
-.modal-content input{width:100%;padding:12px;margin:10px 0;border-radius:8px;border:none;}
-.modal-content button{padding:12px 20px;border:none;border-radius:8px;background:#ff5722;cursor:pointer;color:white;font-weight:600;width:100%;transition:0.3s;}
-.modal-content button:hover{background:#ff9800;}
+/* ============ Modals ============ */
+.modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);display:none;justify-content:center;align-items:center;z-index:1000;backdrop-filter:blur(5px);}
+.modal-content{
+background:#1b1f33;padding:30px;border-radius:15px;width:90%;max-width:400px;text-align:center;
+box-shadow:0 0 20px #00ffff,0 0 40px #ff00ff;
+transform:scale(0);transition:0.3s;
+}
+.modal.show .modal-content{transform:scale(1);}
+.modal-content h2{font-family:'Orbitron',sans-serif;color:#00ffff;margin-bottom:20px;}
+.modal-content input{width:100%;padding:12px;margin:10px 0;border-radius:8px;border:none;background:#111428;color:white;}
+.modal-content input::placeholder{color:#ccc;}
+.modal-content button{padding:12px 20px;border:none;border-radius:8px;background:#00ffff;cursor:pointer;color:white;font-weight:600;width:100%;transition:0.3s;text-shadow:0 0 10px #00ffff;}
+.modal-content button:hover{background:#ff00ff;box-shadow:0 0 20px #ff00ff,0 0 40px #00ffff;transform:scale(1.05);}
 
-/* Footer */
-footer{background:#111428;text-align:center;padding:20px;color:#fff;border-top:2px solid #ff5722;}
+/* ============ Footer ============ */
+footer{background:#111428;text-align:center;padding:20px;color:#fff;border-top:2px solid #00ffff;box-shadow:0 0 10px #00ffff;}
+
+/* ============ Donation Progress Bar ============ */
+#donationProgress{width:100%;background:#111428;border-radius:10px;margin:10px 0;overflow:hidden;}
+#donationProgress .bar{height:20px;background:#00ffff;width:0%;transition:width 1s;}
 </style>
 </head>
 <body>
 
 <header>
-<h1>Royal Games</h1>
+<h1>Royal Futuristic Games</h1>
 <nav>
 <a href="#" onclick="showLogin()">Login</a>
 <a href="#" onclick="showRegister()">Register</a>
@@ -67,51 +119,34 @@ footer{background:#111428;text-align:center;padding:20px;color:#fff;border-top:2
 <section class="hero">
 <div>
 <h2>Play. Buy. Conquer.</h2>
-<p>Get the best games & support dogs with your donations</p>
+<p>Get top futuristic games & support dogs 🐶</p>
 </div>
 </section>
 
+<!-- Search -->
+<div id="searchBar">
+<input type="text" id="searchInput" placeholder="Search games by name or category...">
+<button onclick="searchGames()">Search</button>
+</div>
+
+<!-- Games -->
 <div class="games" id="gamesList"></div>
 
 <!-- Modals -->
-<div class="modal" id="loginModal">
-<div class="modal-content">
-<h2>Login</h2>
-<input type="email" id="loginEmail" placeholder="Email">
-<input type="password" id="loginPassword" placeholder="Password">
-<button onclick="login()">Login</button>
-</div>
-</div>
+<div class="modal" id="loginModal"><div class="modal-content"><h2>Login</h2><input type="email" id="loginEmail" placeholder="Email"><input type="password" id="loginPassword" placeholder="Password"><button onclick="login()">Login</button></div></div>
+<div class="modal" id="registerModal"><div class="modal-content"><h2>Register</h2><input type="email" id="registerEmail" placeholder="Email"><input type="password" id="registerPassword" placeholder="Password"><button onclick="register()">Register</button></div></div>
+<div class="modal" id="donationModal"><div class="modal-content"><h2>Donate for Dogs 🐶</h2><input type="number" id="donationAmount" placeholder="Enter Amount (₹)"><div id="donationProgress"><div class="bar" id="donationBar"></div></div><button onclick="donate()">Donate</button></div></div>
 
-<div class="modal" id="registerModal">
-<div class="modal-content">
-<h2>Register</h2>
-<input type="email" id="registerEmail" placeholder="Email">
-<input type="password" id="registerPassword" placeholder="Password">
-<button onclick="register()">Register</button>
-</div>
-</div>
-
-<div class="modal" id="donationModal">
-<div class="modal-content">
-<h2>Donate for Dogs 🐶</h2>
-<input type="number" id="donationAmount" placeholder="Enter Amount (₹)">
-<button onclick="donate()">Donate</button>
-</div>
-</div>
-
-<footer>
-&copy; 2026 Royal Gaming Store | All Rights Reserved
-</footer>
+<footer>&copy; 2026 Royal Futuristic Gaming Store | All Rights Reserved</footer>
 
 <script>
-// ================= FIREBASE CONFIG =================
+// ================= FIREBASE =================
 const firebaseConfig = {
 apiKey: "YOUR_API_KEY",
 authDomain: "YOUR_PROJECT.firebaseapp.com",
 projectId: "YOUR_PROJECT",
 storageBucket: "YOUR_PROJECT.appspot.com",
-messagingSenderId: "shashwatbakshi80@outlook.com",
+messagingSenderId: "YOUR_SENDER_ID",
 appId: "YOUR_APP_ID"
 };
 firebase.initializeApp(firebaseConfig);
@@ -120,102 +155,60 @@ const db = firebase.firestore();
 const storage = firebase.storage();
 
 // ================= SAMPLE GAMES =================
-const games = [
-{name:"Forex Master", price:100, image:"https://via.placeholder.com/300x150", file:"forex.zip"},
-{name:"stock markt", price:150, image:"https://via.placeholder.com/300x150", file:"adventure.zip"},
+let games = [
+{name:"Forex Master", category:"Forex", price:10, image:"https://via.placeholder.com/300x150", file:"forex.zip", rating:4.5},
+{name:"Adventure Quest", category:"Adventure", price:15, image:"https://via.placeholder.com/300x150", file:"adventure.zip", rating:4.7},
+{name:"Space Shooter", category:"Action", price:12, image:"https://via.placeholder.com/300x150", file:"spaceshooter.zip", rating:4.3}
 ];
 
-function renderGames(){
-const container = document.getElementById('gamesList');
-container.innerHTML="";
-games.forEach((game,index)=>{
-const div=document.createElement('div');
-div.className="game";
-div.innerHTML=`
-<img src="${game.image}" alt="${game.name}">
-<h3>${game.name}</h3>
-<p>Price: ₹${game.price*80}</p>
-<button onclick="buyGame(${index})">Buy Now</button>
-`;
+// Render games
+function renderGames(list=games){
+const container=document.getElementById('gamesList'); container.innerHTML="";
+list.forEach((game,index)=>{
+const div=document.createElement('div'); div.className="game";
+div.innerHTML=`<img src="${game.image}" alt="${game.name}"><h3>${game.name}</h3><p>Category: ${game.category}</p><p>Rating: ${game.rating} ⭐</p><p>Price: ₹${game.price*80}</p><button onclick="buyGame(${index})">Buy Now</button>`;
 container.appendChild(div);
 });
 }
 renderGames();
 
-// ================= MODAL CONTROLS =================
-function showLogin(){document.getElementById('loginModal').style.display="flex"; document.getElementById('registerModal').style.display="none"; document.getElementById('donationModal').style.display="none";}
-function showRegister(){document.getElementById('registerModal').style.display="flex"; document.getElementById('loginModal').style.display="none"; document.getElementById('donationModal').style.display="none";}
-function showDonation(){document.getElementById('donationModal').style.display="flex"; document.getElementById('loginModal').style.display="none"; document.getElementById('registerModal').style.display="none";}
+// Search
+function searchGames(){const q=document.getElementById('searchInput').value.toLowerCase();renderGames(games.filter(g=>g.name.toLowerCase().includes(q)||g.category.toLowerCase().includes(q)));}
+function showLogin(){document.getElementById('loginModal').style.display="flex";}
+function showRegister(){document.getElementById('registerModal').style.display="flex";}
+function showDonation(){document.getElementById('donationModal').style.display="flex";}
 
-// ================= AUTHENTICATION =================
-function register(){
-const email=document.getElementById('registerEmail').value;
-const pass=document.getElementById('registerPassword').value;
-auth.createUserWithEmailAndPassword(email,pass)
-.then(()=>{ alert("Registered Successfully!"); document.getElementById('registerModal').style.display="none"; })
-.catch(err=>alert(err.message));
-}
+// Auth
+function register(){const e=document.getElementById('registerEmail').value;const p=document.getElementById('registerPassword').value;auth.createUserWithEmailAndPassword(e,p).then(()=>{alert("Registered!");document.getElementById('registerModal').style.display="none";}).catch(err=>alert(err.message));}
+function login(){const e=document.getElementById('loginEmail').value;const p=document.getElementById('loginPassword').value;auth.signInWithEmailAndPassword(e,p).then(()=>{alert("Logged In");document.getElementById('loginModal').style.display="none";document.getElementById('logoutBtn').style.display="inline";}).catch(err=>alert(err.message));}
+function logout(){auth.signOut().then(()=>{alert("Logged Out");document.getElementById('logoutBtn').style.display="none";});}
 
-function login(){
-const email=document.getElementById('loginEmail').value;
-const pass=document.getElementById('loginPassword').value;
-auth.signInWithEmailAndPassword(email,pass)
-.then(()=>{ alert("Logged In!"); document.getElementById('loginModal').style.display="none"; document.getElementById('logoutBtn').style.display="inline"; })
-.catch(err=>alert(err.message));
-}
-
-function logout(){ auth.signOut().then(()=>{ alert("Logged Out"); document.getElementById('logoutBtn').style.display="none"; }); }
-
-// ================= BUY GAME =================
+// Buy Game
 function buyGame(index){
-const user = auth.currentUser;
-if(!user){ alert("Please login first"); return; }
-const game = games[index];
-
-const options = {
-"key": "8307077846@ybl",
-"amount": game.price(choose price according to the game) // in Dollars and Ruppess
-"currency":"INR",
-"name":"Royal Gaming Store",
-"description":game.name,
-"handler": function(response){
-db.collection('purchases').add({
-user:user.email,
-game:game.name,
-date:new Date(),
-paymentId:response.razorpay_payment_id
-}).then(()=>{ alert(`Payment Successful! Download: ${game.file}`); });
-},
-"prefill":{ email:user.email }
-};
-const rzp=new Razorpay(options); rzp.open();
+const user=auth.currentUser;if(!user){alert("Login first");return;}
+const game=games[index];
+const options={key:"YOUR_RAZORPAY_KEY",amount:game.price*100,currency:"INR",name:"Royal Gaming Store",description:game.name,handler:function(response){
+db.collection('purchases').add({user:user.email,game:game.name,date:new Date(),paymentId:response.razorpay_payment_id}).then(()=>{alert(`Payment Success! Download: ${game.file}`);});
+},prefill:{email:user.email}};
+const rzp=new Razorpay(options);rzp.open();
 }
 
-// ================= DONATION =================
+// Donation
 function donate(){
-const amount = document.getElementById('donationAmount').value;
-const user = auth.currentUser;
-if(!user){ alert("Please login first"); return; }
-if(!amount || amount<=0){ alert("Enter valid amount"); return; }
-
-const options = {
-"key":"8307077846@ybl",
-"amount":amount*100,
-"currency":"INR,USD",
-"name":"Royal Gaming Store Donations",
-"description":"Donation for Dogs 🐶",
-"handler": function(response){
-db.collection('donations').add({
-user:user.email,
-amount:amount,
-date:new Date(),
-paymentId:response.razorpay_payment_id
-}).then(()=>{ alert("Thank you for your donation!"); document.getElementById('donationModal').style.display="none"; });
-},
-"prefill":{ email:user.email }
-};
-const rzp=new Razorpay(options); rzp.open();
+const amount=document.getElementById('donationAmount').value;const user=auth.currentUser;if(!user){alert("Login first");return;}if(!amount||amount<=0){alert("Enter valid amount");return;}
+const options={key:"YOUR_RAZORPAY_KEY",amount:amount*100,currency:"INR",name:"Royal Store Donations",description:"Donation for Dogs 🐶",handler:function(response){
+db.collection('donations').add({user:user.email,amount:amount,date:new Date(),paymentId:response.razorpay_payment_id}).then(()=>{alert("Thank you!");document.getElementById('donationModal').style.display="none";updateDonationProgress();});
+},prefill:{email:user.email}};
+const rzp=new Razorpay(options);rzp.open();
 }
+
+// Donation Progress
+function updateDonationProgress(){
+db.collection('donations').get().then(snap=>{
+let total=0;snap.forEach(d=>{total+=parseFloat(d.data().amount)});document.getElementById('donationBar').style.width=Math.min(total,100)+"%";
+});
+}
+updateDonationProgress();
 </script>
 
 </body>
