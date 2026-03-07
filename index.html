@@ -1,201 +1,280 @@
 <!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>index.html</title>
+    
+
+  </head>
+    
+  <body>
+  <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RoyalArc Gaming Studios</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-
+<title>Forex Trading Pro</title>
+<script src="https://s3.tradingview.com/tv.js"></script>
 <style>
 body{
-margin:0;
-font-family:'Orbitron',sans-serif;
-background:#0a0f1c;
-color:white;
-scroll-behavior:smooth;
+    margin:0;
+    background:#0b0e11;
+    font-family:Segoe UI;
+    color:white;
 }
-header{
-background:linear-gradient(90deg,#0f2027,#203a43,#2c5364);
-padding:20px;
-display:flex;
-justify-content:space-between;
-align-items:center;
+.topbar{
+    background:#131722;
+    padding:12px 20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-bottom:1px solid #222;
 }
-header h1{
-color:#00f7ff;
+.logo{
+    font-weight:bold;
+    font-size:18px;
+    color:#f23645;
 }
-nav a{
-color:white;
-margin:0 15px;
-text-decoration:none;
-font-size:14px;
+.stats span{
+    margin-right:15px;
+    font-size:13px;
 }
-section{
-padding:60px 10%;
+.container{
+    display:flex;
+    height:calc(100vh - 60px);
 }
-.hero{
-text-align:center;
-padding:120px 20px;
-background:radial-gradient(circle,#111827,#0a0f1c);
+.sidebar{
+    width:270px;
+    background:#131722;
+    padding:15px;
+    border-right:1px solid #222;
 }
-.btn{
-padding:10px 20px;
-background:#00f7ff;
-border:none;
-cursor:pointer;
-margin-top:15px;
+.main{
+    flex:1;
+    display:flex;
+    flex-direction:column;
 }
-.card{
-background:#111827;
-padding:20px;
-border-radius:10px;
-margin:15px 0;
-box-shadow:0 0 15px #00f7ff33;
+.chart{
+    flex:3;
 }
-input{
-padding:10px;
-width:100%;
-margin:8px 0;
-background:#1e293b;
-border:none;
-color:white;
+.bottom{
+    flex:1;
+    background:#131722;
+    border-top:1px solid #222;
+    padding:10px;
+    overflow:auto;
 }
-footer{
-text-align:center;
-padding:20px;
-background:#111827;
-margin-top:40px;
+input,select{
+    width:100%;
+    padding:6px;
+    margin:5px 0;
+    background:#0b0e11;
+    border:1px solid #333;
+    color:white;
 }
-.admin{
-display:none;
-background:#1e293b;
-padding:20px;
+button{
+    width:100%;
+    padding:8px;
+    margin-top:6px;
+    border:none;
+    font-weight:bold;
+    cursor:pointer;
+}
+.buy{background:#089981;}
+.sell{background:#f23645;}
+.green{color:#00ff9d;}
+.red{color:#ff4d4d;}
+.warning{
+    margin-top:8px;
+    font-size:12px;
+}
+table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:13px;
+}
+th,td{
+    padding:6px;
+    border-bottom:1px solid #222;
+}
+.loss-message{
+    font-weight:bold;
+    margin-top:5px;
 }
 </style>
 </head>
 <body>
 
-<header>
-<h1>RoyalArc Gaming</h1>
-<nav>
-<a href="#home">Home</a>
-<a href="#games">Games</a>
-<a href="#donation">Dog Donation</a>
-<a href="#ceo">CEO</a>
-<a href="#admin">Admin</a>
-</nav>
-</header>
-
-<section class="hero" id="home">
-<h2>Futuristic Gaming Empire</h2>
-<p>Next Generation Gaming, AI Powered Simulators, Forex Learning Games, Esports Universe.</p>
-<button class="btn" onclick="showLogin()">Login / Signup</button>
-</section>
-
-<section id="games">
-<h2>Our Games</h2>
-<div class="card">
-<h3>Forex Master Simulator</h3>
-<p>Real-time trading simulation powered by Firebase database and Python analytics engine.</p>
+<div class="topbar">
+<div class="logo">🔥chapal khaega- FOREX TRADING PRO</div>
+<div class="stats">
+<span>Balance: $<span id="balance">10000</span></span>
+<span>Equity: $<span id="equity">10000</span></span>
+<span>Margin Used: $<span id="margin">0</span></span>
 </div>
-<div class="card">
-<h3>Cyber Battle Arena</h3>
-<p>Multiplayer futuristic shooting game built with scalable Java backend.</p>
-</div>
-</section>
-
-<section id="donation">
-<h2>Support Street Dogs 🐶</h2>
-<div class="card">
-<p>We donate 10% of gaming profits to dog shelters.</p>
-<input type="number" id="donateAmount" placeholder="Enter amount">
-<button class="btn" onclick="donate()">Donate Now</button>
-<p id="donateMsg"></p>
-</div>
-</section>
-
-<section id="ceo">
-<h2>About CEO</h2>
-<div class="card">
-<p>Founded by Shashwat Bakshi, RoyalArc Gaming Studios is focused on futuristic AI-driven gaming systems and financial education platforms.</p>
-<p>Vision: Global Gaming Network Expansion.</p>
-</div>
-</section>
-
-<section id="admin">
-<h2>Admin Panel</h2>
-
-<div id="adminLogin">
-<input type="password" id="adminPass" placeholder="Enter Admin Password">
-<button class="btn" onclick="checkAdmin()">Login</button>
 </div>
 
-<div class="admin" id="adminPanel">
-<h3>Admin Dashboard</h3>
-<p>Total Donations: <span id="totalDonation">Loading...</span></p>
+<div class="container">
+
+<div class="sidebar">
+<h3>Order Ticket</h3>
+Lot Size
+<input type="number" id="lot" value="1">
+Leverage
+<select id="lev">
+<option value="10">10x</option>
+<option value="50">50x</option>
+<option value="100">100x</option>
+</select>
+
+<button class="buy" onclick="openTrade('BUY')">BUY MARKET</button>
+<button class="sell" onclick="openTrade('SELL')">SELL MARKET</button>
+
+<div class="warning">
+⚠ High Risk Leveraged Product
 </div>
-</section>
 
-<footer>
-© 2026 RoyalArc Gaming Studios | Firebase Powered | Java + Python Backend
-</footer>
+<div id="lossMsg" class="loss-message red"></div>
+</div>
 
-<!-- Firebase -->
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js"></script>
+<div class="main">
+<div class="chart" id="chart"></div>
+
+<div class="bottom">
+<h3>Open Positions</h3>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Lot</th>
+<th>Entry</th>
+<th>P/L</th>
+<th>Close</th>
+</tr>
+</thead>
+<tbody id="positions"></tbody>
+</table>
+</div>
+</div>
+</div>
 
 <script>
-// 🔥 Replace with your Firebase config
-const firebaseConfig = {
-apiKey: "YOUR_API_KEY",
-authDomain: "YOUR_AUTH_DOMAIN",
-databaseURL: "YOUR_DB_URL",
-projectId: "YOUR_PROJECT_ID",
-storageBucket: "YOUR_BUCKET",
-messagingSenderId: "YOUR_MSG_ID",
-appId: "YOUR_APP_ID"
-};
-
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
-
-function donate(){
-let amount = document.getElementById("donateAmount").value;
-if(amount > 0){
-db.ref("donations").push({
-amount: amount,
-date: new Date().toLocaleString()
+new TradingView.widget({
+  "width": "100%",
+  "height": "100%",
+  "symbol": "FX:EURUSD",
+  "interval": "15",
+  "timezone": "Asia/Kolkata",
+  "theme": "dark",
+  "style": "1",
+  "locale": "en",
+  "container_id": "chart"
 });
-document.getElementById("donateMsg").innerText="Thank you for supporting dogs ❤️";
+
+let balance=10000;
+let positions=[];
+let price=1.1000;
+let marginUsed=0;
+
+function simulatePrice(){
+    price += (Math.random()-0.5)/200;
+    updatePositions();
 }
+setInterval(simulatePrice,1000);
+
+function openTrade(type){
+    let lot=parseFloat(document.getElementById("lot").value);
+    let lev=parseInt(document.getElementById("lev").value);
+
+    let margin=lot*1000/lev;
+
+    if(balance < margin){
+        alert("Insufficient margin!");
+        return;
+    }
+
+    marginUsed += margin;
+    balance -= margin;
+
+    let trade={
+        type:type,
+        lot:lot,
+        entry:price,
+        lev:lev,
+        pl:0,
+        margin:margin
+    };
+
+    positions.push(trade);
+    renderPositions();
+    updateStats();
 }
 
-function checkAdmin(){
-let pass = document.getElementById("adminPass").value;
-if(pass === "RoyalArc123"){
-document.getElementById("adminLogin").style.display="none";
-document.getElementById("adminPanel").style.display="block";
-loadDonations();
-}else{
-alert("Wrong Password");
-}
+function updatePositions(){
+    let totalPL=0;
+
+    positions.forEach(p=>{
+        let diff=price - p.entry;
+        if(p.type==="SELL") diff*=-1;
+
+        p.pl = diff*10000*p.lot*p.lev;
+        totalPL += p.pl;
+    });
+
+    let equity = balance + marginUsed + totalPL;
+
+    document.getElementById("equity").innerText=equity.toFixed(2);
+
+    if(totalPL < 0){
+
+        document.getElementById("lossMsg").innerHTML=`
+        Loss ho raha hai… chappal khayega kya?<br>
+        Garh bik jayega tera!<br>
+        Mummy se pitega kya?<br>
+        Garh ja aur chupne ki jagah dhoondh, flying chappal aa rahi hai!<br>
+        Bete trading sikh raha hai ya garh bikvane ki tayari kar raha hai?<br>
+        Tere aisi ki taisi bete, aaj ghar aa tu!
+        `;
+
+    }else{
+        document.getElementById("lossMsg").innerHTML="";
+    }
+
+    renderPositions();
 }
 
-function loadDonations(){
-db.ref("donations").on("value",snapshot=>{
-let total = 0;
-snapshot.forEach(child=>{
-total += parseInt(child.val().amount);
-});
-document.getElementById("totalDonation").innerText = "₹" + total;
-});
+function renderPositions(){
+    let html="";
+    positions.forEach((p,i)=>{
+        html+=`
+        <tr>
+        <td>${p.type}</td>
+        <td>${p.lot}</td>
+        <td>${p.entry.toFixed(4)}</td>
+        <td class="${p.pl>=0?'green':'red'}">${p.pl.toFixed(2)}</td>
+        <td><button onclick="closeTrade(${i})">X</button></td>
+        </tr>
+        `;
+    });
+    document.getElementById("positions").innerHTML=html;
 }
 
-function showLogin(){
-alert("Login & Signup backend connect via Firebase Auth (Enable in console)");
+function closeTrade(i){
+    balance += positions[i].margin + positions[i].pl;
+    marginUsed -= positions[i].margin;
+    positions.splice(i,1);
+    updateStats();
+    renderPositions();
+}
+
+function updateStats(){
+    document.getElementById("balance").innerText=balance.toFixed(2);
+    document.getElementById("margin").innerText=marginUsed.toFixed(2);
 }
 </script>
 
 </body>
+</html>
+    
+  </body>
+  
 </html>
